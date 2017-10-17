@@ -1,2 +1,1 @@
-# Algo_Source
-#   
+# Algorithm Source 모음
