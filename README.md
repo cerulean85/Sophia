@@ -5,7 +5,6 @@
 
 **운영체제**
 -
-- 위키피디아: 페이지 교체 알고리즘 (http://cerulean85.tistory.com/235) : 번역중
 - 페이지 교체 알고리즘 (http://cerulean85.tistory.com/240)
 - 고정분할과 가변분할 (http://cerulean85.tistory.com/237)
 - 단편화 / 스와핑 / 페이징 / 세그먼테이션 (http://cerulean85.tistory.com/238)
@@ -35,3 +34,6 @@
 
 **단축키 정리**
 -
+
+**위키피디아**
+- 페이지 교체 알고리즘 (http://cerulean85.tistory.com/235) : 번역중
