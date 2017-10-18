@@ -6,7 +6,7 @@
 **운영체제**
 -
 - 단편화와 그 해결 기법 (http://cerulean85.tistory.com/234) : 편집중
-- 페이지 교체 알고리즘 (https://github.com/GGOMJIROCK/Study) : 번역중
+- 페이지 교체 알고리즘 (http://cerulean85.tistory.com/235) : 번역중
 
 **네트워크**
 -
