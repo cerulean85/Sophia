@@ -7,6 +7,7 @@
 -
 - 단편화와 그 해결 기법 (http://cerulean85.tistory.com/234) : 편집중
 - 페이지 교체 알고리즘 (http://cerulean85.tistory.com/235) : 번역중
+- 고정분할과 가변분할 (http://cerulean85.tistory.com/237)
 
 **네트워크**
 -
