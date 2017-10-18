@@ -20,7 +20,7 @@
 
 **용어 정리**
 -
-- 프로세스 주소 공간(http://cerulean85.tistory.com/231)
+- 프로세스 주소 공간(http://cerulean85.tistory.com/208)
 - 프로세스/프로그램/프로세스 구분 (http://cerulean85.tistory.com/210)
 - 배열과 연결리스트의 차이 (http://cerulean85.tistory.com/209)
 - 객체와 인스턴스의 차이 (http://cerulean85.tistory.com/149)
