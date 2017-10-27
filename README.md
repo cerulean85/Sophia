@@ -20,8 +20,9 @@
 - 와이어샤크 사용법
 - 암호화 (http://cerulean85.tistory.com/249)
 
-**프로그래밍 언어**
+**프로그래밍**
 -
+- Database Stored Program 예외 처리 (http://cerulean85.tistory.com/250)
 
 **각종 설정법 정리**
 - [CentOS] MySQL SSL 설정 (http://cerulean85.tistory.com/244)
