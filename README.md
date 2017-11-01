@@ -11,7 +11,7 @@
 - 단편화 / 스와핑 / 페이징 / 세그먼테이션 (http://cerulean85.tistory.com/238)
 - 클럭(clock) 알고리즘 / 2차 기회 알고리즘 (http://cerulean85.tistory.com/239)
 - 프로세스 스케줄러 (http://cerulean85.tistory.com/242)
-- 워킹 셋(working set) (http://cerulean85.tistory.com/257)
+- 워킹 셋(working set)과 가변 할당 기반 교체  (http://cerulean85.tistory.com/257)
 - 파일시스템 (예정)
 
 **컴퓨터 구조**
