@@ -25,7 +25,8 @@
 - 
 - 와이어샤크 사용법
 - 암호화 (http://cerulean85.tistory.com/249)
-- IP 
+- TCP Header & Handshake (예정)
+- 서브넷팅(Subneting) (예정)
 
 **프로그래밍**
 -
