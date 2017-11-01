@@ -2,8 +2,8 @@
 -
 - 카탈란(Catalan) 수 (http://cerulean85.tistory.com/233)
 - 배낭 문제(Knapsack Problem) (http://cerulean85.tistory.com/231)
-- 최단 경로 알고리즘 (업데이트 예정)
-- 거스름돈 (업데이트 예정)
+- 최단 경로 알고리즘 (예정)
+- 거스름돈 (예정)
 
 **운영체제**
 -
@@ -23,7 +23,6 @@
 
 **네트워크**
 - 
-- 와이어샤크 사용법
 - 암호화 (http://cerulean85.tistory.com/249)
 - TCP Header & Handshake (예정)
 - 서브넷팅(Subneting) (예정)
@@ -43,8 +42,6 @@
 - 프로세스/프로그램/프로세스 구분 (http://cerulean85.tistory.com/210)
 - 배열과 연결리스트의 차이 (http://cerulean85.tistory.com/209)
 - 객체와 인스턴스의 차이 (http://cerulean85.tistory.com/149)
-- 리눅스 명령어 정리
-- MySQL 명령어 
 
 **디자인 패턴 목록**
 -
