@@ -2,7 +2,8 @@
 -
 - 카탈란(Catalan) 수 (http://cerulean85.tistory.com/233)
 - 배낭 문제(Knapsack Problem) (http://cerulean85.tistory.com/231)
-- 거스름돈 
+- 최단 경로 알고리즘 (업데이트 예정)
+- 거스름돈 (업데이트 예정)
 
 **운영체제**
 -
@@ -53,7 +54,7 @@
 
 **위키피디아**
 -
-- 페이지 교체 알고리즘 (http://cerulean85.tistory.com/235) : 번역중
+- 페이지 교체 알고리즘 (http://cerulean85.tistory.com/248) : 번역중
 
 **앞으로 공부할 목록**
 -
