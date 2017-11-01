@@ -29,6 +29,7 @@
 **프로그래밍**
 -
 - [MySQL] Database Stored Program 예외 처리 (http://cerulean85.tistory.com/250)
+- AngularJS Directive 관련 ()
 
 **각종 설정법 정리**
 - [CentOS] MySQL SSL 설정 (http://cerulean85.tistory.com/244)
