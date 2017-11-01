@@ -18,7 +18,7 @@
 **컴퓨터 구조**
 -
 - 1의 보수, 2의 보수, 부동소수점과 바이어스(bias) 표현 (http://cerulean85.tistory.com/255)
-- 리틀 엔디안, 빅 
+- 리틀 엔디안, 빅 엔디언 (http://cerulean85.tistory.com/256)
 
 **네트워크**
 - 
