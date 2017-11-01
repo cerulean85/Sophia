@@ -11,8 +11,7 @@
 - 단편화 / 스와핑 / 페이징 / 세그먼테이션 (http://cerulean85.tistory.com/238)
 - 클럭(clock) 알고리즘 / 2차 기회 알고리즘 (http://cerulean85.tistory.com/239)
 - 프로세스 스케줄러 (http://cerulean85.tistory.com/242)
-- 쓰레싱 (예정)
-- 워크셋 (예정)
+- 워크셋 (http://cerulean85.tistory.com/257)
 - 파일시스템 (예정)
 
 **컴퓨터 구조**
