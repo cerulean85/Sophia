@@ -24,7 +24,7 @@
 **네트워크**
 - 
 - 암호화 (http://cerulean85.tistory.com/249)
-- TCP Header & Handshake (예정)
+- TCP Header & Handshake (http://cerulean85.tistory.com/262)
 - 서브넷팅(Subneting) (예정)
 
 **프로그래밍**
