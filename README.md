@@ -30,6 +30,7 @@
 **프로그래밍**
 -
 - [MySQL] Database Stored Program 예외 처리 (http://cerulean85.tistory.com/250)
+- 오브젝트와 배열 키(key)와 값(value) 할당과 접근 (http://cerulean85.tistory.com/261)
 - AngularJS Directive 관련 (예정)
 
 **각종 설정법 정리**
