@@ -57,6 +57,11 @@
 -
 - 페이지 교체 알고리즘 (http://cerulean85.tistory.com/248) : 번역중
 
+**기타**
+-
+- 앨런 튜링과 폰노이만
+(https://joone.net/2016/11/15/%EC%95%A8%EB%9F%B0-%ED%8A%9C%EB%A7%81%EA%B3%BC-%ED%8F%B0%EB%85%B8%EC%9D%B4%EB%A7%8C/)
+
 **앞으로 공부할 목록**
 -
 - 드로잉 연습, 조형의 요소와 원리 (http://story.pxd.co.kr/696)
