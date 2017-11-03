@@ -17,6 +17,7 @@
 
 **컴퓨터 구조**
 -
+- 나무위키-소프트웨어(https://namu.wiki/w/%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4)
 - 1의 보수, 2의 보수, 부동소수점과 바이어스(bias) 표현 (http://cerulean85.tistory.com/255)
 - 리틀 엔디안, 빅 엔디언 (http://cerulean85.tistory.com/256)
 
