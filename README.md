@@ -4,6 +4,7 @@
 - 배낭 문제(Knapsack Problem) (http://cerulean85.tistory.com/231)
 - 최단 경로 알고리즘 (예정)
 - 거스름돈 (예정)
+- 해밍코드 (예정)
 
 **운영체제**
 -
