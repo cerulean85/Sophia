@@ -4,7 +4,7 @@
 - 배낭 문제(Knapsack Problem) (http://cerulean85.tistory.com/231)
 - 최단 경로 알고리즘 (예정)
 - 거스름돈 (예정)
-- 해밍코드 (예정)
+- 패러티 비트(Parity Bit)와 해밍 코드(Hamming Code) (http://cerulean85.tistory.com/268)
 
 **운영체제**
 -
