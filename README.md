@@ -37,6 +37,7 @@
 **각종 설정법 정리**
 -
 - [CentOS] MySQL SSL 설정 (http://cerulean85.tistory.com/244)
+- [Qt] How to deploy Qt Desktop Application (http://cerulean85.tistory.com/manage/posts/)
 
 **용어 정리**
 -
