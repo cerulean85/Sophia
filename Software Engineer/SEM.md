@@ -16,7 +16,7 @@
 <br>가. SEM 구조
 </pre>
 
-![Alt text](image.png)
+![Alt text](images/image.png)
 
  - ERP 등의 기간시스템을 기반으로 D/W 시스템 활용하는 VBM, ABM BSC 등의 애플리케이션으로 구성
  - 비즈니스 전략과 활동의 체계적인 연계 및 지속 관리
@@ -32,7 +32,7 @@
 <strong>III. SEM 구현 절차 및 관련 기술 비교</strong>
 <br>가. 구현 절차
 
-![Alt text](image-4.png)
+![Alt text](images/image-4.png)
 
 
 <br>나. SEM과 ERP 비교
