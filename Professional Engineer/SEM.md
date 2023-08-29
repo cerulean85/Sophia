@@ -1,15 +1,3 @@
-# 주 계획
-# 수정해야 할 오류/요구사항
-
-# 1순위
-# 2순위
-# 3순위
-# 4순위
-
-## 회의
-
-
-
 <strong>I. IT기반 종합성과 관리체계, SEM 개요</strong>
 <br>가. SEM(Strategic Enterprise Management) 정의
   - 방법: 경영관리 활동/전략의 연계/관리
