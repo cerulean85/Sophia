@@ -10,8 +10,8 @@ II. HAZOP 세부내용
 
 <table>
 <tr>
-  <th></th>
-  <th colspan="2"></th>
+  <th>구분</th>
+  <th colspan="2" style="text-align:center">설명</th>
 </tr>
 
 <tr>
