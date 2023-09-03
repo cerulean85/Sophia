@@ -103,10 +103,75 @@
 - 데이터 수신 측에서 오류 검출 후 송신 측에 오류 사실을 알려 재전송을 요청하는 오류 제어 기술
 
 ### 나. ARQ 세부 유형별 동작원리
-유형 | 개념도 | 설명 
--- | -- | --
-Stop and Wait | ![Alt text](./Images/DN001_15.png) | -
-Go-back-N | ![Alt text](./Images/DN001_11.png) | -
-Selective Repeat | ![Alt text](./Images/DN001_12.png) | -
-Hybrid ARQ - Type 1 | ![Alt text](./Images/DN001_13.png) | -
-Hybrid ARQ - Type 2 | ![Alt text](./Images/DN001_14.png) | -
+
+
+<table>
+  <tr>
+    <th>유형</th>
+    <th>개념도</th>
+    <th>설명</th> 
+  </tr>
+
+  <tr>
+    <td>Stop and Wait</td>
+    <td><img src="./Images/DN001_15.png"></img></td>
+    <td>
+      - 송신측에서 한 번에 하나의 프레임 전송<br>
+      - 수신측에서 프레임에 대한 오류 검사 후 오류가 있으면 NAK를 보냄
+    </td>
+  </tr>
+
+  <tr>
+    <td>Go-back-N</td>
+    <td><img src="./Images/DN001_11.png"></td>
+    <td>
+      - 수신 측에서는 오류가 있으면 'NAK + 오류 검출된 프레임 번호'를 송신<br>
+      - 오류가 연속적으로 발생하였다면 제일 처음의 프레임부터 재전송. 오류 발생 이후의 프레임 모두 삭제<br>
+      - 전송 효율 개선
+    </td>
+  </tr>
+
+  <tr>
+    <td>Selective Repeat</td>
+    <td><img src="./Images/DN001_12.png"></td> 
+    <td>
+      - 오류가 발생한 프레임만 재전송<br>
+      - 전송 효율 뛰어나지만, 구현이 복잡
+    </td>
+  </tr>
+
+  <tr>
+    <td>Hybrid ARQ - Type 1</td>
+    <td><img src="./Images/DN001_13.png"></td>
+    <td>
+      - 오류 감지 시 오류를 수정하고, 수정 못하면 수신측 재전송 요청<br>
+      - 여분의 패리티 비트 필요<br>
+      - FEC기능이 있으므로 네트워크 환경이 안 좋은 곳에서 다른 ARQ 보다 처리율 좋음
+    </td>
+  </tr>
+
+  <tr>
+    <td>Hybrid ARQ - Type 2</td>
+    <td><img src="./Images/DN001_14.png"></td>
+    <td>
+      <table>
+        <tr>
+          <td>CC-HARQ(Chase Combining HARQ)</td>
+          <td>
+            - 모든 재전송에 동일한 정보(데이터/패리티비트)를 보냄<br>
+            - 수신자는 수신된 비트를 비트와 결합 
+          </td>
+        </tr>
+
+        <tr>
+          <td>IR-HARQ(Incremental Reundancy HARQ)</td>
+          <td> 
+            - 모든 재전송 시 보내지는 정보는 이전과 다름<br>
+            - 코딩되는 비트세트가 다르므로 수신자는 추가 정보를 얻음 
+          </td>
+        </tr>
+      </table>
+    </td> 
+</table>
+
+- Soft Combining는 오류가 발생한 정보를 버리지 않고 재수신된 추가정보를 결합하여 프레임을 복원하는 기법
