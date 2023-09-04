@@ -1,6 +1,7 @@
 ## I. 네트워크의 논리적 분리, 네트워크 슬라이싱 개요
 ### 가. 네트워크 슬라이싱(Network Slicing) 개념
 
+![Alt text](image-3.png)
 - 물리적으로 하나의 네트워크를 논리적으로 분리하여 서로 다른 특성을 갖는 다양한 서비스로 특화된 전용 네트워크를 만드는 기술
 
 ### 나. 네트워크 슬라이싱 특징
@@ -12,46 +13,23 @@
 경제성 | - 필요에 따른 물리망 구축 불필요. 비용절감
 
 
+## II. 네트워크 슬라이싱 개념도와 기술요소
+### 가. 네트워크 슬라이싱 개념도
 ![Alt text](./Images/DN006_7.png)
 
+### 나. 네트워크 슬라이싱 기술요소
 
-## II. O-RAN 구성도와 구성요소
-### 가. O-RAN 구성도
-![Alt text](./Images/DN006_4.png)
-- O-CU, O-DU에 RIC 연결
-### 나. O-RAN 구성요소
+기술 영역 | 개념도 | 내용 | 구성기술
+-- | -- | -- | --
+SDN | ![Alt text](image-5.png) | - OpenFlow 등 개방형 API로 트래픽 전달<br>- SW 기반 컨트롤러로 제어하는 기술 | - Application, Network OK, Data Plane
+NFV |  ![Alt text](image-6.png) | - 다양한 NW 장비 내 기능을 분리<br>- SW적으로 제어/관리하는 NW 가상화 기술 | - NFVI, NFVs, MANO, E2E Networking
 
-구성요소 | 기반기술 | 설명
--- | -- | --
-RIC | - RIC near-RT, RIC non-RT | - RAN Intelligent Controller<br> - 데이터 수집과 분석을 기반으로 RAN요소와 자원 제어/최적화
-O-CU | - RRC/SDAP, RDCP | - O-RAN Centralized Unit<br>- RRC, PDCP 계층 실행하는 중앙 집중식 장치<br>- CU Control/User Plane 구성, 미드홀 통해 O-DU 작동제어
-O-DU | - RLC, MAC, High PHY | - O-RAN Distributed Unit<br> - O-RU 근처에서 PLC, MAC 및 PHY 계층 일부 실행하는 분산 장치
-O-RU | -RF, Low-PHY | - O-RAN Radio Unit<br>- 안테나 근처에서 송수신되는 무선신호를 프론트홀 통해 O-DU로 전송. 디지털 신호 변환
+### III. 네트워크 슬라이싱 기술요소 세부내용
+![Alt text](image-7.png)
 
 
-## III. 기존 RAN과 O-RAN 비교
-구분 | 기존 RAN | O-RAN
--- | -- | --
-개념도 | ![Alt text](./Images/DN006_5.png) | ![Alt text](./Images/DN006_6.png)
-공급 | - 단일 벤더 | - 다중 벤더
-플랫폼 | - 공급업체 종속<br>- 시장출시 기간 길고, 고비용 | - Software Defined, 개방형 H/W
-모듈성 | - 제어, 데이터, 인터페이스 통합 구성 | - 제어, 데이터, Open API 분리
-애플리케이션 및 네트워크 적응성 | - 제어로직과 네트워크 리소스 고정 | - 네트워크 조건에 따라 프로그래밍 가능
+### IV. SDN과 NFV 비교
+![Alt text](image-4.png)
 
-
-http://dl.kotra.or.kr/pyxis-api/1/digital-files/c4c9464e-616b-44eb-9275-85e0484df769
-
-## IV. O-RAN 기대효과
-구분 | 설명
--- | --
-시장점유율 상승 | - 통신 장비 간 호환성이 사라져 국내 기업의 시장 점유율 상승
-CAPEX 절감 | - 업체 간 경쟁에 따른 통신 장비 가격 하락
-특화망 본격화 | - 특정 산업/지역에 특화된 맞춤형 네트워크 구성 
-
-
-
-## 아래 특화망
-
-https://blog.skby.net/5g-%ED%8A%B9%ED%99%94%EB%A7%9D-private-5g/
-
-
+### V. 네트워크 슬라이싱 구축 절차
+![Alt text](image-8.png)
