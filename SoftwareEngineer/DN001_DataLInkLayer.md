@@ -162,7 +162,6 @@
             - 수신자는 수신된 비트를 비트와 결합 
           </td>
         </tr>
-
         <tr>
           <td>IR-HARQ(Incremental Reundancy HARQ)</td>
           <td> 
