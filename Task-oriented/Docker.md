@@ -80,6 +80,9 @@
 
 # Docker 컨테이너 삭제
 - docker rm [컨테이너명or아이디]
+- docker rm -f [컨테이너 아이디 일부]
+- docker rm -f $(docker ps -a -q)
+  - 불필요한 컨테이너 모두 삭제
  
 # Docker 컨테이너 재시작
 - docker container restart silly_heyrovsky
@@ -162,9 +165,128 @@ docker run -d --name my-nginx nginx
 docker exec my-nginx env
 docker exec -i -t my-nginx bash
   
-
 # docker network
+- Docker 컨테이너가 매우 강력한 이유 중 하나는 Docker 컨테이너 간 Network 연결을 할 수 있으며, Docker 컨테이너와 Docker 컨테이너가 아닌 워크로드에 연결결할 수 있기 때문
+- Docker 컨테이너와 서비스는 연결하려는 것이 Docker 컨테이너인지 아닌지 알 필요가 없음
+- Docker 호스트는 Docker를 이용해 플랫폼에 구애받지 않고 Docker 컨테이너들을 관리, 연결할 수 있음
+
+## Docker network driver bridge
+- Docker를 설치하면 자동으로 Host machine의 Network interface에 Docker0라는 Virtual interface가 생성
+- Docker0는 Host machine의 네트워크에 생성되어 다음의 특징을 가짐
+  - Gateway는 자동으로 172.17.0.1로 설정되고 16 bit netmask(255.255.0.0)로 설정됨
+  - docker0는 일반적인 interface는 아니며, virtual ethernet bridge임
+- 컨테이너가 생성될 때 사용자가 특정 Network driver를 설정한 것이 아니라면 Default로 Docker0라는 Network interface에 연결이 됨
+- Docker0는 각 컨테이너의 veth 인터페이스와 바인딩되며, 호스트OS의 eth0 인터페이스와 이어주는 역할을 함
+
+![Docker Network Bridge](../images/Docker/bridge.png)
+
+
+
+- docker run -p [HOST IP:PORT]:[CONTAINER PORT] [container]
+- docker run -d -p 80:80 nginx 
+  - nginx 컨테이너의 80번 포트를 호스트 모든 IP의 80번 포트와 연결하여 실행
+- docker run -d -p 127.0.0.1:80:80 nginx
+  - nginx 컨테이너의 80번 포트를 호스트 127.0.0.1 IP의 80번 포트와 연결하여 실행
+- docker run -d -p 80 nginx
+  - nginx 컨테이너의 80번 포트를 호스트의 사용 가능한 포트와 연결하여 실행
+  - 호스트의 port 번호가 특정되지 않고 컨테이너의 포트번호를 80번으로 특정
+
+- docker run -d -p 3000:3000 --name metabase metabase/metabase
+- docker run --name nginx -p 80:80 -p 443:443 -it -d nginx
+
+- docker network ls
+- docker network inspect bridge
+- 리눅스 계열에서 Host machine에 생성된 Docker0 확인: ip link
+- Docker Network 공식 문서 보기: Bridge, Host, None, Overlay, 3rd-Party Plugins
+- Bridge, Host, None: 단일 호스트에서 동작
+- Overlay: 멀티호스트. 오케스트레이션 시스템에서 많이 사용. Docker S warm
+- Bridge: 포트를 연결하고 외부에 노출하는 방식
+- None: 해당 컨테이너가 네트워크 기능이 필요 없거나 커스터마이징이 필요할 때 사용
+- Host: 가상 네트워크 사용하지 않고 호스트 네트워크에 붙어서 사용. 호스트 바인딩하지 않아도 바로 접속 가능. grafana 이미지는 기본으로 3000번 포트 사용
+- Bridge: 
+
+# expose vs. publish ?? 설명 부족
+- docker run -d --expose 80 --name nginx-expose nginx
+
+
 
 # docker volume
+- 호스트나 도커 볼륨 주로 사용
+## 호스트 볼륨
+- 호스트의 디렉토리를 컨테이너의 특정 경로에 마운트
+- docker run -d --name nginx -v /opt/html:/usr/share/nginx/html nginx
+
+- 실습 코드
+  - docker run -d -it ubuntu:focal
+  - docker exec -it angry_lehmann bash
+  - cat > hello
+  - exit
+  - docker rm -f c73
+  - docker run -d -it ubuntu:focal
+  - docker exec -it angry_lehmann bash
+    - 이렇게 해봤자 생성한 파일은 살아있지 않음
+
+- docker run -d -v $(pwd)/html:/usr/share/nginx/html -p 80:80 nginx
+  - 현재 경로의 html을 컨테이너의 /usr/share/nginx/html로 바인딩
+  - 컨테이너에서 파일을 만들고 호스트에서 확인해보면 컨테이너 파일이 있음
+
+## 볼륨 컨테이너
+ - 특정 컨테이너의 볼륨 마운트를 공유할 수 있음
+ - docker run -d --name my-volume -it -v /opt/html:/usr/share/nginx html ubuntu:focal
+ - docker run -d --name nginx --volumes-from my-volume nginx
+
+ ![alt text](../images/Docker/volume-container.png)
+
+ - 실습코드
+   - docker run \ -d \ -it \ -v $(pwd)/html:usr/share/nginx/html \ --name web-volume \ ubuntu:focal
+   - docker run \ --name fastcampus-nginx \ --volumes-from web-volume \ -p 80:80 \ nginx
+   - docker run \ -d \ --name fastcampus-nginx2 \ --volumes-from web-volume \ -p 8080: 80 \ nginx
+     - 첫번째 명령에서 web-volume을 생성해서 아래 두 개의 nginx의 Storage로 바인딩하고 있음
+
+## 도커 볼륨
+- 도커가 제공하는 볼륨 관리 기능을 활용하여 데이터를 보존
+- 기본적으로 /var/lib/docker/volumes/${volume-name}/_data에 데이터가 저장
+
+- docker volume create --name db # db 도커 볼륨 생성
+- docker run -d \ --name fastcampus-mysql  -v db:/var/lib/mysql \ -p 3306:3306 \ mysql:5.7
+  - 도커의 db 볼륨을 mysql의 /var/lib/mysql 경로로 마운트
+- docker volume inspect db
+- docker volume rm db
+  - 사용 중이면 제거 안됨 → 컨테이너 모두 제거 후 재실행해야 함
+
+## 읽기전용 볼륨 연결
+- docker run -d \ --name nginx \ -v web-volume:/usr/share/nginx/html:ro \ nginx
+- docker exec ro-nginx touch /usr/share/nginx/html/text
+  - Read-only file system이라고 에러 메시지가 뜸
+
+# docker log
+## STDOUT / STDERR
+- STDOUT, STDERR 표준으로 출력
+## 로그 확인하기
+- 전체 로그 확인
+  - docker logs [container]
+- 마지막 로그 10줄 확인
+  - docker logs --tail 10 [container]
+- 실시간 로그 스트림 확인
+  - docker logs -f [container]
+- 로그마다 타임스탬프 표시
+  - docker logs -f -t [container]
+
+## 로그 확인하기
+- cat /var/lib/docker/containers/${CONTAINER_ID}/${CONTAINER_ID}-json.log
+
+## 로그 용량 제한하기
+- 컨테이너 단위로 로그 용량 제한을 할 수 있지만, 도커 엔진에서 기본 설정을 진행할 수 있음 
+- 운영 환경 필수 설정
+
+- 한 로그 파일당 최대 크기를 3MB로 제한하고, 최대 로그 파일 3개로 로테이팅
+  - docker run \ -d \ --log-driver=json-file \ --log-opt max-size=3m \ --log-opt max-file=5 \ nginx
+
+- 도커 로그 드라이버
+![alt text](../images/Docker/log-driver.png)
+
+
+# 도커 이미지 다루기
+## 도커 이미지 구조
 
 # docker build
