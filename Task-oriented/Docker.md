@@ -19,28 +19,38 @@
 
 # Docker 이미지 검색
 - 호스트 cmd에서 아래처럼 명령어 입력하여 검색
-  - docker search nodejs  # Node.js 이미지 검색
-  - docker search openjdk  # OpenJDK 이미지 검색
-  - docker search kafka  # Apache Kafka
-  - docer search mysql --limit 5 # MySQL
+``` sh
+docker search nodejs  # Node.js 이미지 검색
+docker search openjdk  # OpenJDK 이미지 검색
+docker search kafka  # Apache Kafka
+docer search mysql --limit 5 # MySQL
+```
 
 # Error : Cannot perform an interactive login from a non TTY device
 - 호스트 cmd에서 도커 명령어 실행 시 위의 오류가 발생하면 맨 앞에 winpty 입력
-- winpty docker container run –p 5000:3000 –it zhwan85/goodwill
-- winpty docker container run –p 5000:3000 zhwan85/goodwill
+``` sh
+winpty docker container run –p 5000:3000 –it zhwan85/goodwill
+winpty docker container run –p 5000:3000 zhwan85/goodwill
+```
 
 # Docker 이미지 목록 확인
-- docker image ls
+``` sh
+docker image ls
+```
 
 # Docker 이미지 생성
-- docker image build –t zhwan85/goodwill:latest .
+``` sh
+docker image build –t zhwan85/goodwill:latest .
+```
 
 # Docker 이미지 배포
-- docker image push zhwan85/goodwill:latest
-- docker commit c33c299a3bd4 zhwan85/goodwill:lastest
-- docker image tag [이미지명:현재태그] [이미지명:변경태그]
-- docker image tag zhwan85/goodwill:latest zhwan85/goodwill:0.0.1
-- docker push zhwan85/goodwill:0.0.1
+``` sh
+docker image push zhwan85/goodwill:latest
+docker commit c33c299a3bd4 zhwan85/goodwill:lastest
+# docker image tag [이미지명:현재태그] [이미지명:변경태그]
+docker image tag zhwan85/goodwill:latest zhwan85/goodwill:0.0.1
+docker push zhwan85/goodwill:0.0.1
+```
 - [참고사이트](https://nicewoong.github.io/development/2018/03/06/docker-commit-container/)
 
 # Docker 이미지 삭제
@@ -158,12 +168,18 @@
 
 # docker exec
 - 실행 중인 컨테이너에 명령어 실행
-- docker exec [container] [command]
-- docker exec -i -t my-nginx bash: my-nginx 컨테이너에 Bash 셀로 접속
-- docker exec my-nginx env: my-nginx 컨테이너에 환경변수 확인
+``` sh
+# docker exec [container] [command]
+# my-nginx 컨테이너에 Bash 셀로 접속
+docker exec -i -t my-nginx bash 
+
+# my-nginx 컨테이너에 환경변수 확인
+docker exec my-nginx env 
+
 docker run -d --name my-nginx nginx
 docker exec my-nginx env
 docker exec -i -t my-nginx bash
+```
   
 # docker network
 - Docker 컨테이너가 매우 강력한 이유 중 하나는 Docker 컨테이너 간 Network 연결을 할 수 있으며, Docker 컨테이너와 Docker 컨테이너가 아닌 워크로드에 연결결할 수 있기 때문
@@ -232,27 +248,58 @@ docker exec -i -t my-nginx bash
 
 ## 볼륨 컨테이너
  - 특정 컨테이너의 볼륨 마운트를 공유할 수 있음
- - docker run -d --name my-volume -it -v /opt/html:/usr/share/nginx html ubuntu:focal
- - docker run -d --name nginx --volumes-from my-volume nginx
+ ``` sh
+ docker run -d --name my-volume -it -v /opt/html:/usr/share/nginx html ubuntu:focal
+ docker run -d --name nginx --volumes-from my-volume nginx
+ ```
 
  ![alt text](../images/Docker/volume-container.png)
 
  - 실습코드
-   - docker run \ -d \ -it \ -v $(pwd)/html:usr/share/nginx/html \ --name web-volume \ ubuntu:focal
-   - docker run \ --name fastcampus-nginx \ --volumes-from web-volume \ -p 80:80 \ nginx
-   - docker run \ -d \ --name fastcampus-nginx2 \ --volumes-from web-volume \ -p 8080: 80 \ nginx
-     - 첫번째 명령에서 web-volume을 생성해서 아래 두 개의 nginx의 Storage로 바인딩하고 있음
+``` sh
+docker run \ 
+-d \ 
+-it \ 
+-v $(pwd)/html:usr/share/nginx/html \ 
+--name web-volume \ 
+ubuntu:focal
+
+docker run \ 
+--name fastcampus-nginx \ 
+--volumes-from web-volume \ 
+-p 80:80 \ 
+nginx
+
+# 첫번째 명령에서 web-volume을 생성해서 
+# 아래 두 개의 nginx의 Storage로 바인딩하고 있음
+docker run \ 
+-d \ 
+--name fastcampus-nginx2 \ 
+--volumes-from web-volume \ 
+-p 8080: 80 \ 
+nginx
+
+```
 
 ## 도커 볼륨
 - 도커가 제공하는 볼륨 관리 기능을 활용하여 데이터를 보존
 - 기본적으로 /var/lib/docker/volumes/${volume-name}/_data에 데이터가 저장
+``` sh
+# db 도커 볼륨 생성
+docker volume create --name db
 
-- docker volume create --name db # db 도커 볼륨 생성
-- docker run -d \ --name fastcampus-mysql  -v db:/var/lib/mysql \ -p 3306:3306 \ mysql:5.7
-  - 도커의 db 볼륨을 mysql의 /var/lib/mysql 경로로 마운트
-- docker volume inspect db
-- docker volume rm db
-  - 사용 중이면 제거 안됨 → 컨테이너 모두 제거 후 재실행해야 함
+# 도커의 db 볼륨을 mysql의 /var/lib/mysql 경로로 마운트
+docker run -d \ 
+--name fastcampus-mysql  \
+-v db:/var/lib/mysql \ 
+-p 3306:3306 \ 
+mysql:5.7
+
+docker volume inspect db
+
+# 사용 중이면 제거 안됨 → 컨테이너 모두 제거 후 재실행해야 함
+docker volume rm db 
+```
 
 ## 읽기전용 볼륨 연결
 - docker run -d \ --name nginx \ -v web-volume:/usr/share/nginx/html:ro \ nginx
@@ -273,14 +320,23 @@ docker exec -i -t my-nginx bash
   - docker logs -f -t [container]
 
 ## 로그 확인하기
+``` sh
 - cat /var/lib/docker/containers/${CONTAINER_ID}/${CONTAINER_ID}-json.log
+```
 
 ## 로그 용량 제한하기
 - 컨테이너 단위로 로그 용량 제한을 할 수 있지만, 도커 엔진에서 기본 설정을 진행할 수 있음 
 - 운영 환경 필수 설정
 
 - 한 로그 파일당 최대 크기를 3MB로 제한하고, 최대 로그 파일 3개로 로테이팅
-  - docker run \ -d \ --log-driver=json-file \ --log-opt max-size=3m \ --log-opt max-file=5 \ nginx
+``` sh
+docker run \ 
+-d \ 
+--log-driver=json-file \ 
+--log-opt max-size=3m \ 
+--log-opt max-file=5 \ 
+nginx
+```
 
 - 도커 로그 드라이버
 ![alt text](../images/Docker/log-driver.png)
@@ -289,4 +345,85 @@ docker exec -i -t my-nginx bash
 # 도커 이미지 다루기
 ## 도커 이미지 구조
 
-# docker build
+
+## docker commit
+- docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
+- ubuntu 컨테이너의 현재 상태를 my_ubuntu:v1 이미지로 생성
+``` sh
+docker commit -a fastcampus -m "First Commit" ubuntu my_ubuntu:v1
+docker run -it --name my_ubuntu ubuntu: focal
+docker commit -a fastcampus -m "Add my_file" my_ubuntu my-ubuntu:v1
+docker image inspect my-ubuntu
+docker image inspect ubuntu:focal
+ ```
+
+ ## Dockerfile 이용하여 이미지 생성
+- Dockerfile을 기반으로 새 이밎 생성
+- ./ 디렉토리를 비륻 컨텍스트로 my_app:v1 이미지 빌드 (Dockerfile 이용)
+  - docker build -t my_app:v1 ./
+- ./ 디렉토리를 빌드 컨텍스트로 my_app:v1 이미지 빌드 (example/MyDockerfile 이용)
+  - docker build -t my_app:v1 -f example/MyDockerfile ./
+- Dockerfile Example1 <br>
+``` sh
+FROM node:12-alpine
+RUN apk add --no-cache python3 g++ make
+WORKDIR /app
+COPY . .
+RUN yarn install --production
+CMD ["node", "src/index.js"]
+```
+- Dockerfile Example2
+``` sh
+FROM node:16
+LABEL maintainer="FastCampus Park <fastcampus@fastcampus.com>"
+LABEL description="Simple server with Node.js"
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . . # 현재 디렉토리의 모든 것을 복사. 소스코드의 변경사항 등.
+EXPOSE 8080
+CMD ["node", "server.js"]
+```
+
+## 빌드 컨텍스트
+- 도커 빌드 명령 수행 시 현재 디렉토리(Current Working Directory)를 빌드 컨텍스트라고 함
+- Dockerfile로부터 이미지 빌드에 필요한 정보를 도커 데몬에게 전달하기 위한 목적
+
+## .dockerignore
+- .gitignore와 동일한 문법을 가짐
+- 특정 디렉토리 혹은 파일 목록을 빌드 컨텍스트에서 제외하기 위한 목적 
+
+``` sh
+# comment
+*/temp*
+*/*/temp*
+temp?
+*.md
+!README.md
+```
+
+## 이미지 압축파일로 저장
+- 이미지를 tar 압축파일로 저장
+- 인터넷 안 되는 환경에서 사용하기 용이
+``` sh
+# docker save -o [OUTPUT-FILE] IMAGE
+# ubuntu:focal 이미지를 ubuntu_focal.tar 압축 파일로 저장
+docker save -o ubuntu_focal.tar ubuntu:focal
+
+# docker load -i [INPUT-FILE]
+# ubuntu_focal.tar 압축 파일에서 ubuntu:focal 이미지 불러오기
+docker load -i ubuntu_focal.tar
+```
+
+## 도커허브를 이용한 컨테이너 관리
+- [도커허브](hub.docker.com)
+``` sh
+docker login -u zhwan85
+cat /home/ubuntu/.docker/config.json # → 키값 확인. 안전하게 보관.
+docker tag nginx:latest claudpark/my-nginx:v1.0.0
+docker images
+docker push claudpark/my-nginx:v1.0.0
+docker rmi claudpark/my-nginx v1.0.0
+docker pull claudpark/my-nginx:v1.0.0
+```
+
