@@ -415,7 +415,7 @@ docker save -o ubuntu_focal.tar ubuntu:focal
 docker load -i ubuntu_focal.tar
 ```
 
-## 도커허브를 이용한 컨테이너 관리
+# 도커허브를 이용한 컨테이너 관리
 - [도커허브](hub.docker.com)
 ``` sh
 docker login -u zhwan85
@@ -423,7 +423,350 @@ cat /home/ubuntu/.docker/config.json # → 키값 확인. 안전하게 보관.
 docker tag nginx:latest claudpark/my-nginx:v1.0.0
 docker images
 docker push claudpark/my-nginx:v1.0.0
-docker rmi claudpark/my-nginx v1.0.0
+docker rmi claudpark/my-nginx:v1.0.0
 docker pull claudpark/my-nginx:v1.0.0
 ```
 
+## AEC(Amzon Elastic Container)
+- ECR 저장소. 도커 컨테이너 관리.
+``` sh
+aws sts get-caller-identity
+aws ecr... 복사해서 사용
+```
+
+## 이미지 경량화
+``` sh
+# slacktee
+# build:
+#   docker build --force-rm -t slacktee .
+# run:
+#   docker run --rm -it --name slacktee slacktee
+
+FROM alpine:3.14
+LABEL maintainer="FastCampus Park <fastcampus@fastcampus.com>"
+LABEL description="Simple utility to send slack message easily."
+
+# Install needed packages
+# 불필요한 캐시를 남기지 않는 것을 고려해야 함
+RUN \
+  apk add --no-cache bash curl git && \
+  git clone https://github.com/course-hero/slacktee /slacktee && \
+  pak del --no-cache git
+RUN chmod 755 /slacktee/slacktee.sh
+
+# Run
+WORKDIR /slacktee
+ENTRYPOINT ["/bin/bash", "-c", "./slacktee.sh"]
+```
+
+- 경량 베이스 이미지 선택
+- node.js 16-slim, 16, 16-alpine → 용량 차이가 남
+``` sh
+# nodejs-server
+# build:
+#   docker build --force-rm -t nodejs-server .
+# run:
+#   docker run --rm -it --name nodejs-server nodejs-server
+
+FROM node:16-slim
+LABEL maintainer="FastCampus Park <fastcampus@fastcampus.com>"
+LABEL description="Simple server with Node.js"
+
+# Create app directory
+WORKDIR /app
+
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
+
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
+
+# Bundle app source
+COPY . .
+
+EXPOSE 8080
+CMD [ "node", "server.js"]
+```
+
+``` sh
+docker build --force-rm -t nodejs-server:slim -f Dockerfile.slim .
+```
+
+``` sh
+# nodejs-server
+# build:
+#   docker build --force-rm -t nodejs-server .
+# run:
+#   docker run --rm -it --name nodejs-server nodejs-server
+
+FROM node:16-alpine
+LABEL maintainer="FastCampus Park <fastcampus@fastcampus.com>"
+LABEL description="Simple server with Node.js"
+
+# Create app directory
+WORKDIR /app
+
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
+
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
+
+# Bundle app source
+COPY . .
+
+EXPOSE 8080
+CMD [ "node", "server.js"]
+```
+
+``` sh
+docker build --force-rm -t nodejs-server:alpine -f Dockerfile.alpine .
+```
+
+- 멀티 스테이지
+- 의존성 많아질수록 더 큰 효과를 누릴 수 있음
+``` bash
+# nodejs-server
+# build:
+#   docker build --force-rm -t nodejs-server .
+# run:
+#   docker run --rm -it --name nodejs-server nodejs-server
+
+FROM node:16-alpine AS base
+LABEL maintainer="FastCampus Park <fastcampus@fastcampus.com>"
+LABEL description="Simple server with Node.js"
+
+# Create app directory
+WORKDIR /app
+
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
+
+FROM base AS build
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
+
+FROM base AS release
+COPY --from=build /app/node_modules ./node_modules
+# build 스테이지에서 node_modules 복사
+
+# Bundle app source
+COPY . .
+
+EXPOSE 8080
+CMD [ "node", "server.js"]
+```
+
+``` bash
+docker build --force-rm -t nodejs-server:alpine-multi -f Dockerfile.alpine-multi .
+docker images
+```
+
+
+## 도커 데몬 디버깅
+``` bash
+docker system
+docker system info
+docker system events -h
+docker events -h # alias
+docker system events # Streaming log 확인 가능
+docker events
+
+# Shell 새로 띄워서 아래 명령어 치면 events 동작 중인 곳에서 로그 확인 가능
+docker run --name my-nginx nginx:latest
+```
+
+``` bash
+# Ubuntu에서는 아래 명령어러 도커 이벤트 확인 가능
+$ journalctl
+```
+
+``` bash
+# 이미지가 어떻게 볼륨을 사용하고 있는지 확인 가능
+# RECLAIMABLE 회수할 수 있는 자원
+docker system df 
+docker system df  -v  # 자세한 값 확인 가능
+docker system prune # 쓸모 없는 것들 제거. 저장 공간 확인
+docker stats # 각 컨테이너별 컴퓨팅 자원 사용현황 확인 가능
+
+docker run -it -d mysql:5.7
+docker run -it -d nginx
+docker run -it -d ubuntu
+docker stats
+```
+
+## 도커 컴포즈: 명시적으로 여러 컨테이너 관리하기
+- 도커 컴포즈(Docker Compose)
+  - 단일 서버에서 여러 컨테이너를 프로젝트 단위로 묶어서 관리
+  - docker-compose.yaml YAML 파일 통해 명시적 관리
+  - 프로젝트
+    - 도커 컴포즈에서 다루는 워크스페이스 단위
+    - 함께 관리하는 서비스 컨테이너 묶음
+    - 프로젝트 단위로 기본 도커 네트워크 생성
+  - 서비스
+    - 도커 컴포즈에서 컨테이너를 관리하기 위한 단위
+    - scale을 통해 서비스 컨테이너의 수 확장 가능
+  - 컨테이너
+    - 서비스를 통해 컨테이너 관리
+  - 도커 스왐(Docker Swarm)
+    - 여러 서버를 기반으로 스왐 클러스터를 형성하여 컨테이너를 관리하는 컨테이너 오케스트레이션 시스템
+    - 쿠버네티스와 동일한 목적으로 만들어졌지만 인기를 끌지는 못함
+
+``` python
+import redis
+from flask import Flask
+
+app = Flask(__name__)
+cache = redis.Redis(host='redis', port=6379)
+
+def get_hit_count():
+  retries = 5
+  while True:
+    try:
+      return cache.incr('hits')
+    except redis.exceptions.ConnectionError as exc:
+      if retries == 0:
+        raise exc
+      retries -= 1
+      time.sleep(0.5)
+
+@app.route('/')
+def hello():
+  count = get_hit_count()
+  return 'Hello World! I have been seen {} times.\n'.format(count)
+```
+
+``` bash
+FROM python:3.7-alpine
+WORKDIR /code
+ENV FLASK_APP=app.py
+ENV FLASK_RUN_HOST=0.0.0.0
+RUN apk add --no-cache gcc musl-dev linux-headers
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+EXPOSE 5000
+COPY . .
+CMD ["flast", "run"]
+```
+
+``` yaml
+version: "3.9"
+services:
+  web:
+    build: .
+    ports:
+    - "5000"
+  redis:
+    image: "redis:alpine"
+```
+
+``` bash
+docker-compose
+docker-compose version
+
+# 생성 시 브릿지 네트워크가 default로 생성됨 "build_default" > 프로젝트명 없으면 기본으로 들어가는 이름
+# build_web1 > build: 프로젝트명, web1: 서비스명
+docker-compose up  
+docker-compose -p my-project up -d # -p: 프로젝트명 변경, -d: 백그라운드 모드
+docker-compose ls
+docker-compose ls -a # -a: all
+
+# 프로젝트 내 컨테이너 및 네트워크 종료 및 제거
+docker-compose down 
+
+# 프로젝트 내 컨테이너, 네트워크 및 볼륨 종료 및 제거 (볼륨까지 제거)
+docker-compose down -v
+```
+
+
+``` yaml
+# wordpress
+
+version: '3.9'
+sevices:
+  db:
+    image: mysql:5.7
+    volumes:
+    - db:/var/lib/mysql
+    restart: always
+    environment:
+    - MYSQL_ROOT_PASSWORD=wordpress
+    - MYSQL_DATABASE=wordpress
+    - MYSQL_USER=wordpress
+    - MYSQL_PASSWORD=wordpress
+    networks:
+    - wordpress
+  
+  wordpress:
+    depends_on:
+    -db
+    image: wordpress:latest
+    ports:
+    - "8000:80"
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    networks:
+    - wordpress
+
+  volumes:
+    db: {}
+  
+  networks:
+    wordpress: {} # 옵션 주지 않으면 bridge로 기본 사용
+```
+
+``` bash
+docker-compose up -d
+docker-compose down
+docker-compose down -v
+```
+
+``` bash
+# web 서비스를 3개로 확장
+docker-compose up --scale web=3
+```
+``` yaml
+version: "3.9"
+services:
+  web:
+    build: .
+    ports:
+    - "5000"
+  redis:
+    image: "redis:alpine"
+```
+- scale 시 Host 포트, 컨테이너 네임 충돌할 수 있음
+``` bash
+docker-compose -p my-project ps
+docker-compose -p my-project up --scale web=3 -d
+docker-compose -p my-project ps
+```
+``` bash
+docker-compose -p my-project logs
+docker-compose -p my-project logs -h
+
+# Streaming 형식
+docker-compose -p my-project logs -f 
+
+# 다른 터미널에서 진행되는 컴포즈 진행 현황 확인
+docker-compose -p my-project logs events 
+
+docker-compose -p my-project up --scale web=1 -d
+docker-compose -p my-project images
+docker-compose -p my-project ps
+docker-compose -p my-project top
+
+```
