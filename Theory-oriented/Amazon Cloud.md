@@ -110,3 +110,17 @@
 - NLB 사용하여 세션 지속성을 효과적으로 유지할 수 있음
 - 네트워크 레벨에서 로드밸런싱을 제공하고, TCP/UDP 트래픽에서 적합
 - L4 기반 로드 밸런서 지원
+
+
+# ELB 비용
+- Classic Load Balancer 및 Application Load Balancer만 월별 750시간까지 무료
+- Classic Load Balancer에서 데이터처리 15GB까지 가능
+- Application Load Balancer에서 15LCU 사용
+
+# 비용 관련
+- [비용 정리 잘되어 있는 사이트](https://inpa.tistory.com/entry/AWS-%F0%9F%92%B0-%ED%94%84%EB%A6%AC%ED%8B%B0%EC%96%B4-%EC%9A%94%EA%B8%88-%ED%8F%AD%ED%83%84-%EB%B0%A9%EC%A7%80-%F0%9F%92%B8-%EB%AC%B4%EB%A3%8C-%EC%82%AC%EC%9A%A9%EB%9F%89-%EC%A0%95%EB%A6%AC)
+
+
+
+# Notion 정리
+https://www.notion.so/AWS-SAA-SAP-4b098215302c4bb680c68941be9c32dc
