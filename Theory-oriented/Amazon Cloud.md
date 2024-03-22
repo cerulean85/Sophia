@@ -1,7 +1,7 @@
 
 
 
-![alt text](./Images/cloud/loadbalancing.png)
+![alt text](../images/cloud/loadbalancing.png)
 
 # ELB(Elastic Laod Balancer)
 - AWS의 사용자 정의 네트워크인 VPC(Virtual Private Network)에 탑재
@@ -25,7 +25,7 @@
 - AWS 환경에서 제공하는 4가지 유형의 로드 밸런서 지원
 - 뛰어난 확장성과 유연성을 제공. 사용자의 다양한 요구 사항과 환경에 맞출 수 있음
 
-![alt text](./Images/cloud/elb_conecpt.png)
+![alt text](../images/cloud/elb_conecpt.png)
 
 ## 리전(Region)
 - 물리적으로 호스팅 영역을 구분
@@ -34,7 +34,7 @@
 - 각 리전은 서로 완전히 독립적으로, 서울 리전에서 만든 리소스는 미국 버지니아 북부 리전에서는 사용할 수 없음
 
 ## 가용 영역(Availability Zone, AZ)
-![alt text](./Images/cloud/available_zone.png)
+![alt text](../images/cloud/available_zone.png)
 - 리전은 가용영역이라는 더 작은 단위로 격리됨
 - 리전은 최소 2개 이상의 가용 영역으로 구성
 - 각 가용 영역은 최소 1개 이상의 데이터 센터로 구성

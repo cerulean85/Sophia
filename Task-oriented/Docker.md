@@ -697,7 +697,7 @@ sevices:
     image: mysql:5.7
     volumes:
     - db:/var/lib/mysql
-    restart: always
+    restart: always  # 컨테이너가 실패하는 경우 재시작
     environment:
     - MYSQL_ROOT_PASSWORD=wordpress
     - MYSQL_DATABASE=wordpress
@@ -764,9 +764,126 @@ docker-compose -p my-project logs -f
 # 다른 터미널에서 진행되는 컴포즈 진행 현황 확인
 docker-compose -p my-project logs events 
 
+# 스케일 다운
 docker-compose -p my-project up --scale web=1 -d
+
+# 프로젝트 내 이미지 목록
 docker-compose -p my-project images
+
+# 프로젝트 내 컨테이너 목록
 docker-compose -p my-project ps
+
+# 프로젝트 실행중인 프로세스 목록
 docker-compose -p my-project top
 
+```
+
+## 도커 컴포즈 사용 목적
+- 로컬 개발 환경 구성
+  - 특정 프로젝트의 로컬 개발 환경 구성 목적으로 사용
+  - 프로젝트의 의존성(Redis, MySQL, Kafka 등)을 쉽게 띄울 수 있음
+- 자동화된 테스트 환경 구성
+  - CI/CD 파이프라인 중 쉽게 격리된 테스트 환경을 구성하여 테스트 수행 가능
+- 단일 호스트 내 컨테이너를 선언적 관리
+  - 단일 서버에서 컨테이너를 관리할 때 YAML 파일을 통해 선언적으로 관리 가능
+
+# Grafana 도커 가이드
+- Docker 공식 이미지 확인하기
+# MySQL 도커 가이드
+- Docker 공식 이미지 확인하기
+
+# 도커 컴포즈 실습
+## Grafana 도커 컴포즈
+- 아래는 기본적으로 SQLite DB 사용
+``` yaml
+version: '3.9'
+
+services:
+  grafana:
+    image: grafana/grafana:8.2.2
+    restart: unless-stopped  # 서버가 재시작 되더라도 도커 컨테이너를 다시 띄움
+    environment:
+      GF_INSTALL_PLUGINS: grafana-clock-panel
+    ports:
+    - 3000:3000
+    volums:
+    - ./files/grafana.ini:/etc/grafana/grafana.ini:ro # Grafana 컨테이너가 기본적으로 불러들이는 Grafana 설정 파일(ro옵션. ReadOnly). 여기서 port, ip 지정 가능. db 옵션도 있음
+    - grafana-data:/var/lib/grafana
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "8m"
+        max-file: "10"
+
+volumes:
+  grafana-data: {}
+```
+
+``` bash
+docker-compose up -d
+docker-compose ps
+curl localhost:3000
+ec2metadata # EC2의 경우.
+docker-compose down -v # 볼륨까지 제거
+```
+
+- 3000번 포트로 브라우저(그라파나)로 들어가가서 계정 admin/admin 입력
+
+``` yaml
+version: '3.9'
+
+services:
+  db:
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: grafana
+      MYSQL_DATABASE: grafana
+      MYSQL_USER: grafana
+      MYSQL_PASSWORD: grafana
+    volumes:
+    - mysql-data:/var/lib/mysql
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "8m"
+        max-file: "10"
+  
+  grafana:
+    depends_on:
+    - db
+    image: grafana/grafana:8.2.2
+    restart: unless-stopped  # 서버가 재시작 되더라도 도커 컨테이너를 다시 띄움
+    environment:
+      GF_INSTALL_PLUGINS: grafana-clock-panel
+    ports:
+    - 3000:3000
+    volums:
+    - ./files/grafana.ini:/etc/grafana/grafana.ini:ro # Grafana 컨테이너가 기본적으로 불러들이는 Grafana 설정 파일(ro옵션. ReadOnly). 여기서 port, ip 지정 가능. db 옵션도 있음
+    - grafana-data:/var/lib/grafana
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "8m"
+        max-file: "10"
+
+volumes:
+  mysql-data: {}
+  grafana-data: {}
+```
+``` ini
+[database]
+type = mysql
+host = db:3306
+name = grafana
+user = grafana
+password = grafana
+```
+``` bash
+docer-compose up -d
+docker-compose ps
+docker-compose down # 해도 살아있음. 비번 바꾼 후 껐다 켜도 바뀐 정보 유지됨
+docker volume ls
+docker-compose up -d
+docker-compose ps
 ```

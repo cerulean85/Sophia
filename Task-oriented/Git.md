@@ -1,23 +1,71 @@
-Git 명령어
-Stash
-https://mine-it-record.tistory.com/651
+# 목차
+- [스태시(Stash)](#스태시)
+  - [저장](#스태시-저장)
+  - [내용 확인](#스태시-내용-확인)
+  - [불러오기](#스태시-불러오기)
+  - [제거](#스태시-제거)
+
+<br>
+
+# Git 명령어
+## 스태시
+- 파일의 변경 내용을 일시적으로 기록해두는 영역
+- [참고사이트](https://mine-it-record.tistory.com/651)
+
+### 스태시 저장
+``` bash
+git stash push -m "message"
+git stash save "message"
+git stash # Save 생략
+```
+
+### 스태시 내용 확인
+``` bash
+# 저장된 내용 확인
 git stash show
+git stash show -p
+git stash show stash@{2} # stash@{2}에서 2는 index를 의미 stash@{index}
+git stash show stash@{2} -p  # -p 상세한 내용 확인
+
 git stash list
 git stash clear
 git stash pop
+```
 
-git stash push -m "message"
-git stash save "message"
+### 스태시 불러오기
+- Pop
+  - git stash pop [stash@{index}]
+  - index 지정하지 않으면 최근 저장된 stash를 불러옴
+  - stash를 불러오고 목록에서 사라짐
+``` bash
+git stash pop
+git stash pop stash@{2}
+```
+- Apply
+  - git stash apply [stash@{index}]
+  - stash를 불러오고 목록에 유지됨
 
-# git stash pop [stash@{index}]
-
-$ git stash pop
-$ git stash pop stash@{2}
-
-# git stash apply [stash@{index}]
-
+``` bash
 $ git stash apply
 $ git stash apply stash@{2}
+```
+- --index 옵션
+  - stash area에 올라간 파일의 상태까지 불러옴
+``` bash
+git stash pop --index
+git stash apply --index
+```
+
+### 스태시 제거
+- git stash drop [stash@{index}]
+- index 생략시 최근 stash만 삭제
+``` bash
+git stash drop
+git stash drop stash@{2}
+
+# 목록 모두를 삭제
+git stash clear
+```
 
 Log
 git log //커밋 이력 상세 조회
