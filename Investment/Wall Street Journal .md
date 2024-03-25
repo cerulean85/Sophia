@@ -1,3 +1,19 @@
+# 날짜: 24.3.24.
+German Business Sentiment(심리) Imporves
+Business sentiment in Germany turned brighter in March, boosted by a better outlook for the economy, according to a closely(면밇0) watched(관찰된) survey.
+
+The Ifo business-climate rose to 87.8 in March from 85.7 in February, data from the Ifo Institute showed Friday, beating expoectations of 86.0 from a consensus forecast of economists polled by The Wall Street Journal.
+
+"The German economy glimpses light on the horizon," Clemes Fuest, president of the Ifo Insitutue(독일 경제 연구소), said."
+
+The reading(이 수치) was driven by Ifo's measure of business expectations, which climbed especially compared with February, while its index for current conditions of the economy also ticked up, the data said.
+
+
+# 날짜: 24.3.23.
+The ghost of old Microsft <u>hung the air thes(방송에 등장)</u> past week as the Justice Department took aim(겨냥) at Apple, accusing the tech giant of an improper monopoly with its iPhone.
+
+Cook, who has overseen(감독) extraordinary profit and revenue growth since becoming Apple CEO in 2011, cna hardly afford(거의 감당 불가) the timing of the latest fight(최근 싸움). It comes amid a slowdown in iPhone growth and investor jitters
+
 # 날짜: 24.3.22.
 - Foreign Direct Investment in China Continues to Fall(계속 떨어진다.)
 - Foreign direct investment in China dropped in the first two months of the year, continuing a fall that started after economic growth plateaued(정체된) amid(가운데에) a prolonged(연장된) property downturn(하강) and weak domestic deman.

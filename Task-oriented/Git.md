@@ -31,8 +31,8 @@ git stash # Save 생략
 ```
 
 ### 스태시 내용 확인
+- 저장된 Task 목록 확인
 ``` bash
-# 저장된 Task 목록 확인
 git stash show
 git stash show -p
 git stash show stash@{2} # stash@{2}에서 2는 index를 의미 stash@{index}

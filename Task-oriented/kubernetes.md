@@ -18,7 +18,6 @@
   - 대부분의 리눅스 환경에서 동작하기 때문에 환경 이동에 제약이 없음
 
 
-
 2. 쿠버네티스 컴포넌트
 
 쿠버네티스 클러스터
@@ -236,3 +235,278 @@ kubectl exec -i -t hello bash
 # 특정 파드 로그 확인
 kubectl logs pod/hello
 ```
+
+### 멀티 컨테이너 파드와 사이드카 패턴
+- 동일 파드 내 컨테이너는 모두 같은 노드에서 실행(네임스페이스 공유)
+
+### 사이드카 패턴(Side-car Pattern)
+- 메인 컨테이너를 보조하는 컨테이너와 샅이 실행하는 구조
+- 주요 유즈 케이스
+  - Filebeat와 같은 로그 에이전트로 파드 로그 수집
+  - Envoy와 같은 프록시 서버로 서비스메시 구성
+  - Vault Agent와 같은 기밀 데이터 전달 목적
+  - Nginx의 설정 리로드 역할 에이전트 구성
+- 특정 파드 로그 확인
+``` bash
+kubectl logs pod/hello -c debug
+```
+- 특정 파드에 명령어 전달
+``` bash
+kubectl exec -i -t hello -c debug bash
+```
+
+## ReplicaSet
+- 정해진 수의 파드가 항상 실행될 수 있도록 관리
+- 기존 실행중이던 파드에 문제가 생기면 파드를 다시 스케줄링
+- ReplicationController의 신규 버전
+- 파드와 마찬가지로 직접 관리한느 경우는 거의 없음
+<p align="center">
+<img src="../images/kube/replicaset.png" height="300" />
+</p>
+
+- 동작원리
+  - ReplicaSet Controller가 Control Plane에 존재
+  - spec.selector에 대응되는 파드의 수가 spec.replicas와 동일한지 지속적으로 검사하고, 다를 경우 스케일 아웃 혹은 인 진행
+  - 레이블 셀렉터(Label Selector)
+    - 쿠버네티스 오브젝트는 모두 metadata.labels에 Key-Value 형태의 레이블 값을 가짐
+    - 특정 오브젝트 목록을 필터링 하기 위한 기능이 Label Selector
+    - matchLabels와 matchExpressions 옵션 제공
+    - 많은 쿠버네티스 API리소스가 Label Selector을 통해 기능을 제공
+    → 리소스 간 느슨한 결합 유지
+
+```yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: web
+  labels:
+    env: dev
+    role: web
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      role: web      
+```
+```yaml
+selector:
+  matchLabels:
+    component: redis
+  matchExpressions:
+    - {key: tier, operator: In, values: [cache]}
+    - [key: environment, operator: NotIn, values: [dev]]
+```
+
+## Deployment
+- 파드의 이미지 버전이 갱신될 때 배포 전략을 설정
+- 디플로이먼트 오브젝트를 생성하면 대응되는 ReplicaSet과 Pod 자동 생성
+- 기본적으로 Recreate 전략과 RollingUpdate 전략 지원
+- 사용자는 특수한 목적이 아니라면 파드와 레플리카셋이 아닌 디플로이먼트로 워크로드 관리
+
+### 배포전략
+- 재생성(Recreate)
+  - 기존 레플리카셋의 파드를 모두 종류 후 새 레플리카엣의 파드를 새로 생성
+
+- 롤링 업데이트(Rolling Update)
+  - 세부 설정에 따라 기존 레플리카셋에서 새 레플리카셋으로 점진적으로 이동
+    - maxSurge: 업데이트 과정에 spec.replicas 수 기준 최대 새로 추가되는 파드 수
+    - maxUnavailable: 업데이트 과정에 spec.replicas 수 기준 최대 이용 불가능 파드 수
+
+## 서비스
+- 여러 파드에 대해 클러스터 내에서 사용 가능한 고유 도메인 부여
+- 여러 파드에 대한 요청을 분산하는 로드 밸런서 기능 수행
+- 파드의 IP는 항상 변할 수 있음
+- 일반적으로 ClusterIP 타입의 Service와 함께 Ingress를 사용하여 외부 트래픽을 처리
+<p align="center">
+<img src="../images/kube/service.png" height="300" />
+</p>
+
+### ClusterIP와 서비스 디스커버리
+- ClusterIP
+  - Service API 리소스의 가장 기본적인 타입
+  - 쿠버네티스 클러스터는 Pod에 부여되는 Pod IP를 위한 CIDR 대역과 Service에 부여되는 CLuster IP CIDR 대역이 독립적으로 존재
+  - Label Selector를 통해 서비스와 연결할 파드 목록 관리
+  - Cluster IP로 들어오는 요청에 대하여 파드에 L4 레벨의 로드밸런싱
+  - Cluster IP 뿐만 아니라 내부 DNS를 통해 서비스 이름을 이용한 통신 가능
+- ClusterIP 타입의 Service는 쿠버네티스 클러스터 내부 통신 목적으로만 사용 가능
+- 서비스의 Cluster IP CIDR 대역 확인
+```bash
+kubectl cluster-info dump | grep -m 1 service-cluster-ip-range
+```
+<p align="center">
+<img src="../images/kube/clusterip.png" height="300" />
+</p>
+
+### NodePort로 외부에 노출하기
+- NodePort
+  - 모든 쿠버네티스 노드의 동일 포트를 개방하여 서비스에 접근하는 방식
+  - NodePort는 ClusterIP 타입 서비스를 한 번 더 감싸서 만들어진 것
+    - NodePort 서비스도 ClusterIP 사용 가능
+    - NodePort로 들어온 요청은 실제로 ClusterIP로 전달되어 Pod로 포워딩
+
+<p align="center">
+<img src="../images/kube/nodeport.png" height="300" />
+</p>
+
+
+### LoadBalancer로 클라우드 프로바이더의 로드밸런서 연동
+- LoadBalancer
+  - 클라우드 프로바이더에서 제공하는 로드밸런서를 동적으로 생성하는 방식
+  - LoadBalancer 타입 서비스는 NodePort 타입 서비스를 한 번 더 감싸서 만들어진 것
+  - LoadBalancer 서비스도 ClusterIP 사용 가능
+  - LoadBalancer 서비스를 통해 만들어진 로드밸런서는 NodePort를 타겟 그룹으로 생성
+  - NodePort로 들어온 요청은 실제로 ClusterIP로 전달되어 Pod로 포워딩
+  - AWS/GCP 등과 같은 클라우드 환경이 아니라면 기본적으로는 해당 기능 이용 불가
+  - MetalLB와 같은 기술 등을 사용하여 온프레미스 환경에서도 LoadBalancer 타입 사용 가능
+
+<p align="center">
+<img src="../images/kube/loadbalancer.png" height="300" />
+</p>
+
+### ExternalName로 외부로 요청 전달
+- ExternalName
+  - 서비스가 파드를 가리키는 것이 아닌 외부 도메인을 가리키도록 구성
+  - DNS의 CNAME 레코드와 동일한 역할 수행
+  - 클러스터의 외부에 존재하는 레거시 시스템을 쿠버네티스로 마이그레이션하는 과정에 활용 가능
+  - ExternalName 타입의 서비스는 앞서 다룬 세 서비스 타입과 비교해 많이 사용되지는 않음
+
+<p align="center">
+<img src="../images/kube/externalname.png" height="300" />
+</p>
+
+## ConfigMap
+- 설정 정보를 환경변수 혹은 볼륨의 형태로 파드에 전달하기 위한 목적으로 사용
+- 파드에서 직접 환경변수를 관리하지 않고 ConfigMap을 분리하여 목적에 따라 설정 데이터를 다르게 주입 가능
+<p align="center">
+<img src="../images/kube/configmap.png" height="300" />
+</p>
+
+### kubectl ConfigMap 생성 명령어
+- my-config 이름의 ConfigMap 생성
+```bash
+kubectl create configmap my-config
+```
+- my-config 이름의 ConfigMap 생성 - 로컬의 config.yaml 파일을 config.yaml을 키로 저장
+```bash
+kubectl create configmap my-config --from-file config.yaml
+```
+- my-config 이름의 ConfigMap 생성 - 로컬의 config.yaml 파일을 config을 키로 저장
+```bash
+kubectl create configmap my-config --from-file config=config.yaml
+```
+- my-config 이름의 ConfigMap YAML 출력 - 로컬의 config.yaml 파일을 config을 키로 저장
+```bash
+kubectl create configmap my-config --from-file config=config.yaml -dry-run -o yaml
+```
+
+## Secret
+- 패스워드, API Key, SSH Key 등 민감한 정보를 컨테이너에 주입할 때 사용
+- 컨피그맵과 사용법 비슷
+- 사용 목적에 따라 몇 가지 종류로 나뉨
+- 쿠버네티스는 기본적으로 시크릿 값을 저장할 때 Base64 인코딩
+<p align="center">
+<img src="../images/kube/secret.png" height="300" />
+</p>
+
+### 종류
+- Opaque(generic): 일반적인 용ㄷ의 시크릿
+- dockerconfigjson: 도커 이미지 저장소 인증 정보
+- tls: TLS 인증서 정보
+- service-account-token: ServiceAccount의 인증정보
+- my-secret이름의 generic 타입 Secret 생성
+```bash
+kubectl create secret generic my-secret
+```
+- my-secret이름의 generic 타입 Secret 생성: 로컬의 secret.yaml 파일을 secret.yaml을 키로 저장
+```bash
+kubectl create secret generic my-secret --from-file secret.yaml
+```
+- my-secret이름의 generic 타입 Secret 생성: 로컬의 secret.yaml 파일을 secret을 키로 저장
+```bash
+kubectl create secret generic my-secret --from-file secret=secret.yaml
+```
+- my-secret이름의 generic 타입 Secret YAML 출력: 로컬의 secret.yaml 파일을 secret을 키로 저장
+```bash
+kubectl create secret generic my-secret --from-file secret=secret.yaml --dry-run -o yaml
+```
+### 선언적 관리
+- Git과 같은 버전관리시스템에서 관라하기에 기밀 정보가 담겨 있어 부적절
+- External Secrets
+  - HashiCorp Vault, AWS Secrets Manager 등과 통합
+  - ExternalSecret 오브젝트를 생성하면 컨트롤러가 프로바이더로부터 기밀값을 가져와 Secret 오브젝트 생성
+- Sealed Secrets
+  - 쿠버네티스 클러스터 상에 컨트롤러 실행
+  - 클러스터 상에 암호화 키 보관
+  - kubeseal CLI가 컨트롤러가 통신하며 데이터 암호화
+  - SealedSecret 오브젝트를 생성하면 컨트롤러가 복호화하여 Secret 오브젝트 생성
+
+## Namespace
+- 쿠버네티스상의 API 오브젝트들을 논리적으로 구분하여 관리
+- 해당 논리적인 그룹에 대하여 권한 관리, CPU&Memory 등 리소스 제한
+- 리소스를 논리적으로 나누기 위한 방법 제공(논리적 그룹)
+- 네임스페이스의 단위는 사용자 목적에 맞추어 결정
+  - 팀 단위, 환경 단위, 서비스 단위
+
+<p align="center">
+<img src="../images/kube/namespace.png" height="300" />
+</p>
+
+### 클러스터 범위 API 리소스와 네임스페이스 범위 API 리소스
+- 네임스페이스 범위 API 리소스(Namespace-scoped API Resources)
+  - Pod, Deployment, Service, Ingress, Secret, ConfigMap, ServiceAccount, Role, RoleBinding 등
+```bash
+kubectl api-resources --namespaced=true
+```
+- 클러스터 범위 API 리소스(Cluster-scoped API Resources)
+  - Node, Namespace, IngressClass, PriorityClass, ClusterRole, ClusterRoleBinding 등
+```bash
+kubectl api-resources --namespaced=false
+```
+
+### 클러스터 기본 네임스페이스
+- 쿠버네티스 클러스터를 생성하고 나면 기본적으로 만들어져 있는 네임스페이스
+  - default: 네임스페이스를 지정하지 않은 경우 기본적으로 할당되는 네임스페이스
+  - kube-system: 쿠버네티스 시스템에 의해 생성되는 API 오브젝트들을 관리하기 위한 네임스페이스
+  - kube-public: 클러스터 내 모든 사요자로부터 접근 가능하고 읽을 수 있는 오브젝트들을 관리하기 위한 네임스페이스
+  - kube-node-lease: 쿠버네티스 클러스터 내 노드의 연결 정보를 관리하기 위한 네임스페이스
+
+### 다른 네임스페이스의 서비스 접근하기
+- 서로 다른 서비스가 통신하기 위해서는 서비스명으로는 충분하지 않음
+- FQDN(Fully Qualified Domain Name)과 Domain Search 옵션
+```bash
+curl ${service}.${namespace}.svc.cluster.local
+curl ${service}.${namespace}.svc
+curl ${service}.${namespace}
+curl ${service}
+```
+### RecourceQuota와 LimiRange
+- 네임스페이스 단위의 자원 사용량 관리할 수 있는 기능 제공
+
+- ResourceQuota
+  - 네임스페이스에서 사용할 수 있는 자원 사용량의 합을 제한
+    - 할당할 수 있는 자원(CPU, Memory, Volume 등)의 총합 제한
+    - 생성할 수 있는 리소스(Pod, Service, Deployment 등)의 개수 제한
+
+- LimitRange
+  - 파드 혹은 컨테이너에 대하여 자원 기본 할당량 설정, 혹은 최대/최소 할당량 설정
+
+## 잡
+- 지속적으로 실행되는 서비스가 아니라 특정 작업을 수행하고 종료해야 하는 경우 사용
+- 특정 동작을 수행하고 종료하는 작업을 정의하기 위한 리소스
+- 내부적으로 파드를 생성하여 작업 수행
+- Pod의 상태가 Running이 아닌 COmpleted가 되는 것이 최종 상태
+- 실패시 재시작 옵션, 작업 수행 회수, 동시 실행 수 등 세부 옵션 제공
+
+### 크론잡
+- 주기적으로 특정 작업을 수행하고 종료해야 하는 경우 사용
+- 주기적으로 특정 동작을 수행하고 종료하는 작업을 저의하기 위한 리소스
+- 리눅스의 크론 스케줄링 방법을 그대로 사용
+- 내부적으로 잡을 생성하여 작업 수행
+- 주기적으로 데이터를 백업하거나 데이터 점검 및 알림 전송 등의 목적으로 사용
+
+## DaemonSet
+- 각 노드마다 꼭 실행되어야 하는 워크로드(로그 수집, 메트릭 수집, 네트워크 구성)를 위해 사용
+- 클러스터 상의 모든 노드에 동일한 파드를 하나씩 생성
+- 로그 수집/메트릭 수집/네트워크 구성 등의 목적으로 많이 사용
+  - 로그 수집: filebeat / fluentbit 등
+  - 메트릭 수집: node-exporter / metricbeat / telegraf 등
