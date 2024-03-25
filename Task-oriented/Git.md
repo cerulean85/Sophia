@@ -35,8 +35,8 @@ git stash # Save 생략
 ``` bash
 git stash show
 git stash show -p
-git stash show stash@{2} # stash@{2}에서 2는 index를 의미 stash@{index}
-git stash show stash@{2} -p  # -p 상세한 내용 확인
+git stash show stash@{인덱스번호} # stash@{2}에서 2는 index를 의미 stash@{index}
+git stash show stash@{인덱스번호} -p  # -p 상세한 내용 확인
 
 git stash list
 git stash clear
@@ -45,20 +45,20 @@ git stash pop
 
 ### 스태시 불러오기
 - Pop
-  - git stash pop [stash@{index}]
-  - index 지정하지 않으면 최근 저장된 Task를 불러옴
+  - git stash pop stash@{인덱스번호}
+  - 인덱스번호 지정하지 않으면 최근 저장된 Task를 불러옴
   - Task를 불러온 후 해당 Task는 목록에서 사라짐
 ``` bash
 git stash pop
-git stash pop stash@{2}
+git stash pop stash@{인덱스번호}
 ```
 - Apply
-  - git stash apply [stash@{index}]
+  - git stash apply stash@{인덱스번호}
   - Task를 불러온 후에도 해당 Task는 목록에 유지됨
 
 ``` bash
 $ git stash apply
-$ git stash apply stash@{2}
+$ git stash apply stash@{인덱스번호}
 ```
 - --index 옵션
   - 스태시 영역에 올라간 파일의 상태까지 불러옴
@@ -72,7 +72,7 @@ git stash apply --index
 - index 생략시 최근 Task만 삭제
 ``` bash
 git stash drop
-git stash drop stash@{2}
+git stash drop stash@{인덱스번호}
 
 # 목록 모두를 삭제
 git stash clear
@@ -212,10 +212,6 @@ git push
 ``` bash
 git branch -d [브랜치명]
 ```
-
-
-
-
 
 
 - log 종료하려면 Q를 누르면 됨
