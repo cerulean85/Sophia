@@ -1,3 +1,9 @@
+# 날짜: 24.3.25.
+..., backing views(견해를 뒷받침) that any potential monetary easing(통화완화) is still some time away.
+..., and was above the <u>median estimate(중앙값)</u> of a 3.3% rise projected(예상) in a Wall Street Journal survey of nine economists.
+
+Core CPI, which <u>strips out(제외하고)</u> <u>private road transport(개인 도로 교통)</u> and accommodation(숙박) costs, climbed 3.6% in February from a year earlier,...
+
 # 날짜: 24.3.24.
 German Business Sentiment(심리) Imporves
 Business sentiment in Germany turned brighter in March, boosted by a better outlook for the economy, according to a closely(면밇0) watched(관찰된) survey.

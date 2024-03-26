@@ -510,3 +510,257 @@ curl ${service}
 - 로그 수집/메트릭 수집/네트워크 구성 등의 목적으로 많이 사용
   - 로그 수집: filebeat / fluentbit 등
   - 메트릭 수집: node-exporter / metricbeat / telegraf 등
+  - 네트워크 구성: kube-proxy / calico 등
+- Deployment와 마찬가지로 Label Selector 기반으로 동작
+- nodeSelector / Affinity / Toleration 등을 통해 실행되어야 할 노드 목록 필터링 가능
+
+<p align="center">
+<img src="../images/kube/daemonset.png" height="300" />
+</p>
+
+
+## Ingress
+- 외부 요청을 받아 L7에서 어떻게 처리할 것인지 결정
+- 라우팅 기능 수행 (Host, Path 단위로 라우팅 가능)
+- SSL/TLS 통신 암호화 처리: 각 연결 호스트에 대해 인증서 적용
+<p align="center">
+<img src="../images/kube/ingress.png" height="300" />
+</p>
+
+### 인그레스 컨트롤러
+- 쿠버네티스 클러스터는 기본적으로 Ingress API 리소스를 다루는 Ingress Controller를 제공하지 않음
+- Ingress API 리소스에 대한 스펙만 제공 → 사용자 직접 Ingress Controller 설치 필요
+- 대표적인 Ingress Controller
+  - NGINX Ingress Controller
+  - Kong Ingress Controller
+  - AWS Load Balancer Controller
+  - Google Load Balancer Controller
+- 인그레스 클래스
+  - 하나의 클러스터에서 여러 인그레스 컨트롤러를 사용할 수 있도록 하기 위해 만들어진 리소스
+    - IngressClass = IngressController + Configuration
+- 인그레스
+  - 라우팅 규칙 및 TSL 설정 정의
+  - 하나의 인그레스 클래스와 연결
+- NGINX 웹 서버 기반 Ingress Controller
+<p align="center">
+<img src="../images/kube/nginx_ingress.png" height="300" />
+</p>
+
+- AWS Load Balancer Controller
+  - AWS에서 관리하는 오픈소스 컨트롤러로 다음 기능 제공
+    - AWS ALB(Application Load Balancer) 기반의 Ingress Controller
+    - AWS NLB(Network Load Balancer) 기반의 Load Balancer 타입 Service
+<p align="center">
+<img src="../images/kube/aws_ingress.png" height="300" />
+</p>
+
+# 파드 배치 전략
+## Node Selector
+### minikube로 멀티 노드 클러스터 구성
+- minikube는 멀티 노드 클러스터 지원
+``` bash
+# 기존 minikube 클러스터 제거
+# 싱글 노드로 생성된 minikube 클러스터는 기본적으로 CNI를 설치 하지 않으므로,
+# 재구성이 간단
+minikube delete
+
+# 노드 3개로 구성된 minikube 클러스터 구성(docker driver 이용)
+minikube start --nodes 3 --driver=docker
+```
+### nodeName을 이용한 배치
+- 매니페스트의 재활용성이 떨어지며, 노드와 강결합되므로 추천되지 않음
+- 노드 이름 기반으로 파드가 배치될 노드 결정
+```yaml
+spec:
+  containers:
+  - name: nginx
+    image: nginxdemos/hello:plain-text
+    ports:
+    - name: http
+      containerPort: 80
+      protocol: TCP
+  nodeName: minikube
+```
+- 노드도 쿠버네티스 API 오브젝트로 관리되기 때문에 Labels를 가지고 있음
+- 노드에 설정된 Label 기반으로 하여 Label Selector 기반 파드 배치 가능
+```yaml
+spec:
+  containers:
+  - name: nginx
+    image: nginxdemos/hello:plain-text
+    ports:
+    - name: http
+      containerPort: 80
+      protocol: TCP
+  nodeSelector: 
+    team: red
+```
+### 노드 Label 관리
+- 노드를 새로 구성할 때 kubelet 옵션을 통해 기본 Labels 설정도 가능
+- kubectl을 통해 노드의 label 관리 가능
+```bash
+# minikube-m02 노드에 team=key Label 추가
+kubectl label node minikube-m02 team=red
+
+#minikube-m02 노드에 team Label 제거
+kubectl label node minikube-m02 team-
+```
+
+## Affinity
+### nodeAffinity을 이용한 배치
+- 선호하는 노드를 설정하는 방법으로, nodeSelector 보다 확장된 Label Selector 기능 지원
+  - matchExpressions 사용 가능(In, NotIn, Exists, DoesNotExist, Gt, Lt 등)
+- 여러 유스케이스에 활용 가능한 다양한 옵션 제공
+  - 반드시 충족해야 하는 조건(Hard)
+    - requiredDuringSchedulingIgnoredDuringExecution
+  - 선호하는 조건(Soft)
+    - preferredDuringSchedulingIgnoredDuringExecution
+```yaml
+sepc:
+  containers:
+  - name: nginx
+    image: nginxdemos/hello:plain-text
+    ports:
+    - name: http
+      containerPort: 80
+      protocol: TCP
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: team
+            operator: In
+            values:
+            - blue
+            - red
+```
+- IgnoredDuringExecution=> 실행중인 워크로드에 대해 해당 규칙을 무시
+
+### podAffinity을 이용한 배치
+- 선호하는 파드를 설정하는 방법으로, 사용법은 nodeAffinity와 거의 동일
+- 여러 유스케이스에 활용 가능한 다양한 옵션 제공
+  - 반드시 충족해야 하는 조건(Hard)
+    - requiredDuringSchedulingIgnoredDuringExecution
+  - 선호하는 조건(Soft)
+    - preferredDuringSchedulingIgnoredDuringExecution
+``` yaml
+spec:
+  containers:
+  - name: nginx
+    image: nginxdemos/hello:plain-text
+    ports:
+    - name: http
+      containerPort: 80
+      protocol: TCP
+    affinity:
+      podAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - mysql
+          topologyKey: kubernetes.io/hostname
+```
+- 토폴로지 키(Topology Key)
+  - Label Selector를 수행할 노드의 범위를 결정
+  - 노드 단위: kubernetes.io/hostname
+  - 존 단위: topology.kubernetes.io/zone
+  - 리전 단위: topology.kubernetes.io/region
+
+- 선호하지 않는 파드를 설정하는 방법은, ```podAffinity```를 ```podAntiAffinity```로만 변경하면 사용법 동일
+
+## Taint와 Toleration
+### Taint(얼룩)
+- 노드에 설정. 노드에 Taint를 설정하여 임의의 파드가 할당되는 것을 방지
+### Toleration(용인)
+- 파드에 설정. 특정 Taint를 용인할 수 있는 Toleration 설정을 가진 파드는 해당 노드에 할당 가능
+<p align="center">
+<img src="../images/kube/taint_toleration.png" height="300" />
+</p>
+
+
+### 노드 Taint 관리
+- 노드를 새로 구성할 때 kubelet 옵션을 통해 기본 Taint 설정도 가능
+- kubectl을 통해 노드의 Taint 관리 가능
+- Label/Annotation과 비슷하지만, 추가적으로 Effect 파라미터를 가짐
+  - Key=Value:Effect
+
+### Effect
+- Taint가 노드에 설정될 시 적용될 효과
+- NoSchedule: 파드를 스케줄링 하지 않음
+- NoExecute: 파드의 실행을 허용하지 않음
+- PreferNoSchedule: 파드 스케줄링을 선호하지 않음
+
+``` bash
+# minikube-m02 노드에 role=system:NoSchedule Taint 추가
+kubectl taint node minikube-m02 role=system:NoSchedule
+
+# minikube-m02 노드에 role:NoSchedule Taint 제거
+kubectl taint node minikube-m02 role:NoSchedule-
+
+# minikube-m02 노드에 role 키를 가진 모든 Taint 제거
+$ kubectl taint node minikube-m02 role
+```
+
+### 다양한 Toleration 설정 방법
+- 모든 종류의 Taint 용인
+```yaml
+spec:
+  containers:
+  - name: nginx
+    image: nginxdemos/hello:plain-text
+    ports:
+    - name: http
+      containerPort: 80
+      protocol: TCP
+  tolerations:
+  - operator: Exists
+```
+- 키가 role인 모든 Taint를 용인
+```yaml
+spec:
+  containers:
+  - name: nginx
+    image: nginxdemos/hello:plain-text
+    ports:
+    - name: http
+      containerPort: 80
+      protocol: TCP
+  tolerations:
+  - key: role
+    operator: Exists
+```
+- 키가 role이고 효과가 NoExecute인 모든Taint를 용인
+```yaml
+spec:
+  containers:
+  - name: nginx
+    image: nginxdemos/hello:plain-text
+    ports:
+    - name: http
+      containerPort: 80
+      protocol: TCP
+  tolerations:
+  - key: role
+    operator: Exists
+    effect: NoExecute
+```
+- role=system:NoSchedule Taint를 용인
+```yaml
+spec:
+  containers:
+  - name: nginx
+    image: nginxdemos/hello:plain-text
+    ports:
+    - name: http
+      containerPort: 80
+      protocol: TCP
+  tolerations:
+  - key: role
+    operator: Exists
+    value: system
+    effect: NoExecute
+```

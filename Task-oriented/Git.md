@@ -1,5 +1,7 @@
 # 목차
 - [목차](#목차)
+- [Git 저장소](#git-저장소)
+  - [origin master](#origin-master)
 - [Git 명령어](#git-명령어)
   - [스태시](#스태시)
     - [스태시 저장](#스태시-저장)
@@ -17,15 +19,36 @@
     - [추가](#추가)
     - [병합](#병합)
     - [삭제](#삭제)
-- [Git 변경사항 되돌리기 or 버리기](#git-변경사항-되돌리기-or-버리기)
-  - [파일 되돌리기](#파일-되돌리기)
-  - [모두 되돌리기](#모두-되돌리기)
-- [git stash pop \[stash@{index}\]](#git-stash-pop-stashindex)
-- [git stash apply \[stash@{index}\]](#git-stash-apply-stashindex)
-  - [저장소 종류](#저장소-종류)
-    - [origin master](#origin-master)
-- [병합 취소](#병합-취소)
-- [미추적](#미추적)
+  - [변경사항 되돌리기](#변경사항-되돌리기)
+    - [특정 파일 되돌리기](#특정-파일-되돌리기)
+    - [모두 되돌리기](#모두-되돌리기)
+  - [HEAD 위치 변경](#head-위치-변경)
+    - [reset](#reset)
+  - [Tag](#tag)
+    - [Lightweight 태그](#lightweight-태그)
+    - [Annotated 태그](#annotated-태그)
+    - [올리기](#올리기)
+    - [삭제](#삭제-1)
+
+
+
+# Git 저장소
+## origin master
+- origin: Remote Repo(Repository)의 URL에 대한 alias
+- Remote Repo를 처음 생성하면 자동으로 별칭 origin, 초기 상태 브랜치 master가 만들어짐
+- origin/master: Remote Repo의 master 브랜치
+- master: 지역저장소의 브랜치
+```bash
+# Remote Repo에 master 브랜치를 생성하고,
+# Local Repo의 master 브랜치 내용을 Remote Repo의 master 브랜치에 보냄
+git push -u origin master
+
+# Remote Repo의 origin/master의 내용을 Local Repo의 master로 Fetch
+git fetch origin master
+
+```
+- Local Repo인 develop의 Remote Repo가 origin/develop이라 할 때,
+  - origin/develop의 HEAD가 develop 보다 위에 있으면 Local Repo가 최신화 되지 않았음을 의미함 ▶ pull 땡기면 같아짐
 
 # Git 명령어
 ## 스태시
@@ -197,6 +220,10 @@ git push --set-upstream origin [새로운 브랜치명]
 ``` bash
 git fetch origin
 ```
+- 특정 브랜치들만 가져올 수 있음
+``` bash
+git fetch origin master stable oldstable
+```
 - 체크아웃 가능한 브랜치 목록 보기
   - 원격 브랜치에는 remotes/origin이라는 접두사가 붙음
 ``` bash
@@ -218,90 +245,68 @@ git add .
 git commit -m "새 파일 추가"
 git push
 ```
+- Local Repo의 master 브랜치에서  Local Repo의 test 브랜치를 병합하려면,
+``` bash
+git checkout master
+git merge test
+```
+- 여러 개의 브랜치 merge 가능
+``` bash
+# Local Repo의 master 브랜치에 origin/master, figure/v1.1, figure/v1.2, figure/v1.3 등의 4개 브랜치 병합
+git checkout master
+git merge origin/master figure/v1.1 figure/v1.2 figure/v1.3
+```
+
 ### 삭제
 ``` bash
 git branch -d [브랜치명]
 ```
 
+## 되돌리기
+### 특정 파일 되돌리기
+``` bash
+git checkout -- [filename]
+```
+### 모두 되돌리기
+``` bash
+git restore .
+```
 
-- log 종료하려면 Q를 누르면 됨
+## HEAD 위치 변경
+### reset
+- HEAD의 위치를 현재 커밋에서 과거나 미래로 이동할 수 있음
+- reset 옵션: --soft, --mixed, --hard
+  - -soft
+    - HEAD가 특정 커밋(과거 또는 미래)을 새롭게 가리킴
+    - working 디렉토리와 staging Area는 아무런 영향을 받지 않음
+  - -mixed
+    - staging area도 해당 커밋의 모습과 동일하게 변경
+    - 현재 작업중인 working directory에 아무런 영향 받지 않음
+  - -hard
+    - staging area와 현재 작업 중인 working directory도 해당 커밋의 모습과 동일하게 변경
 
-git tag 붙이기
-
-Lightweight 태그
-git tag v0.0.0.3
-
-Annotated 태그
-git tag -a v0.0.0.3 -m "Build Version 0.0.3"
-
-태그 추가
-https://minsone.github.io/git/git-addtion-and-modified-delete-tag
-
-
-# Git 변경사항 되돌리기 or 버리기
-
-## 파일 되돌리기
-- git checkout -- [filename]
-
-## 모두 되돌리기
-- git restore .
-
-
-
-
----
-
-GIt 명령어
-Stash
-https://mine-it-record.tistory.com/651
-git stash show
-git stash list
-git stash clear
-git stash pop
-
-git stash push -m "message"
-git stash save "message"
-
-# git stash pop [stash@{index}]
-
-$ git stash pop
-$ git stash pop stash@{2}
-
-# git stash apply [stash@{index}]
-
-$ git stash apply
-$ git stash apply stash@{2}
-
-Log
-git log //커밋 이력 상세 조회
-git log --oneline //커밋 이력 중 커밋 ID와 타이틀 메시지만 조회
-git log --oneline --decorate --graph --all // 모든 브랜치 커밋 이력 조회
-git log --index.html // 특정 파일의 변경 커밋 조회
-git log -p // diff 를 보여준다
-git log -p -2 // 최근 두 개의 결과만 diff를 보여준다./
-
-git log --pretty=oneline
-
-git log --pretty=format:"%h - %an, %ar : %s" // 나만의 포맷으로 (아래 참조)
-https://kin3303.tistory.com/294
-
-git log --pretty=format:"%h %s" --graph // --graph는 아스키 그래프 보여줌
-
-=> Q 누르면 꺼짐
-
-git tag 붙이기
-
-Lightweight 태그
-git tag v0.0.0.3
-
-Annotated 태그
-
-git reset —hard origin/develop
-
-git tag -a v0.0.0.3 -m "Build Version 0.0.3"
+## Tag
+### Lightweight 태그
+- 특정 태그만 가리키는 역할만 함
+``` bash
+git tag v0.0.3
+```
+### Annotated 태그
+- 태그 만든 사람, 이메일, 날짜, 메시지 저장
+``` bash
+git reset —hard origin/quality # Tag를 달고자 하는 Commit으로 HEAD 이동
+git tag -a v0.0.3 -m "Build Version 0.0.3"  
+```
+### 올리기
+``` bash
+git push origin v0.0.3
+```
+### 삭제
+``` bash
+git tag -d v0.0.3
+```
 
 태그 추가
-https://minsone.github.io/git/git-addtion-and-modified-delete-tag
 
 git checkout
 
@@ -313,43 +318,11 @@ git merge upstream/main
 
 git cherry-pick
 
-## 저장소 종류
-### origin master
-- origin: Remote Repo(Repository)의 URL에 대한 alias
-- Remote Repo를 처음 생성하면 자동으로 별칭 origin, 초기 상태 브랜치 master가 만들어짐
-- origin/master: Remote Repo의 master 브랜치
-- master: 지역저장소의 브랜치
-```bash
-# 원격 레포에 master 브랜치를 생성하고,
-# 로컬 레포의 master 브랜치 내용을 원격 레포의 master 브랜치에 보냄
-git push -u origin master
 
-# Remote Repo의 origin/master의 내용을 로컬 master로 Fetch
-git fetch origin master
 
-git checkout develop
-git pull
-```
-origin/master: 원격저장소의 브랜치 = origin이라는 원격저장소에 있는 master브랜치의 local복사본
-git fetch origin master: 원격저장소의 origin의 master를 패치
 
-origin/devlep이 위에 있고 develop이 아래에 있으면,
-develop 브랜치에 대한 내 로컬의 복사본이 최신화가 되지 않았음을 의미
-pull 땡기면같아짐
 
-https://jmjmjm.tistory.com/60
 
-reset: HEAD의 위치를 현재 커밋에서 과거나 미래로 이동할 수 있음
-reset 옵션 세 가지: --soft, --mixed, --hard
-
-- -soft
-- HEAD가 특정 커밋(과거 또는 미래)을 새롭게 가리킴
-- working 디렉토리와 staging Area는 아무런 영향을 받지 않음
-- -mixed
-- staging area도 해당 커밋의 모습과 동일하게 변경
-- 현재 작업중인 working directory에 아무런 영향 받지 않음
-- -hard
-- staging area와 현재 작업 중인 working directory도 해당 커밋의 모습과 동일하게 변경
 
 
 제가 Git을 어설프게 알고 있어서 정리를 좀 해봤습니다.
@@ -361,11 +334,8 @@ https://mine-it-record.tistory.com/651
 https://niklasjang.tistory.com/27
 https://seonkyukim.github.io/git-tutorial/git-log/#google_vignette
 https://www.freecodecamp.org/korean/news/git-remote-branch-checkout/
-
-
-
-
-
+https://minsone.github.io/git/git-addtion-and-modified-delete-tag
+https://jmjmjm.tistory.com/60
 
 
 
@@ -478,5 +448,3 @@ git diff [커밋 해시값1]...[커밋 해시값2]
 git diff 531c1d06412a57ef050d6372e36d6921169495f4 af35084e7f9fce61ddcede3545f56802b30f3d62
 
 git diff 531c1d06412a57ef050d6372e36d6921169495f4...af35084e7f9fce61ddcede3545f56802b30f3d62
-
-
