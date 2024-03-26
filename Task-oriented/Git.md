@@ -1,21 +1,31 @@
 # 목차
-- [스태시(Stash)](#스태시)
-  - [저장](#스태시-저장)
-  - [내용 확인](#스태시-내용-확인)
-  - [불러오기](#스태시-불러오기)
-  - [제거](#스태시-제거)
-- [로그(log)](#로그)
-  - [기본 조회](#기본-조회)
-  - [시간 기준 조회](#시간-기준-조회)
-  - [요약 조회](#요약-조회)
-  - [포맷 지정 조회](#포맷-지정-조회)
-  - [아스키 그래프 조회](#아스키-그래프-조회)
-- [브랜치(Branch)](#브랜치)
-  - [생성](#생성)
-  - [추가](#추가)
-  - [병합](#병합)
-  - [삭제](#삭제)
-<br>
+- [목차](#목차)
+- [Git 명령어](#git-명령어)
+  - [스태시](#스태시)
+    - [스태시 저장](#스태시-저장)
+    - [스태시 내용 확인](#스태시-내용-확인)
+    - [스태시 불러오기](#스태시-불러오기)
+    - [스태시 제거](#스태시-제거)
+  - [로그](#로그)
+    - [기본 조회](#기본-조회)
+    - [시간 기준 조회](#시간-기준-조회)
+    - [요약 조회](#요약-조회)
+    - [포맷 지정 조회](#포맷-지정-조회)
+    - [아스키 그래프 조회](#아스키-그래프-조회)
+  - [브랜치](#브랜치)
+    - [생성](#생성)
+    - [추가](#추가)
+    - [병합](#병합)
+    - [삭제](#삭제)
+- [Git 변경사항 되돌리기 or 버리기](#git-변경사항-되돌리기-or-버리기)
+  - [파일 되돌리기](#파일-되돌리기)
+  - [모두 되돌리기](#모두-되돌리기)
+- [git stash pop \[stash@{index}\]](#git-stash-pop-stashindex)
+- [git stash apply \[stash@{index}\]](#git-stash-apply-stashindex)
+  - [저장소 종류](#저장소-종류)
+    - [origin master](#origin-master)
+- [병합 취소](#병합-취소)
+- [미추적](#미추적)
 
 # Git 명령어
 ## 스태시
@@ -351,3 +361,122 @@ https://mine-it-record.tistory.com/651
 https://niklasjang.tistory.com/27
 https://seonkyukim.github.io/git-tutorial/git-log/#google_vignette
 https://www.freecodecamp.org/korean/news/git-remote-branch-checkout/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+새로운 브랜치 생성
+git push origin [새로운 브랜치명]
+
+생성한 브랜치에 최초 Push 할 때,
+git push로는 아래 메시지 발생
+
+fatal: The current branch master has no upstream branch.
+To push the current branch and set the remote as upstream
+
+기본 브랜치 설정
+git push --set-upstream origin [새로운 브랜치명]
+https://healthcoding.tistory.com/18
+
+
+git checkout feature/v1.7
+로 체크아웃해서 내용 변경 후
+
+git checkout master
+로 다시 체크아웃하고
+
+git checkout feature/v1.7
+로 체크아웃하고 돌아와도 feature/v1.7의 변경 내용은 살아있음
+
+
+master 브랜치에서 test 브랜치를 merge
+
+git checkout master
+git merge test
+
+# 병합 취소
+머지 작업 취소
+git merge --abort
+
+
+# 미추적
+.gitignore 적용
+git rm -r --cached .
+
+1. 작성 패턴
+- #로 시작하는 라인은 주석, 무시
+- 표준 glob 패턴을 따름
+- 디렉토리는 끝에 슬래시(/)를 사용해 표현
+- 느낌표(!)로 시작하는 경우 예외로 처리
+
+파일 하나만 무시
+fileName,txt
+
+특정 디렉토리의 특정 파일 무시
+fileDirectory/fileName.txt
+
+특정 디렉토리의 모든 파일 무시
+fileDirectory/
+
+특정 확장자 가진 모든 파일 무시
+*.txt
+
+현재 경로의 fileName 무시
+/fileName.txt
+
+특정 경로의 모든 fileName 무시
+fileDirectory/**/fileName.txt
+
+예외
+!fileName.txt
+
+https://growingarchive.tistory.com/244
+
+
+
+Unstaged된 파일 비교
+git diff
+
+Stagin Area에 있는 파일 비교 => git add로 변경사항을 추가하였다면 이것으로 비교해야 됨
+git diff --staged
+git diff --cached
+
+브랜치간 비교
+git diff [브랜치명1] [브랜치명2]
+git diff [브랜치명1] origin[브랜치명2]
+
+커밋 간 비교
+git diff [커밋 해시값1] [커밋 해시값2]
+-> 커밋 해시값은 git log로 확인 가능
+
+커밋 사이를 비교
+git diff [커밋 해시값1]...[커밋 해시값2]
+
+git diff 531c1d06412a57ef050d6372e36d6921169495f4 af35084e7f9fce61ddcede3545f56802b30f3d62
+
+git diff 531c1d06412a57ef050d6372e36d6921169495f4...af35084e7f9fce61ddcede3545f56802b30f3d62
+
+
