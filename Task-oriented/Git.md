@@ -19,7 +19,7 @@
     - [추가](#추가)
     - [병합](#병합)
     - [삭제](#삭제)
-  - [변경사항 되돌리기](#변경사항-되돌리기)
+  - [되돌리기](#되돌리기)
     - [특정 파일 되돌리기](#특정-파일-되돌리기)
     - [모두 되돌리기](#모두-되돌리기)
   - [HEAD 위치 변경](#head-위치-변경)
@@ -29,6 +29,8 @@
     - [Annotated 태그](#annotated-태그)
     - [올리기](#올리기)
     - [삭제](#삭제-1)
+- [병합 취소](#병합-취소)
+- [미추적](#미추적)
 
 
 
@@ -229,6 +231,10 @@ git fetch origin master stable oldstable
 ``` bash
 git branch -a
 ```
+- -r: remotes를 줄여서 보여줌. Local Repo는 안 보여줌
+``` bash
+git branch -r
+```
 - Remote Repo 브랜치 변경이력 병함
   - 원격 브랜치에는 직접 작업할 수 없음
   - 변경사항 추가하기 위해서는 원격 브랜치의 복사본 필요
@@ -261,6 +267,14 @@ git merge origin/master figure/v1.1 figure/v1.2 figure/v1.3
 ``` bash
 git branch -d [브랜치명]
 ```
+- 원격 브랜치 삭제
+``` bash
+# git push <원격 저장소 이름> -d <원격 브랜치 이름>
+# 예시
+git push origin -d test2
+git push origin -d feature/v1.8
+```
+- 강제 삭제(--delete --forece)를 위해서는 대문자D 입력 (-D)
 
 ## 되돌리기
 ### 특정 파일 되돌리기
@@ -336,7 +350,7 @@ https://seonkyukim.github.io/git-tutorial/git-log/#google_vignette
 https://www.freecodecamp.org/korean/news/git-remote-branch-checkout/
 https://minsone.github.io/git/git-addtion-and-modified-delete-tag
 https://jmjmjm.tistory.com/60
-
+https://www.freecodecamp.org/korean/news/git-delete-local-or-remote-branch/
 
 
 
