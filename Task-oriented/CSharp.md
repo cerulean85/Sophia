@@ -33,16 +33,58 @@ Something maxResult = list.MaxBy(e => e.val);
 Something minResult = list.MinBy(e => e.val);
 ```
 
+### 입력된 조건에 부합하는 하나의 요소 반환
+- 만족하는 요소가 없다면 Default 반환
+``` cs
+Something result = list.SingleOrDefault(e => e.val == compVal)
+```
+
+### OrderBy 후 중첩 정렬
+```cs
+List<Something> reuslt = list.OrderBy(e => e.val1).ThenBy(e => e.val2)
+```
+
+### List 합치기
+```cs
+List<Something> target = new List<Something>();
+List<Something> target1 = ...;
+List<Something> target2 = ...;
+target.AddRange(target1);  // target에 target1 합침
+target.AddRange(target2);  // target에 target2 합침
+```
+
+### 원하는 개수 만큼 요소 반환
+- 앞에서부터 순회하며 원하는 개수 만큼 요소를 반환
+```cs
+List<Something> target = ...
+// 정렬 후, 앞에 3개 건너 뛰고, 5개 반환
+List<Something> result = target.OrderBy(e => e.val).Skip(3).Take(5).ToList();
+```
+
+### 두 시퀀스소를 합쳐 지정한 메서드의 반환값이 요소인 새로운 시퀀스를 생성
+```cs
+
+int[] numbers = { 1, 2, 3, 4, 5};
+string[] words = { "one", "two", "three", "four", "five" };
+var result = numbers.Zip(words, (numIndex, wordIndex) => $"{numIndex} = {wordIndex}");
+foreach (var item in result)
+{
+  Console.WriteLine(item)
+  // 1 = one
+  // 2 = tow
+  // 3 = three
+  // 4 = four
+  // 5 = five
+}
+
+```
+
+
 - Average
-- AddRange
 - Distinct
 - Contains
 - UnionBy
-- Zip
-- ThenBy
-- Take
 - Sum
-- Single(e => e.val == compVal): Condition에 부합하는 하나의 Element 반환
 
 # LINQ(Language Integrated Query)
 - 특정 데이터들에서 Query로 데이터를 빠르고 편리하게 추출하는 방식
