@@ -320,6 +320,78 @@ git push origin v0.0.3
 git tag -d v0.0.3
 ```
 
+## Cherry Pick
+- 다른 브랜치에 있는 커밋을 선택적으로 내 브린채에 적용시킬 때 사용하는 명령어
+```bash
+git cherry-pick <commit_hash_1> <commit_hash_2> ...
+```
+### 충돌 해결 후 재진행
+- 충돌을 해결하고 cherry-pick 진행 <br>
+  1. 충돌이 발생한 코드 수정
+  2. ```git add <path>``` 명령어로 수정된 코드를 올림 (커밋 불필요)
+  3. ```git cherry-pick --continue 명령어 사용하여 재진행```
+
+### 중단
+- ```git cherry-pick --abort``` 명령어로 체리픽 중단
+
+### 병합
+- Merge Commit을 cherry-pcik 하고 싶다면 다음 명령 사용
+```bash
+git cherry-pick -m 1 <merge_commit_has>
+```
+
+
+## Merge
+### Fast-Forward
+
+<p align="center">
+<img src="../images/git/merge_fast_forward.png" height="200" />
+</p>
+
+- main의 새로운 브랜치 my-branch가 분기된 후 main에 새로운 커밋이 없다면, my-branch가 main보다 최신의 브랜치
+- Fast-Forward에서는 my-branch의 변경 이력을 그대로 main에 가져올 수 있음
+
+### Recursive
+<p align="center">
+<img src="../images/git/merge_fast_forward.png" height="200" />
+</p>
+
+- my-branch가 분기된 후 main에 새로운 커밋이 생기면, my-bracnch와 amin을 공통 부모로 새로운 Merge Commit이 생성
+- Fast-Forward Merge가 가능한 상태에서 ```git merge``` 명령에 --no-ff 옵션을 주면 강제로 Merge Commit 생성
+
+### Squash & Merge
+<p align="center">
+<img src="../images/git/merge_squash.png" height="200" />
+</p>
+- 여러 개의 커밋을 하나의 커밋으로 합침 
+- 병합할 브랜치의 모든 커밋을 하나의 커밋으로 Squash한 후 새로운 커밋을 Base 브랜치에 추가하여 병합
+- 모든 커밋 이력이 하나의 커밋으로 합쳐져 사라짐
+```bash
+git checkout main
+git merge --squash my-branch
+git commit -m "squash & merge"
+```
+
+### Rebase & Merge
+<p align="center">
+<img src="../images/git/merge_rebase.png" height="200" />
+</p>
+- my-branch가 main 브랜치의 A커밋에서 분기
+- 이때 my-branch의 Base는 A 커밋
+- 말 그대로 Base를 다시 설정하는 것으로, my-branch가 분기된 main의 최신 커밋으로 Base가 변경됨
+- Rebase를 하면 커밋들의 Base가 변경되므로 Commit Hash가 변경될 수 있음
+- Force Push를 해야 할 수도 있으니 주의
+
+``` bash
+git checkout my-branch
+git rebase main
+git checkout main
+git merge my-branch
+```
+
+
+
+
 태그 추가
 
 git checkout
@@ -351,7 +423,7 @@ https://www.freecodecamp.org/korean/news/git-remote-branch-checkout/
 https://minsone.github.io/git/git-addtion-and-modified-delete-tag
 https://jmjmjm.tistory.com/60
 https://www.freecodecamp.org/korean/news/git-delete-local-or-remote-branch/
-
+https://hudi.blog/git-merge-squash-rebase/
 
 
 

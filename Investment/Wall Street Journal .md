@@ -1,3 +1,17 @@
+# 날짜: 24.3.26.
+- China Files(제소) WTO Complaint Against U.S. Over Electric-Vehicle Subsidies
+
+- dispute-settlement mechanism: 분쟁해결메커니즘
+
+- The rules being challenged require vehicles to use parts from specific regions to qualify for subsidies while excluding products from china, among other countries, the statement said.
+
+- Under the Inflation Reduction Act (인플레이션 감소법에 따라)
+- consumers in the U.S. won't be able to claim(청구) a $7,500 clean-vehicle(청정 차량) tax credit(세금 공제)
+- foreign entity of concern: 우려 관계가 있는 외국 단체
+- The policy will extend to the minerals(광물) that go into battery components in 2025. 
+
+-companies elsewhere that are 25% or more owned by state-backed entites from China. 중국 정부 기관이 25% 이상 지분을 소유한
+
 # 날짜: 24.3.25.
 ..., backing views(견해를 뒷받침) that any potential monetary easing(통화완화) is still some time away.
 ..., and was above the <u>median estimate(중앙값)</u> of a 3.3% rise projected(예상) in a Wall Street Journal survey of nine economists.
