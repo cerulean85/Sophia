@@ -193,6 +193,72 @@ git log --pretty=format:"%h - %an, %ar : %s"
 git log --pretty=format:"%h %s" --graph
 ```
 
+## diff
+### Unstaged된 파일 비교
+```bash
+git diff
+```
+
+### Stagin Area에 있는 파일 비교
+- git add로 변경사항을 추가하였다면 이것으로 비교해야 됨
+```bash
+git diff --staged
+git diff --cached
+```
+
+### 브랜치간 비교
+``` bash
+git diff [브랜치명1] [브랜치명2]
+git diff [브랜치명1] origin[브랜치명2]
+```
+
+### 커밋 간 비교
+커밋 해시값은 git log로 확인 가능
+```bash 
+# git diff 531c1d06412a57ef050d6372e36d6921169495f4 af35084e7f9fce61ddcede3545f56802b30f3d62
+git diff [커밋 해시값1] [커밋 해시값2]
+```
+
+### 커밋 사이를 비교
+```bash
+# git diff 531c1d06412a57ef050d6372e36d6921169495f4...af35084e7f9fce61ddcede3545f56802b30f3d62
+git diff [커밋 해시값1]...[커밋 해시값2]
+```
+
+## gitignore
+- .gitignore 파일에 적용
+- 적용이 바로 안 되는 경우 ```git rm -r --cached .```
+
+### 작성 패턴
+- #로 시작하는 라인은 주석, 무시
+- 표준 glob 패턴을 따름
+- 디렉토리는 끝에 슬래시(/)를 사용해 표현
+- 느낌표(!)로 시작하는 경우 예외로 처리
+
+### .gitignore 작성 예시
+```
+# 파일 하나만 무시
+fileName.txt
+
+# 특정 디렉토리의 특정 파일 무시
+fileDirectory/fileName.txt
+
+# 특정 디렉토리의 모든 파일 무시
+fileDirectory/
+
+# 특정 확장자 가진 모든 파일 무시
+*.txt
+
+# 현재 경로의 fileName 무시
+/fileName.txt
+
+# 특정 경로의 모든 fileName 무시
+fileDirectory/**/fileName.txt
+
+# 예외
+!fileName.txt
+```
+
 ## 브랜치
 ### 생성
 ``` bash
@@ -213,8 +279,14 @@ touch new-file.js
 git add .
 git commit -m "message"
 
-# 새 원격 브랜치로 푸시
+# 생성한 브랜치에 최초 Push 할 때, git push로는 아래 메시지 발생
+# fatal: The current branch master has no upstream branch.
+# To push the current branch and set the remote as upstream#
+# 아래 명령어로 새 원격 브랜치로 푸시
 git push --set-upstream origin [새로운 브랜치명]
+
+# 원격 브랜치로 Push
+git push origin [새로운 브랜치명]
 ```
 
 ### 병합
@@ -275,6 +347,25 @@ git push origin -d test2
 git push origin -d feature/v1.8
 ```
 - 강제 삭제(--delete --forece)를 위해서는 대문자D 입력 (-D)
+
+### 사용예시
+- Local Repo의 다른 브랜치로 체크아웃한 후 다시 돌아와도 내용 살아 있음
+```bash
+git checkout feature/v1.7
+# 위의 브랜치로 체크아웃해서 내용을 변경하고
+
+git checkout master
+# 위의 브랜치로 체크아웃한 후
+
+git checkout feature/v1.7
+# 다시 돌아와도 feature/v1.7의 변경 내용은 살아있음
+```
+- 병합 예시
+```bash
+#master 브랜치에서 test 브랜치를 merge
+git checkout master
+git merge test
+```
 
 ## 되돌리기
 ### 특정 파일 되돌리기
@@ -388,34 +479,11 @@ git rebase main
 git checkout main
 git merge my-branch
 ```
+### 병합 취소
+- 머지 작업 취소: ```git merge --abort```
 
 
-
-
-태그 추가
-
-git checkout
-
-git 브랜치 삭제
-git branch -d 브랜치명
-
-git fetch upstream
-git merge upstream/main
-
-git cherry-pick
-
-
-
-
-
-
-
-
-제가 Git을 어설프게 알고 있어서 정리를 좀 해봤습니다.
-Sourcetree를 사용하고 있어서 이 명령어가 얼마나 유용할 지는 모르겠지만, 지식을 공유하는 차원에서 공유드려 봅니다.
-
-
-참고한 사이트
+## 참고한 사이트
 https://mine-it-record.tistory.com/651
 https://niklasjang.tistory.com/27
 https://seonkyukim.github.io/git-tutorial/git-log/#google_vignette
@@ -424,113 +492,4 @@ https://minsone.github.io/git/git-addtion-and-modified-delete-tag
 https://jmjmjm.tistory.com/60
 https://www.freecodecamp.org/korean/news/git-delete-local-or-remote-branch/
 https://hudi.blog/git-merge-squash-rebase/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-새로운 브랜치 생성
-git push origin [새로운 브랜치명]
-
-생성한 브랜치에 최초 Push 할 때,
-git push로는 아래 메시지 발생
-
-fatal: The current branch master has no upstream branch.
-To push the current branch and set the remote as upstream
-
-기본 브랜치 설정
-git push --set-upstream origin [새로운 브랜치명]
-https://healthcoding.tistory.com/18
-
-
-git checkout feature/v1.7
-로 체크아웃해서 내용 변경 후
-
-git checkout master
-로 다시 체크아웃하고
-
-git checkout feature/v1.7
-로 체크아웃하고 돌아와도 feature/v1.7의 변경 내용은 살아있음
-
-
-master 브랜치에서 test 브랜치를 merge
-
-git checkout master
-git merge test
-
-# 병합 취소
-머지 작업 취소
-git merge --abort
-
-
-# 미추적
-.gitignore 적용
-git rm -r --cached .
-
-1. 작성 패턴
-- #로 시작하는 라인은 주석, 무시
-- 표준 glob 패턴을 따름
-- 디렉토리는 끝에 슬래시(/)를 사용해 표현
-- 느낌표(!)로 시작하는 경우 예외로 처리
-
-파일 하나만 무시
-fileName,txt
-
-특정 디렉토리의 특정 파일 무시
-fileDirectory/fileName.txt
-
-특정 디렉토리의 모든 파일 무시
-fileDirectory/
-
-특정 확장자 가진 모든 파일 무시
-*.txt
-
-현재 경로의 fileName 무시
-/fileName.txt
-
-특정 경로의 모든 fileName 무시
-fileDirectory/**/fileName.txt
-
-예외
-!fileName.txt
-
 https://growingarchive.tistory.com/244
-
-
-
-Unstaged된 파일 비교
-git diff
-
-Stagin Area에 있는 파일 비교 => git add로 변경사항을 추가하였다면 이것으로 비교해야 됨
-git diff --staged
-git diff --cached
-
-브랜치간 비교
-git diff [브랜치명1] [브랜치명2]
-git diff [브랜치명1] origin[브랜치명2]
-
-커밋 간 비교
-git diff [커밋 해시값1] [커밋 해시값2]
--> 커밋 해시값은 git log로 확인 가능
-
-커밋 사이를 비교
-git diff [커밋 해시값1]...[커밋 해시값2]
-
-git diff 531c1d06412a57ef050d6372e36d6921169495f4 af35084e7f9fce61ddcede3545f56802b30f3d62
-
-git diff 531c1d06412a57ef050d6372e36d6921169495f4...af35084e7f9fce61ddcede3545f56802b30f3d62

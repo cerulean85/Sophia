@@ -1,14 +1,29 @@
 
 # 목차
 - [목차](#목차)
-- [LINQ(Language Integrated Query)](#linqlanguage-integrated-query)
   - [List 조회](#list-조회)
     - [조건에 부합하는 요소의 목록 조회](#조건에-부합하는-요소의-목록-조회)
     - [조건에 부합하는 요소의 존재여부 조회](#조건에-부합하는-요소의-존재여부-조회)
     - [입력된 수치에 대해 최대값이나 최소값을 갖는 요소 조회](#입력된-수치에-대해-최대값이나-최소값을-갖는-요소-조회)
-    - [주어진 조건에 맞는 요소를](#주어진-조건에-맞는-요소를)
-  - [SELECT](#select)
-  - [문법 비교](#문법-비교)
+    - [입력된 조건에 부합하는 하나의 요소 반환](#입력된-조건에-부합하는-하나의-요소-반환)
+    - [OrderBy 후 중첩 정렬](#orderby-후-중첩-정렬)
+    - [List 합치기](#list-합치기)
+    - [원하는 개수 만큼 요소 반환](#원하는-개수-만큼-요소-반환)
+    - [두 시퀀스를 합쳐 지정한 메서드의 반환값이 요소인 새로운 시퀀스를 생성](#두-시퀀스를-합쳐-지정한-메서드의-반환값이-요소인-새로운-시퀀스를-생성)
+    - [평균 계산](#평균-계산)
+    - [중복없이 시퀀스의 요소 반환(Distinct)](#중복없이-시퀀스의-요소-반환distinct)
+    - [두 시퀀스를 중복없이 병합하기](#두-시퀀스를-중복없이-병합하기)
+    - [시퀀스의 숫자형 요소 합계(Sum)](#시퀀스의-숫자형-요소-합계sum)
+- [LINQ(Language Integrated Query)](#linqlanguage-integrated-query)
+  - [문법](#문법)
+    - [from ](#from)
+    - [where](#where)
+    - [orderby](#orderby)
+    - [select](#select)
+    - [LINQ 쿼리식 예시](#linq-쿼리식-예시)
+    - [메소드 호출 방식 예시](#메소드-호출-방식-예시)
+    - [Join 예시](#join-예시)
+  - [비교](#비교)
 
 
 
@@ -38,11 +53,14 @@ Something minResult = list.MinBy(e => e.val);
 ``` cs
 Something result = list.SingleOrDefault(e => e.val == compVal)
 ```
+- Single vs. SingleOrDefault
+  - Single은 요소를 찾지 못하면 Exception을 발생시킴
 
 ### OrderBy 후 중첩 정렬
 ```cs
 List<Something> reuslt = list.OrderBy(e => e.val1).ThenBy(e => e.val2)
 ```
+- ThenBy는 OrderBy 이후에 부차적인 정렬을 다시 진행할 수 있음
 
 ### List 합치기
 ```cs
@@ -61,7 +79,7 @@ List<Something> target = ...
 List<Something> result = target.OrderBy(e => e.val).Skip(3).Take(5).ToList();
 ```
 
-### 두 시퀀스소를 합쳐 지정한 메서드의 반환값이 요소인 새로운 시퀀스를 생성
+### 두 시퀀스를 합쳐 지정한 메서드의 반환값이 요소인 새로운 시퀀스를 생성
 ```cs
 
 int[] numbers = { 1, 2, 3, 4, 5};
@@ -80,45 +98,240 @@ foreach (var item in result)
 ```
 
 
-- Average
-- Distinct
+### 평균 계산
+```cs
+List<int> exam = new List<int>() { 1, 2, 3, 4 };
+var val1 = (from num in exam
+           where num > 0
+           select num).Average();
+var val2 = exam.Average();
+var val3 = exam.FindAll(v => v > 2).Average();
+
+# val1 = 2.5
+# val2 = 2.5
+# val3 = 3.5
+
+# 클래스 사용하는 경우
+List<A> exam = new List<A>()
+{
+    new A(){ Num = 1 },
+    new A(){ Num = 2 },
+    new A(){ Num = 3 },
+    new A(){ Num = 4 },
+};
+var val1 = (from t in exam
+            where t.Num > 0
+            select t.Num).Average();
+var val2 = exam.Average(e => e.Num);
+var val3 = exam.FindAll(x => x.Num > 2).Average(e => e.Num);
+Debug.WriteLine(val3);
+
+# val1 = 2.5
+# val2 = 2.5
+# val3 = 3.5
+
+```
+
+### 중복없이 시퀀스의 요소 반환(Distinct)
+```cs
+List<int> numArray = new List<int>()
+{
+    1, 2, 2, 3, 3, 3, 4, 5, 5,
+};
+
+numArray.Distinct().ToList().ForEach(x => Debug.WriteLine(x));
+# Result: 1, 2, 3, 4, 5
+
+# 클래스 예시
+List<A> exam = new List<A>()
+{
+    new A(){ Num = 1 },
+    new A(){ Num = 2 },
+    new A(){ Num = 2 },
+    new A(){ Num = 3 },
+    new A(){ Num = 3 },
+    new A(){ Num = 3 },
+    new A(){ Num = 4 },
+    new A(){ Num = 5 },
+    new A(){ Num = 5 }
+};
+
+# Select로 Distinct 할 프로퍼티 선택
+exam.Select(e => e.Num).Distinct().ToList().ForEach(x => Debug.WriteLine(x));
+# Result: 1, 2, 3, 4, 5
+```
+
 - Contains
-- UnionBy
-- Sum
+```cs
+List<string> fruits = new List<string>()
+{
+    "사과", "사과", "바나나", "토마토", "귤", "바나나", "오렌지"
+};
+Debug.WriteLine(fruits.Contains("사과")); // true
+Debug.WriteLine(fruits.Contains("수박")); // false
+
+# 클래스 예시
+List<Exam> examList = new List<Exam>()
+{
+    new Exam() { Fruit = "사과" },
+    new Exam() { Fruit = "사과" },
+    new Exam() { Fruit = "바나나" },
+    new Exam() { Fruit = "토마토" },
+    new Exam() { Fruit = "귤" },
+    new Exam() { Fruit = "바나나" },
+    new Exam() { Fruit = "오렌지" },
+};
+Debug.WriteLine(examList.Select(e => e.Fruit).Contains("사과"));  // true
+Debug.WriteLine(examList.Select(e => e.Fruit).Contains("수박"));  // false
+```
+### 두 시퀀스를 중복없이 병합하기
+- Union과 UnionBy 사용
+- UnionBy는 특정 프로퍼티를 지정하여 중복제거
+```cs
+List<string> fruits1 = new List<string>()
+{
+    "사과", "바나나", "토마토", "귤", "오렌지"
+};
+
+List<string> fruits2 = new List<string>()
+{
+  "옥수수", "망고", "자몽", "바나나", "사과", "감"
+};
+fruits1.Union(fruits2).ToList().ForEach(f => Debug.WriteLine(f));
+// 중복된 "바나나", "사과" 제거
+// Result: 사과, 바나나, 토마토, 귤, 오렌지, 옥수수, 망고, 자몽, 감
+
+- Union 클래스 예시
+List<Exam1> examList1 = new List<Exam1>()
+{
+    new Exam1() { Fruit = "사과" },
+    new Exam1() { Fruit = "바나나" },
+    new Exam1() { Fruit = "토마토" },
+    new Exam1() { Fruit = "귤" },
+    new Exam1() { Fruit = "오렌지" },
+};
+
+List<Exam1> examList2 = new List<Exam1>()
+{
+    new Exam1() { Fruit = "옥수수" },
+    new Exam1() { Fruit = "망고" },
+    new Exam1() { Fruit = "자몽" },
+};
+examList1.Union(examList2).ToList().ForEach(f => Debug.WriteLine(f.Fruit));
+// Result: 사과, 바나나, 토마토, 귤, 오렌지, 옥수수, 망고, 자몽
+```
+- UnionBy 예시1
+```cs
+List<Exam1> examList1 = new List<Exam1>()
+{
+    new Exam1() { Fruit = "사과", Num = 1 },
+    new Exam1() { Fruit = "사과", Num = 1 },
+    new Exam1() { Fruit = "바나나", Num = 2 },
+    new Exam1() { Fruit = "토마토", Num = 3 },
+    new Exam1() { Fruit = "귤", Num = 4 },
+    new Exam1() { Fruit = "바나나", Num = 5 },
+    new Exam1() { Fruit = "오렌지", Num = 6 },
+};
+
+List<Exam1> examList2 = new List<Exam1>()
+{
+    new Exam1() { Fruit = "옥수수", Num = 1 },
+    new Exam1() { Fruit = "망고", Num = 1 },
+    new Exam1() { Fruit = "자몽", Num = 3 },
+    new Exam1() { Fruit = "바나나", Num = 1 },
+    new Exam1() { Fruit = "사과", Num = 7 },
+    new Exam1() { Fruit = "감", Num = 18 },
+};
+
+// 단일 프로퍼티 
+examList1.Select(s => s.Fruit)
+          .UnionBy(examList2.Select(t => t.Fruit), s => s)
+          .ToList()
+          .ForEach(f => Debug.WriteLine(f));
+// Result: 사과, 바나나, 토마토, 귤, 오렌지, 옥수수, 망고, 자몽
+
+// 여러 프로퍼티. 튜플로 등록
+examList1.Select(s => (s.Fruit, s.Num))
+          .UnionBy(examList2.Select(t => (t.Fruit, t.Num)), s => s)
+          .ToList()
+          .ForEach(f => Debug.WriteLine(f.Fruit));
+// Result: 사과, 바나나, 토마토, 귤, 오렌지, 옥수수, 망고, 자몽                    
+```
+
+- UnionBy 예시2
+  - 서로 다른 클래스 Union
+```cs
+// examList1의 Fruit와 examList2의 FruitName는 동일한 프로퍼티로 이름만 다름
+List<Exam1> examList1 = new List<Exam1>()
+{
+    new Exam1() { Fruit = "사과", Num = 1 },
+    new Exam1() { Fruit = "사과", Num = 1 },
+    new Exam1() { Fruit = "바나나", Num = 2 },
+    new Exam1() { Fruit = "토마토", Num = 3 },
+    new Exam1() { Fruit = "귤", Num = 4 },
+    new Exam1() { Fruit = "바나나", Num = 5 },
+    new Exam1() { Fruit = "오렌지", Num = 6 },
+};
+List<Exam2> examList2 = new List<Exam2>()
+{
+    new Exam2() { FruitName = "옥수수", Num = 1 },
+    new Exam2() { FruitName = "망고", Num = 1 },
+    new Exam2() { FruitName = "자몽", Num = 3 },
+    new Exam2() { FruitName = "바나나", Num = 1 },
+    new Exam2() { FruitName = "사과", Num = 7 },
+    new Exam2() { FruitName = "감", Num = 18 },
+};
+
+// 여러 프로퍼티. 튜플로 등록.
+// 클래스의 프로퍼티명이 다르다면, Fruit: t.FruitName 앞쪽 클래에 맞게 얼라이싱
+examList1.Select(s => (s.Fruit, s.Num))
+          .UnionBy(examList3.Select(t => (Fruit: t.FruitName, t.Num)), s => s)
+          .ToList()
+          .ForEach(f => Debug.WriteLine(f.Fruit));
+// Result: 사과, 바나나, 토마토, 귤, 오렌지, 옥수수, 망고, 자몽          
+```
+- 
+### 시퀀스의 숫자형 요소 합계(Sum)
+```cs
+# 클래스 예시
+List<A> exam = new List<A>()
+{
+    new A(){ Num = 1 },
+    new A(){ Num = 2 },
+    new A(){ Num = 2 },
+    new A(){ Num = 3 },
+    new A(){ Num = 3 },
+    new A(){ Num = 3 },
+    new A(){ Num = 4 },
+    new A(){ Num = 5 },
+    new A(){ Num = 5 }
+};
+var val = exam.Sum(e => e.Num);
+Debug.WriteLine(val);
+```
 
 # LINQ(Language Integrated Query)
 - 특정 데이터들에서 Query로 데이터를 빠르고 편리하게 추출하는 방식
 - C# 3.0 부터 추가되기 시작하였으며, 람다표현식을 사용하여 간결하고 가독성 좋게 작성 가능
 - SQL과 비슷한 문법으로 Query 할 수 있음
 
-## 문법 비교
-- Where vs. FindAll
-  - Where
-    - 조건에 부합하는 요소를 포함한 새로운 시퀀스 반환
-    - 지연 실행 방식. 쿼리를 바로 실행하지 않고 쿼리식을 만듦
-  - FindAll
-    - 조건에 부합하는 요소를 포함하는 List 반환
-    - 즉시 실행 방식. 쿼리 실행하여 조건에 부합하는 요소를 찾음 
-  - FindAll은 결과를 List로 반환하므로, Where에 비해서는 활용이 제한적
-  - Where로 조회할 경우 캐스팅이 필요
-
-
 ## 문법
 ### from 
 - 쿼리식의 대상이 될 데이터 원본과 안에 들어있는 각 요소 데이터를 나타내는 범위 변수를 지정
-- from의 데이터 원본은 IEnumerable<T> 인터페이스를 상속하는 형식이어야 합니다. 
+- from의 데이터 원본은 IEnumerable<T> 인터페이스를 상속하는 형식이어야 함
 
 ### where
-- 해당 조건에 부합하는 데이터만을 걸러낼때 사용하는 연산자 입니다.  
+- 해당 조건에 부합하는 데이터만을 걸러낼 때 사용하는 연산자
 
 ### orderby
-- 데이터의 정렬을 수행하는 연산자입니다.
+- 데이터의 정렬을 수행하는 연산자
 
 ### select
-- 최종 결과를 추출합니다.
-- 데이터를 변형하거나 부분 서택하여 새로운 클래스(Anonymous Type)를 만들어 리턴하고 싶을 때 사용
+- 최종 결과를 추출
+- 데이터를 변형하거나 부분 선택하여 새로운 Anonymous Type의 클래스를 만들어 반활할 때 사용
 
 ```  cs
+# 메소드 호출 방식 예시
 var v = list.Where(e => e.val == CompVal).Select(p => new { X = p.x, Y = p.y })
 foreach (var o in v)
 {
@@ -128,6 +341,7 @@ foreach (var o in v)
 
 ### LINQ 쿼리식 예시
 ``` cs
+# Anonymous Type으로 반환하므로 반환 결과 사용 시 캐스팅 필요
 var profileList = from profile in Profiles
                   where profile.Height < 175
                   orderby profile.Height
@@ -141,6 +355,7 @@ var profileList = from profile in Profiles
 
 ### 메소드 호출 방식 예시
 ``` cs
+# Anonymous Type으로 반환하므로 반환 결과 사용 시 캐스팅 필요
 var profileList = Profiles.
                   Where(profile => profile.Height < 175).
                   Orderby(profile => profile.Height).
@@ -164,3 +379,14 @@ var joinList = from profile in Profiles
                 Height = profile.Height
                }
 ```
+
+## 비교
+- Where vs. FindAll
+  - Where
+    - 조건에 부합하는 요소를 포함한 새로운 시퀀스 반환
+    - 지연 실행 방식. 쿼리를 바로 실행하지 않고 쿼리식을 만듦
+  - FindAll
+    - 조건에 부합하는 요소를 포함하는 List 반환
+    - 즉시 실행 방식. 쿼리 실행하여 조건에 부합하는 요소를 찾음 
+  - FindAll은 결과를 List로 반환하므로, Where에 비해서는 활용이 제한적
+  - Where로 조회할 경우 캐스팅이 필요
