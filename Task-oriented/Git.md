@@ -1,5 +1,3 @@
-# 목차
-- [목차](#목차)
 - [Git 저장소](#git-저장소)
   - [origin master](#origin-master)
 - [Git 명령어](#git-명령어)
@@ -14,11 +12,21 @@
     - [요약 조회](#요약-조회)
     - [포맷 지정 조회](#포맷-지정-조회)
     - [아스키 그래프 조회](#아스키-그래프-조회)
+  - [diff](#diff)
+    - [Unstaged된 파일 비교](#unstaged된-파일-비교)
+    - [Stagin Area에 있는 파일 비교](#stagin-area에-있는-파일-비교)
+    - [브랜치간 비교](#브랜치간-비교)
+    - [커밋 간 비교](#커밋-간-비교)
+    - [커밋 사이를 비교](#커밋-사이를-비교)
+  - [gitignore](#gitignore)
+    - [작성 패턴](#작성-패턴)
+    - [.gitignore 작성 예시](#gitignore-작성-예시)
   - [브랜치](#브랜치)
     - [생성](#생성)
     - [추가](#추가)
     - [병합](#병합)
     - [삭제](#삭제)
+    - [사용예시](#사용예시)
   - [되돌리기](#되돌리기)
     - [특정 파일 되돌리기](#특정-파일-되돌리기)
     - [모두 되돌리기](#모두-되돌리기)
@@ -29,8 +37,18 @@
     - [Annotated 태그](#annotated-태그)
     - [올리기](#올리기)
     - [삭제](#삭제-1)
-- [병합 취소](#병합-취소)
-- [미추적](#미추적)
+  - [Cherry Pick](#cherry-pick)
+    - [충돌 해결 후 재진행](#충돌-해결-후-재진행)
+    - [중단](#중단)
+    - [병합](#병합-1)
+  - [Merge](#merge)
+    - [Fast-Forward](#fast-forward)
+    - [Recursive](#recursive)
+    - [Squash \& Merge](#squash--merge)
+    - [Rebase \& Merge](#rebase--merge)
+    - [병합 취소](#병합-취소)
+  - [참고한 사이트](#참고한-사이트)
+
 
 
 
@@ -199,7 +217,7 @@ git log --pretty=format:"%h %s" --graph
 git diff
 ```
 
-### Stagin Area에 있는 파일 비교
+### Staging Area에 있는 파일 비교
 - git add로 변경사항을 추가하였다면 이것으로 비교해야 됨
 ```bash
 git diff --staged
@@ -399,7 +417,7 @@ git tag v0.0.3
 ### Annotated 태그
 - 태그 만든 사람, 이메일, 날짜, 메시지 저장
 ``` bash
-git reset —hard origin/quality # Tag를 달고자 하는 Commit으로 HEAD 이동
+git reset --hard origin/quality # Tag를 달고자 하는 Commit으로 HEAD 이동
 git tag -a v0.0.3 -m "Build Version 0.0.3"  
 ```
 ### 올리기
@@ -412,7 +430,7 @@ git tag -d v0.0.3
 ```
 
 ## Cherry Pick
-- 다른 브랜치에 있는 커밋을 선택적으로 내 브린채에 적용시킬 때 사용하는 명령어
+- 다른 브랜치에 있는 커밋을 선택적으로 내 브린치에 적용시킬 때 사용하는 명령어
 ```bash
 git cherry-pick <commit_hash_1> <commit_hash_2> ...
 ```
@@ -428,7 +446,7 @@ git cherry-pick <commit_hash_1> <commit_hash_2> ...
 ### 병합
 - Merge Commit을 cherry-pcik 하고 싶다면 다음 명령 사용
 ```bash
-git cherry-pick -m 1 <merge_commit_has>
+git cherry-pick -m 1 <merge_commit_hash>
 ```
 
 
@@ -444,19 +462,21 @@ git cherry-pick -m 1 <merge_commit_has>
 
 ### Recursive
 <p align="center">
-<img src="../images/git/merge_fast_forward.png" height="200" />
+<img src="../images/git/merge_recursive.png" height="200" />
 </p>
 
-- my-branch가 분기된 후 main에 새로운 커밋이 생기면, my-bracnch와 amin을 공통 부모로 새로운 Merge Commit이 생성
-- Fast-Forward Merge가 가능한 상태에서 ```git merge``` 명령에 --no-ff 옵션을 주면 강제로 Merge Commit 생성
+- my-branch가 분기된 후 main에 새로운 커밋이 생기면, my-bracnch와 main을 공통 부모로 새로운 Merge Commit이 생성
+- Fast-Forward Merge가 가능한 상태에서 ```git merge``` 명령에 ```--no-ff``` 옵션을 주면 강제로 Merge Commit 생성
 
 ### Squash & Merge
 <p align="center">
 <img src="../images/git/merge_squash.png" height="200" />
 </p>
+
 - 여러 개의 커밋을 하나의 커밋으로 합침 
 - 병합할 브랜치의 모든 커밋을 하나의 커밋으로 Squash한 후 새로운 커밋을 Base 브랜치에 추가하여 병합
 - 모든 커밋 이력이 하나의 커밋으로 합쳐져 사라짐
+
 ```bash
 git checkout main
 git merge --squash my-branch
@@ -467,6 +487,7 @@ git commit -m "squash & merge"
 <p align="center">
 <img src="../images/git/merge_rebase.png" height="200" />
 </p>
+
 - my-branch가 main 브랜치의 A커밋에서 분기
 - 이때 my-branch의 Base는 A 커밋
 - 말 그대로 Base를 다시 설정하는 것으로, my-branch가 분기된 main의 최신 커밋으로 Base가 변경됨

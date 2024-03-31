@@ -1,3 +1,9 @@
+# 날짜: 24.3.30.
+- Fed가 선호하는 인플레이션 게이지가 2월 2.5%로 올랐다
+- 물가는 2월에 예상대로 상승했고, 올봄 물가 상승이 충분히 냉각되면 올해 중반 금리 인하 정당화
+- 전반적으로 물가 상승이 예상 범위 내였음
+- Since economic activity has been solid(탄탄)
+
 # 날짜: 24.3.26.
 - China Files(제소) WTO Complaint Against U.S. Over Electric-Vehicle Subsidies
 
