@@ -24,6 +24,9 @@
     - [메소드 호출 방식 예시](#메소드-호출-방식-예시)
     - [Join 예시](#join-예시)
   - [비교](#비교)
+  - [GUID 생성](#guid-생성)
+  - [Enum](#enum)
+    - [Enum To String](#enum-to-string)
 
 
 
@@ -390,3 +393,37 @@ var joinList = from profile in Profiles
     - 즉시 실행 방식. 쿼리 실행하여 조건에 부합하는 요소를 찾음 
   - FindAll은 결과를 List로 반환하므로, Where에 비해서는 활용이 제한적
   - Where로 조회할 경우 캐스팅이 필요
+
+
+## GUID 생성
+- 전역 고유 식별자(Globally Unique Identifier, CUGID)
+- 응용 S/W에서 사용되는 유사 난수
+- 중복된 값을 생성할 가능성이 매우 낮음
+  - 사용할 수 있는 모든 값의 수가 2^128 = 3.4028 x 10^38개로 매우 크
+```cs
+Guid guid = Guid.NewGuid();
+string guidStr = guid.ToString();
+```
+
+
+## Enum
+
+### Enum To String
+```cs
+
+enum FruitType
+{
+  사과, 배, 복숭아, 수박, 멜론
+}
+
+string EnumToString(FruitType fruit)
+{
+  return fruit.ToString();
+}
+
+FruitType StringToEnum(string fruitName)
+{
+  return (FruitType) Enum.Parse(typeof(FruitType), fruitName);
+}
+
+```
