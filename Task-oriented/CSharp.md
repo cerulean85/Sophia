@@ -440,3 +440,37 @@ foreach (var value in valueList)
 // 4 > 멜론
 
 ```
+
+
+
+# Null 처리
+## 코드정리 및 설명 필요
+```cs
+        Test test = null;
+        int? a = null;
+        
+        a = test?.testCol; // test가 null이면  null 반환. 반대는 멤버(testCol)를 반환
+        Console.WriteLine($"{a} / {a == null}"); // Result: / true
+
+        a = test?.testCol ?? 100;
+        Console.WriteLine($"{a}"); // Result: 100
+
+
+        test = new Test();
+        test.testCol = 66;
+        a = test?.testCol;
+        Console.WriteLine($"{a} / {a == null}"); // Result: 66 / false
+
+        a = test?.testCol ?? 100;
+        Console.WriteLine($"{a}"); // Result: 66. 그냥 a 출력
+
+        // 물음표(엘비스)를 쓰면 null과 string 두 가지로 형태가 될 수 있음을 암시
+        string? x = null; 
+
+        // 느낌표(!, null-forgiving)를 사용하면 x의 반환형 중 null을 무시함을 암시
+        // 즉, x를 string으로만 인식하도록 함
+        int length = x.Length;
+
+        // 반면, 물음표를 쓰면 x의 반환형이 null이나 string을 암시하므로 오류
+        int length = x?.Length;
+```
