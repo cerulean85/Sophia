@@ -190,21 +190,19 @@ Debug.WriteLine(examList.Select(e => e.Fruit).Contains("수박"));  // false
 ### 두 시퀀스를 중복없이 병합하기
 - Union과 UnionBy 사용
 - UnionBy는 특정 프로퍼티를 지정하여 중복제거
-```cs
-List<string> fruits1 = new List<string>()
-{
-    "사과", "바나나", "토마토", "귤", "오렌지"
-};
 
-List<string> fruits2 = new List<string>()
-{
-  "옥수수", "망고", "자몽", "바나나", "사과", "감"
-};
+```cs
+List<string> fruits1 = new List<string>() { "사과", "바나나", "토마토", "귤", "오렌지" };
+List<string> fruits2 = new List<string>() { "옥수수", "망고", "자몽", "바나나", "사과", "감" };
+
 fruits1.Union(fruits2).ToList().ForEach(f => Debug.WriteLine(f));
 // 중복된 "바나나", "사과" 제거
 // Result: 사과, 바나나, 토마토, 귤, 오렌지, 옥수수, 망고, 자몽, 감
+```
 
 - Union 클래스 예시
+
+```cs
 List<Exam1> examList1 = new List<Exam1>()
 {
     new Exam1() { Fruit = "사과" },
@@ -411,19 +409,34 @@ string guidStr = guid.ToString();
 ### Enum To String
 ```cs
 
-enum FruitType
-{
-  사과, 배, 복숭아, 수박, 멜론
-}
+enum FruitType { 사과, 배, 복숭아, 수박, 멜론 }
+string EnumToString(FruitType fruit) { return fruit.ToString(); }
+```
 
-string EnumToString(FruitType fruit)
-{
-  return fruit.ToString();
-}
-
+### String To Enum
+```cs
+enum FruitType { 사과, 배, 복숭아, 수박, 멜론 }
 FruitType StringToEnum(string fruitName)
 {
   return (FruitType) Enum.Parse(typeof(FruitType), fruitName);
 }
+
+```
+```cs
+enum FruitType { 사과, 배, 복숭아, 수박, 멜론 }
+
+var nameList = Enum.GetNames(typeof(FruitType));
+foreach (var name in nameList)
+  Console.WriteLine($"{name}");
+// Result: 사과, 배, 복숭아, 수박, 멜론
+
+var valueList = Enum.GetValues(typeof(Colors));
+foreach (var value in valueList)
+  Console.WriteLine($"{(int)value} > {(FruitType)value}");
+// 0 > 사과
+// 1 > 배
+// 2 > 복숭아
+// 3 > 수박
+// 4 > 멜론
 
 ```
