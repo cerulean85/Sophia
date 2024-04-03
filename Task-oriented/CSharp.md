@@ -24,6 +24,9 @@
     - [메소드 호출 방식 예시](#메소드-호출-방식-예시)
     - [Join 예시](#join-예시)
   - [비교](#비교)
+  - [GUID 생성](#guid-생성)
+  - [Enum](#enum)
+    - [Enum To String](#enum-to-string)
 
 
 
@@ -187,21 +190,19 @@ Debug.WriteLine(examList.Select(e => e.Fruit).Contains("수박"));  // false
 ### 두 시퀀스를 중복없이 병합하기
 - Union과 UnionBy 사용
 - UnionBy는 특정 프로퍼티를 지정하여 중복제거
-```cs
-List<string> fruits1 = new List<string>()
-{
-    "사과", "바나나", "토마토", "귤", "오렌지"
-};
 
-List<string> fruits2 = new List<string>()
-{
-  "옥수수", "망고", "자몽", "바나나", "사과", "감"
-};
+```cs
+List<string> fruits1 = new List<string>() { "사과", "바나나", "토마토", "귤", "오렌지" };
+List<string> fruits2 = new List<string>() { "옥수수", "망고", "자몽", "바나나", "사과", "감" };
+
 fruits1.Union(fruits2).ToList().ForEach(f => Debug.WriteLine(f));
 // 중복된 "바나나", "사과" 제거
 // Result: 사과, 바나나, 토마토, 귤, 오렌지, 옥수수, 망고, 자몽, 감
+```
 
 - Union 클래스 예시
+
+```cs
 List<Exam1> examList1 = new List<Exam1>()
 {
     new Exam1() { Fruit = "사과" },
@@ -390,3 +391,86 @@ var joinList = from profile in Profiles
     - 즉시 실행 방식. 쿼리 실행하여 조건에 부합하는 요소를 찾음 
   - FindAll은 결과를 List로 반환하므로, Where에 비해서는 활용이 제한적
   - Where로 조회할 경우 캐스팅이 필요
+
+
+## GUID 생성
+- 전역 고유 식별자(Globally Unique Identifier, CUGID)
+- 응용 S/W에서 사용되는 유사 난수
+- 중복된 값을 생성할 가능성이 매우 낮음
+  - 사용할 수 있는 모든 값의 수가 2^128 = 3.4028 x 10^38개로 매우 크
+```cs
+Guid guid = Guid.NewGuid();
+string guidStr = guid.ToString();
+```
+
+
+## Enum
+
+### Enum To String
+```cs
+
+enum FruitType { 사과, 배, 복숭아, 수박, 멜론 }
+string EnumToString(FruitType fruit) { return fruit.ToString(); }
+```
+
+### String To Enum
+```cs
+enum FruitType { 사과, 배, 복숭아, 수박, 멜론 }
+FruitType StringToEnum(string fruitName)
+{
+  return (FruitType) Enum.Parse(typeof(FruitType), fruitName);
+}
+
+```
+```cs
+enum FruitType { 사과, 배, 복숭아, 수박, 멜론 }
+
+var nameList = Enum.GetNames(typeof(FruitType));
+foreach (var name in nameList)
+  Console.WriteLine($"{name}");
+// Result: 사과, 배, 복숭아, 수박, 멜론
+
+var valueList = Enum.GetValues(typeof(Colors));
+foreach (var value in valueList)
+  Console.WriteLine($"{(int)value} > {(FruitType)value}");
+// 0 > 사과
+// 1 > 배
+// 2 > 복숭아
+// 3 > 수박
+// 4 > 멜론
+
+```
+
+
+
+# Null 처리
+## 코드정리 및 설명 필요
+```cs
+        Test test = null;
+        int? a = null;
+        
+        a = test?.testCol; // test가 null이면  null 반환. 반대는 멤버(testCol)를 반환
+        Console.WriteLine($"{a} / {a == null}"); // Result: / true
+
+        a = test?.testCol ?? 100;
+        Console.WriteLine($"{a}"); // Result: 100
+
+
+        test = new Test();
+        test.testCol = 66;
+        a = test?.testCol;
+        Console.WriteLine($"{a} / {a == null}"); // Result: 66 / false
+
+        a = test?.testCol ?? 100;
+        Console.WriteLine($"{a}"); // Result: 66. 그냥 a 출력
+
+        // 물음표(엘비스)를 쓰면 null과 string 두 가지로 형태가 될 수 있음을 암시
+        string? x = null; 
+
+        // 느낌표(!, null-forgiving)를 사용하면 x의 반환형 중 null을 무시함을 암시
+        // 즉, x를 string으로만 인식하도록 함
+        int length = x.Length;
+
+        // 반면, 물음표를 쓰면 x의 반환형이 null이나 string을 암시하므로 오류
+        int length = x?.Length;
+```

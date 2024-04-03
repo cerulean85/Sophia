@@ -1,3 +1,46 @@
+
+## Java 17 JDK & Gradle 설치
+```bash
+sudo apt install openjdk-17-jdk
+
+gradle init --type java-library
+sudo apt install wget
+wget https://services.gradle.org/distributions/gradle-7.5.1-bin.zip -P /tmp
+sudo apt-get install unzip
+cd /tmp
+sudo unzip -d /opt/gradle /tmp/gradle-7.5.1-bin.zip
+sudo vim /etc/profile.d/gradle.sh
+# ************ 아래 내용 입력 ************ 
+export GRADLE_HOME=/opt/gradle/gradle-7.5.1
+export PATH=${GRADLE_HOME}/bin:${PATH}
+# ***************************************
+sudo chmod +x /etc/profile.d/gradle.sh
+source /etc/profile.d/gradle.sh
+gradle -v
+
+```
+
+## Gradle Library 생성
+```bash
+gradle init --type java-library
+```
+
+## Gradle 파일명 변경하기
+- 다음의 <b><font color="yellow">[링크](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.bundling.Jar.html#org.gradle.api.tasks.bundling.Jar:archiveVersion)</font></b>를 참고하여 build.gradle 내용 추가하기
+```gradle
+jar {
+    archiveBaseName = "grpc-interface"
+    archiveVersion = "1.0.0"
+    archiveClassifier = ""
+}
+
+```
+
+## 참고주소
+- https://www.lesstif.com/spring/gradle-java-application-29590240.html
+- https://velog.io/@k0000k/%EB%A6%AC%EB%88%85%EC%8A%A4%EC%97%90%EC%84%9C-Gradle-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0
+
+
 # CentOS Firewall 대역 차단/해제
 
 - [CentOS] Firewall IP대역 차단/해제
