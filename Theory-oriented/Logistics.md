@@ -97,3 +97,66 @@
 - 효율적 공간 구성, 피킹과 분류를 짧은 동선 내에서 수행
 - 다품종 소량 물류 특성은 가진 e커머스, 의류, 제약 등 적용 가능
 - 피킹 후 분류 작업을 수행하여 작업자 동선 최소화
+
+
+# 물류자동화가 잘 구축된 안성 상온 저온 복합 물류센터
+
+- [영상보기](https://www.youtube.com/watch?v=XeUhrwGle6A)
+
+- 박스 접어주는 기계: 제함기
+
+<p align="center">
+<img src="../images/logistics/machine_box.png" height="200px">
+</p>
+
+# 지엘이 스마트물류센터 물류자동화설비
+- [영상보기](https://www.youtube.com/watch?v=_Jjwmwv8UZg)
+
+# [기자가 간다] “로켓배송 비결은 ‘AI 기반 자동화 로봇’”...쿠팡 대구 물류센터 가보니
+- [영상보기](https://www.youtube.com/watch?v=qgTkQVfkqZI)
+
+# "실수는 적고 속도는 빨라" 노동자 없는 물류 센터 [뉴스.zip/MBC뉴스]
+- [영상보기](https://www.youtube.com/watch?v=FhM-w4g0FiU)
+- AGV, 소팅봇
+
+# [극찬기업] E-commerce의 미래! 물류 혁명의 중심에 서다!
+- [영상보기](https://www.youtube.com/watch?v=2dVQAkD8ELI)
+- 노르웨이 기업
+
+# '13조 쩐의 전쟁'…한국, 글로벌 이커머스 격전지로(종합)
+- [기사보기](https://www.yna.co.kr/view/AKR20240315126651030)
+- 2024.3.17. 기사
+
+# [극찬기업] 최적화 시스템을 찾아라 물류 설비의 자동화 솔루션!
+- [영상보기](https://www.youtube.com/watch?v=8xk5EVMdLk4)
+
+# 두산로지스틱스 물류자동화, 나이키도 선택했다
+- [영상보기](https://www.youtube.com/watch?v=H9QdnL08i4o)
+
+# 자동화물류시스템 소개영상
+- [영상보기](https://www.youtube.com/watch?v=ukE5ChAqEyU) 
+
+# 대한민국 중소기업 현실적인 창고 모습, 우리가 일하는 물류창고를 소개합니다.
+- [영상보기](https://www.youtube.com/watch?v=Ro5gB6IVeS4)
+
+# 자동창고 (AS/RS), Stacker Crane, 컨베이어, Lifter, 물류자동화, A/S_코윈테크
+- [영상보기](https://www.youtube.com/watch?v=bH-5TGizFaI)
+- 크레인/컨베이어/Destacker/RGV/Twin Fork/AGV 동작 모습을 제대로 확인할 수 있음
+
+# 물류, 포워딩 기초 이 영상 하나로 끝! (신입, 취준 필시청)
+- [영상보기](https://www.youtube.com/watch?v=Nud8D-ESSpo)
+
+# [사업스토리] 두산로지스틱스솔루션, 물류 자동화가 사업의 성패를 좌우한다! #물류 SI의 사본 #물류센터
+- [영상보기](https://www.youtube.com/watch?v=dRsn2exh_Ik)
+
+# APOS&S 물류 자동화 시스템 소개 Logistics Automation
+- [영상보기](https://www.youtube.com/watch?v=uaiIpLB59hA)
+
+# 상하차는 로봇으로 안되나요? 이제 물류는 기술이다 [유료 광고 포함]
+- [영상보기](https://www.youtube.com/watch?v=uuMELilKVD8)
+
+# [무.물.보] 무엇이든 물류 보세요!｜물류 자동화 설비 편
+- [영상보기](https://www.youtube.com/watch?v=8B4N_pLgSho)
+
+# 빠른 배송이 가능한 물류의 비밀(f. 풀필먼트)
+- [영상보기](https://www.youtube.com/watch?v=FgiE67dyCP8)
