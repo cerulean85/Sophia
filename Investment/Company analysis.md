@@ -37,3 +37,37 @@
  - 23년 5월 중 인수 완료
  - 미국의 조선소도 인수 추진하며 글로벌한 방산거인을 꿈꾸는 중
  - [참고기사1](https://www.fortunekorea.co.kr/news/articleView.html?idxno=35959)
+
+
+
+ # S&P 500개 기업 조사
+- 순위는 늘 변하는거라 큰 의미는 없는 듯 하니 걍 번호만 표기
+- [목록보기](https://www.slickcharts.com/sp500)
+
+## 500: 폭스 코퍼레이션 (Fox Corporation)
+- 2019년 설립된 미국 대중 매체 다국적 기업
+- 21세기 폭스 전체 자산 중 60% 정도 디즈니가 인수. 자회사 통합하여 폭스 코퍼레이션 탄생
+- S&P 500 지수에 21세기 폭스를 대체하면서 상장기업이 됨
+- 주가 30달러 수준
+- 배당 1.68% 수준
+- PER 18.39 수준
+- [재무제표](https://kr.investing.com/equities/fox-corp-financial-summary)
+- 영업이익이 그닥 매력적이지는 않음
+
+## 499: VF Corporation
+- 신발 및 의류 회사
+- 미국 종합패션 지주회사
+- 슈프림의 모기업
+- 반스, 노스페이스, 디키즈, 슈프림 등 들어본 산하 브랜드가 있음
+- [설명보기](https://namu.wiki/w/VF%20%EC%BD%94%ED%8D%BC%EB%A0%88%EC%9D%B4%EC%85%98)
+- 영업이익이 이래도 되나 싶을 정도로 절단남... 패쓰!
+
+## 498: Paramount Global
+- 미국 글로벌 대중 매체 복합 기업
+- 여기도 23년 영업이익이 절단 났네.. 패쓰!
+
+# 497: Ralph Lauren Corporation
+- 폴로 랄프 로렌. 맞다. 그 POLO!!
+- [설명보기](https://kr.investing.com/equities/polo-ralph-laur-financial-summary)
+- 21년 마이너스 적자... 23년 되니 전년보다순이익 줄어듦...
+- 뭔가 5% 아쉬운 주식

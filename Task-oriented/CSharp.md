@@ -164,7 +164,7 @@ exam.Select(e => e.Num).Distinct().ToList().ForEach(x => Debug.WriteLine(x));
 # Result: 1, 2, 3, 4, 5
 ```
 
-- Contains
+### 특정값이 존재하는지 확인
 ```cs
 List<string> fruits = new List<string>()
 {
