@@ -1,3 +1,26 @@
+- 단어의 뜻과 활용 위주로 정리할 것
+
+# Word
+1. rule out
+- to decied or say officially that something is impossible or will not happen, or that something or someone is not suitable. [more...](https://dictionary.cambridge.org/ko/%EC%82%AC%EC%A0%84/%EC%98%81%EC%96%B4/rule-out)
+
+- "The ecentral bank all but ruled out the possibility of an early rate cut," [more...](https://www.wsj.com/economy/central-banking/philippine-central-bank-holds-rate-steady-to-tame-inflation-dfb546df?mod=economy_lead_story)
+
+# 날짜: 24.4.8.
+
+The Philippines central bank kept its policy rate unchanged as widely expected,
+extending its pause as a recent pickup in inflation resurfaces 
+
+Bankko Sentral ng Pilipinas Gov.Eli Remolona said Moday that the central bank maintained its bechmark overnight reverse repurchase
+
+
+# 날짜: 24.3.31.
+- 미국, 유럽에서 기본 인플레이션이 하락이 멈췄거나 소폭 상승하여 금리인하 가능성을 약화시키고 있음
+- 인플레이션이 미국과 유럽에서 예상보다 더 끈질기다고 증명
+- 이는 중앙은행은 두통을, 투자자들이 세계 경제에 너무 낙관적이라는 의심을 뿌리고 있음
+- 경제학자들과 중앙은행의 예언. 지속적인 인플레이션 하락. 
+
+
 # 날짜: 24.3.30.
 - Fed가 선호하는 인플레이션 게이지가 2월 2.5%로 올랐다
 - 물가는 2월에 예상대로 상승했고, 올봄 물가 상승이 충분히 냉각되면 올해 중반 금리 인하 정당화
