@@ -12,6 +12,7 @@
     - [두 시퀀스를 합쳐 지정한 메서드의 반환값이 요소인 새로운 시퀀스를 생성](#두-시퀀스를-합쳐-지정한-메서드의-반환값이-요소인-새로운-시퀀스를-생성)
     - [평균 계산](#평균-계산)
     - [중복없이 시퀀스의 요소 반환(Distinct)](#중복없이-시퀀스의-요소-반환distinct)
+    - [특정값이 존재하는지 확인](#특정값이-존재하는지-확인)
     - [두 시퀀스를 중복없이 병합하기](#두-시퀀스를-중복없이-병합하기)
     - [시퀀스의 숫자형 요소 합계(Sum)](#시퀀스의-숫자형-요소-합계sum)
 - [LINQ(Language Integrated Query)](#linqlanguage-integrated-query)
@@ -27,6 +28,11 @@
   - [GUID 생성](#guid-생성)
   - [Enum](#enum)
     - [Enum To String](#enum-to-string)
+    - [String To Enum](#string-to-enum)
+- [Null 처리](#null-처리)
+  - [코드정리 및 설명 필요](#코드정리-및-설명-필요)
+- [String 처리](#string-처리)
+  - [bool.TryParse](#booltryparse)
 
 
 
@@ -473,4 +479,17 @@ foreach (var value in valueList)
 
         // 반면, 물음표를 쓰면 x의 반환형이 null이나 string을 암시하므로 오류
         int length = x?.Length;
+```
+
+
+# String 처리
+## bool.TryParse
+- string이 대소문자를 구분하지 않는 true/false 일 때 bool로 변환을 해줌
+- 좀 헷갈리는 문법이라 잘 확인하고 사용해야 함
+
+```CS
+string fruit = "True";
+bool result = false;
+bool.TryParse(fruit, out result);
+Console.WriteLine($"{fruit} / 변환 결과: {result}");
 ```
