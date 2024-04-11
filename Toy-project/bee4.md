@@ -91,4 +91,3 @@ jar {
 java -jar app-1.0-SNAPSHOT.jar --grpc.server.port=9090
 java -jar app-1.0-SNAPSHOT.jar --grpc.server.port=9091
 ```
-

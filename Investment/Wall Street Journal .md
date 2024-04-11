@@ -1,7 +1,11 @@
 - 단어의 뜻과 활용 위주로 정리할 것
 
 # Word
-1. rule out
+
+002. broad-based
+- used to describe something that will affect many different places, activities, etc.
+
+001. rule out
 - to decied or say officially that something is impossible or will not happen, or that something or someone is not suitable. [more...](https://dictionary.cambridge.org/ko/%EC%82%AC%EC%A0%84/%EC%98%81%EC%96%B4/rule-out)
 
 - "The ecentral bank all but ruled out the possibility of an early rate cut," [more...](https://www.wsj.com/economy/central-banking/philippine-central-bank-holds-rate-steady-to-tame-inflation-dfb546df?mod=economy_lead_story)
