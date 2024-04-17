@@ -60,6 +60,9 @@ service WorkProtocolService {
 ```bash
 # proto 폴더 이동 후 아래 명령어 입력
 python -m grpc_tools.protoc --python_out=. --grpc_python_out=. --proto_path=. ./WorkProtocolService.proto
+
+python -m grpc_tools.protoc --python_out=. --grpc_python_out=. --proto_path=. ./Bee4Service.proto
+
 ```
 
 - 파일명: server.py
