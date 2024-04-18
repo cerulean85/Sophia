@@ -1,3 +1,21 @@
+### 016. gauge
+- to calculate an amount, especially by using a measuring device
+
+### 015. fragile
+- a fragile object is easily damaged or broken
+
+### 014. spur
+- to encoruage an activity or development or make it happen faster
+
+### 013. methodology
+- a system of ways of doing, teaching, or studying something
+
+### 012. bureau
+- an organizaion or business that collects or provides information
+
+### 011. distress
+- a feeling of extreme worry, sadness, or pain
+
 ### 010. exclaim
 - to say or shout something suddenly because of surprise, fear, pleasure, etc.
 
