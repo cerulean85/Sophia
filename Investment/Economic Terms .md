@@ -1,3 +1,15 @@
+
+Bank of Canada Gov is positively considering currency policy.
+
+### 019. fiscal
+- connected with (public) money
+
+### 018. strain
+- a force or influence that stretched, pulls, or puts pressure on something, sometimes causing damage.
+
+### 017. sustain
+- to cause or allow something to continue for a period of time
+
 ### 016. gauge
 - to calculate an amount, especially by using a measuring device
 
