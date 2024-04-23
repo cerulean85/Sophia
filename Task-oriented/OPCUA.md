@@ -18,3 +18,9 @@
 ## 참고 사이트
 - [OPC UA 서버 설정](https://oppr123.tistory.com/35)
 - [이 페이지 뒤에 OPC UA 서버 설정 내용 추가](https://swsolution.atlassian.net/wiki/spaces/QA/pages/422510653/02.+OPCUA+Kepserver+KEPServerEX+6+Configuration)
+
+
+## 기타
+
+- 
+- 

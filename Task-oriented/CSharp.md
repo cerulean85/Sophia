@@ -33,6 +33,12 @@
   - [코드정리 및 설명 필요](#코드정리-및-설명-필요)
 - [String 처리](#string-처리)
   - [bool.TryParse](#booltryparse)
+- [ExpandObject](#expandobject)
+- [switch구문 람다식으로 표현](#switch구문-람다식으로-표현)
+  - [객체 초기화자(Initializer)](#객체-초기화자initializer)
+  - [Keyward Arguments](#keyward-arguments)
+- [변수 일렬로 선언](#변수-일렬로-선언)
+- [switch/when](#switchwhen)
 
 
 
@@ -479,6 +485,11 @@ foreach (var value in valueList)
 
         // 반면, 물음표를 쓰면 x의 반환형이 null이나 string을 암시하므로 오류
         int length = x?.Length;
+
+        // x가 null이 아니라면 x를, null이라면 30을 대입
+        string y = x ?? 30;
+
+
 ```
 
 
@@ -492,4 +503,107 @@ string fruit = "True";
 bool result = false;
 bool.TryParse(fruit, out result);
 Console.WriteLine($"{fruit} / 변환 결과: {result}");
+```
+
+
+# ExpandObject
+- dynamic Object에 Property 있는지 검사
+```cs
+private bool CheckExpandObjectProperty(dynamic target, string name)
+{
+    return ((IDictionary<String, object>)target).ContainsKey(name);
+}
+
+```
+
+
+# switch구문 람다식으로 표현
+- 예시
+```cs
+
+public static AbsSearchEmtpyCellStrategy GetFactory(            
+    OpGantryCellType cellType,
+    OpProductData product,
+    OpProductMatchingType matchingType)
+{
+    AbsSearchEmtpyCellStrategy targetStrategy = matchingType switch
+    {
+        OpProductMatchingType.SkuOnly => new SearchSameSkuAndEmptyCellStrategy(),
+        OpProductMatchingType.SkuLot => new SearchSameSkuLotAndEmptyCellStrategy(),
+        OpProductMatchingType.Grade => new SearchSameGradeAndEmptyCellStrategy(),
+        _ => new SearchEmptyCellStrategy()
+    };
+
+    targetStrategy.CellType = cellType;
+    targetStrategy.Product = product;
+    return targetStrategy;
+}
+
+```
+
+## 객체 초기화자(Initializer)
+```cs
+public class X
+{ 
+  public int A { get; set; }
+  public int B { get; set; }
+  public X()
+  {
+
+  }
+
+  // 이건 안됨
+  //public X(int A, int B)
+  //{
+
+  //}
+}
+
+X x = new X { A=1, B=2 };
+
+```
+
+## Keyward Arguments
+```cs
+public class X
+{ 
+  public int A { get; set; }
+  public int B { get; set; }
+
+  public X(int A, int B) { }
+}
+
+// A, B 순서가 다름
+X x = new X { B:1, A:2 };
+
+```
+
+# 변수 일렬로 선언
+```cs
+bool targetA = false, targetB = true, targetC = true;
+```
+
+# switch/when
+```cs
+
+public static string NewSwitch(Schema_Test dataModel)
+  => (dataModel.pk, dataModel.id) switch
+{
+  (1, "a") => "1번 a 유저",
+  (2, "b") => "2번 b 유저",
+  (3, "c") => "3번 c 유저",
+  (_, _) => "None~"           // 기존 Switch 문의 default 해당
+};
+
+
+
+
+public static string NewSwitch(TClass dm)
+  => (dm.pk, dm.id) switch
+{
+  (1, "a") => "1번 a 유저",
+  var (x, y) when x > 100 && y == "와우" => "흠...",
+  var (x, y) when x > 1 && x < 30 => "오호..",
+  var (_, _) => "ㅠㅠㅠ"
+}
 ```
