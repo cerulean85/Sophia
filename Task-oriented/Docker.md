@@ -887,3 +887,38 @@ docker volume ls
 docker-compose up -d
 docker-compose ps
 ```
+
+
+# Docker MariaDb 설치 및 외부 접속 허용
+
+- Docker mariadb 설치 및 실행
+```bash
+docker pull mariadb
+docker run -p 3306:3306 --name hobby_mariadb -e MARIADB_ROOT_PASSWORD=1234 -d mariadb
+```
+
+- 컨테이너 접속
+```bash
+# docker exec -it [컨테이너 아이디] bash
+docker exec -it 714c bash
+```
+
+
+- vim 사용을 위해 아래 코드 실행하여 vim 설치
+```bash
+apt update
+apt upgrade
+apt install vim
+```
+
+- 외부접속 허용을 위해 다음 파일 내용 수정
+- /etc/mysql/mariadb.conf.d/50-server.cnf
+```bash
+# 아래 주석 푼 후 0.0.0.0으로 변경
+bind-address = 0.0.0.0
+```
+
+- 컨테이너 재시작
+```bash
+docker restart mariadb
+```
