@@ -920,5 +920,5 @@ bind-address = 0.0.0.0
 
 - 컨테이너 재시작
 ```bash
-docker restart mariadb
+hdocker restart hobby_mariadb
 ```

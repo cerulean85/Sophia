@@ -3,10 +3,30 @@
 
 ![alt text](../images/cloud/loadbalancing.png)
 
+# NAT
+- 대부분의 네트워크는 모든 호스트 중 일부만 인터넷 통신을 수행
+- 대부분의 호스트는 PrivateIP를 이용하고 인터넷 통신에만 PublicIP 사용하여 외부에 노출하는 PublicIP 수를 줄임
+- PrivateIP에서 인터넷으로 요청을 보낼 때 해당 요청이 NAT를 제공하는 라우터를 통과하면, NAT 라우터는 주소 변환 테이블에 가지고 있떤 PrivateIP를 PublicIP로 IP를 변환하여 요청을 보내고 변환 내용을 NAT 변환 테이블에 기록함
+- 이후 인터넷으로 보낸 응답이 도착하면 기록해두었던 NAT 변환 테이블을 참조하여 요청을 보낸 PrivateIP를 가진 호스트에게 응답을 반환함
+
+# AWS의 NAT gateway란?
+- NAT 게이트웨이는 AWS에서 제공하는 NAT 서비스
+- NAT의 개념과 동일하게 프라이빗 서브넷의 인스턴스가 VPC 외부 서비스(인터넷)에 연결할 수 있도록 하고, 외부 서비스에선느 프라이빗 서브넷 내의 인스턴스와 연결할 수 없도록 하기 위해 NAT 게이트웨이를 사용
+- 즉, 프라이빗 서브넷 내의 EC2를 인터넷, AWS 서비스에 접근 가능하게 하고, 외부에서는 해당 EC2에 대한 접근을 막기 위해 사용
+- VPC 내의 Public Subnet 내에 생성해야 함
+
+# NAT 게이트웨이 설정 순서
+1. NAT 게이트웨이가 속할 퍼블릭 서브넷 지정
+2. NAT 게이트웨이와 연결할 탄력적 IP 주소 지정
+  - NAT 게이트웨이 연결 후에는 탄력적 IP 주소를 변경할 수 없음
+3. NAT 게이트웨이 만든 뒤 한 개 이상의 프라이빗 서브넷과 연결된 라우팅 테이블을 업데이트하여 인터넷 바운드 트래픽이 NAT 게이트웨이를 가리키도록 함
+- [링크1](https://hyeyeon13.tistory.com/20)
+
+
 # ELB(Elastic Laod Balancer)
 - AWS의 사용자 정의 네트워크인 VPC(Virtual Private Network)에 탑재
 - 사용자 요청 받아 VPC 내 리소스(EC2 등)에 적절히 부하 분산
-- **리스너(Listener)**와 **대상그룹(Target Group)**으로 구성
+- <b>리스너(Listener)</b>와 <b>대상그룹(Target Group)</b>으로 구성
   - 리스너: 외부 요청을 받아 들여 요청 분산하여 전달
   - 대상그룹: 요청 처리하는 리소스
 - 다수의 리스너와 대상그룹을 거느릴 수 있음
@@ -124,3 +144,31 @@
 
 # Notion 정리
 https://www.notion.so/AWS-SAA-SAP-4b098215302c4bb680c68941be9c32dc
+
+
+
+
+# EBS(Elastic Block Store)
+- AWS가 제공하는 블록 수준 스토리지 볼륨
+- 하나의 가용영역 서버들의 자원을 모아 생성하므로, 99.9999%의 가용성 제공
+- 생성된 EBS는 물리적 하드디스크처럼 동일한 가용영역에서 생성된 EC2 장치에 탈부착 가능
+- EBS는 독립적이므로 탈부착하더라도 데이터는 유효
+
+## EBS 스냅샷
+- 스냅샷을 만들어 증분식 백업 가능
+- 요금은 저장된 데이터 양에 따라 결정
+- 스냅샷 작업 시점에 플러시 되지 않은 쓰기가 문제를 일으킬 수 있으므로, 스냅샷 생성 시에는 ```fsfreeze -f <마운트디렉토리>``` 명령을 통해 EBS를 열어야 함
+- 스냅샷 생성 실행 후 바로 ```fsfreeze -u <마운트디렉토리>``` 명령으로 파일시스템 액세스를 허용해도 됨
+- 생성된 스냅샷은 다른 가용 영역에서도 사용 가능
+
+## EBS 볼륨 유형
+1. SSD
+  - 범용 SSD
+    - 가격과 성능 간 균형이 잡힌 볼륨으로, gp2와 gp3가 있으며 볼륨당 최대 처리량에 차이가 있음
+  - Provisioned IOPS SSD
+    - 보다 고성능을 위한 볼륨으로, 16000 IOPS 이상이 필요한 워크로드일 때 사용
+    - io2Block Express, io2, io1이 있으며, 이 유형의 볼륨 사용시 하나의 EBS에 여러 인스턴스 연결 가능
+    - IOPS(Input/Output Operations Per Second, IOPS)는 HDD, SDD 또는 NVMe 등 저장장치의 속도를 나타내는 데 사용되는 측정 단위
+      - [링크](https://hiseon.me/server/iops-calculator/#google_vignette)
+    - NVMe(비휘발성 메모리 익스프레스): 플래시 스토리지와 솔리드 스테이트 드라이브(SSD)에 사용되는 입출력(I/O)당 시스템 오버헤드를 줄이면서 고도로 병렬화된 데이터 전송을 위한 프로토콜로, NVMe SSD는 병렬 처리와 폴링을 허용하는 장치 드라이버의 변경으로 인해 기존 하드 디스크 드라이브보다 빠른 응답 속도 제공
+      - [링크](https://www.ibm.com/kr-ko/topics/nvme)

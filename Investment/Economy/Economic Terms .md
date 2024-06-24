@@ -1,5 +1,31 @@
 
 Bank of Canada Gov is positively considering currency policy.
+These days interest rates are remaining high.
+
+## 27. key interest rate
+- 기준금리
+- [기사보기](https://www.wsj.com/economy/global/boe-chief-economist-pill-says-key-rate-cut-is-some-way-off-279c82fb?mod=economy_lead_story)
+
+### 026. hike
+- an increase in the cost of something, expecially a large or unwanted increase
+
+### 025. scale back/down
+- to reduce something in size, amount, or production
+
+### 024. entice
+- to persuade someone to do something by offering them something pleasant
+
+### 023. coincide
+- to happen at or near the same time
+
+### 022. counterpart
+- a person or thing that has the same purpose as another one in a different place or organization
+
+### 021. ponder
+- to think carefully about something, especially for a noticeable length of time
+
+### 020. Tricky
+- If a piece of work or problem is tricky, it is difficult to deal with and needs careful attention or skill
 
 ### 019. fiscal
 - connected with (public) money
@@ -25,13 +51,14 @@ Bank of Canada Gov is positively considering currency policy.
 ### 012. bureau
 - an organizaion or business that collects or provides information
 
-### 011. distress
+## 011. distress
 - a feeling of extreme worry, sadness, or pain
+- She claimed that the way she had been treated at work had caused her extreme emotional and psychological distress.
 
-### 010. exclaim
+## 010. exclaim
 - to say or shout something suddenly because of surprise, fear, pleasure, etc.
 
-### 009, steep
+## 009. steep
 - rising or falling at a sharp angle
 
 ## 008. exhausted
@@ -60,4 +87,4 @@ Bank of Canada Gov is positively considering currency policy.
 ## 001. rule out
 - to decied or say officially that something is impossible or will not happen, or that something or someone is not suitable. [more...](https://dictionary.cambridge.org/ko/%EC%82%AC%EC%A0%84/%EC%98%81%EC%96%B4/rule-out)
 
-- "The ecentral bank all but ruled out the possibility of an early rate cut," [more...](https://www.wsj.com/economy/central-banking/philippine-central-bank-holds-rate-steady-to-tame-inflation-dfb546df?mod=economy_lead_story)
+- "The central bank all but ruled out the possibility of an early rate cut," [more...](https://www.wsj.com/economy/central-banking/philippine-central-bank-holds-rate-steady-to-tame-inflation-dfb546df?mod=economy_lead_story)
