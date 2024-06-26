@@ -10,16 +10,17 @@
 - 이후 인터넷으로 보낸 응답이 도착하면 기록해두었던 NAT 변환 테이블을 참조하여 요청을 보낸 PrivateIP를 가진 호스트에게 응답을 반환함
 
 # AWS의 NAT gateway란?
-- NAT 게이트웨이는 AWS에서 제공하는 NAT 서비스
-- NAT의 개념과 동일하게 프라이빗 서브넷의 인스턴스가 VPC 외부 서비스(인터넷)에 연결할 수 있도록 하고, 외부 서비스에선느 프라이빗 서브넷 내의 인스턴스와 연결할 수 없도록 하기 위해 NAT 게이트웨이를 사용
-- 즉, 프라이빗 서브넷 내의 EC2를 인터넷, AWS 서비스에 접근 가능하게 하고, 외부에서는 해당 EC2에 대한 접근을 막기 위해 사용
+- NAT Gateway는 AWS에서 제공하는 NAT 서비스
+- Private Subnet의 인스턴스가 VPC 외부 서비스(인터넷)에 연결할 수 있도록 함
+- 외부 서비스에서는 Private Subnet 내의 인스턴스와 연결할 수 없도록 하기 위해 NAT 게이트웨이를 사용
+- 즉, Private Subnet 내의 EC2가 인터넷, AWS 서비스 등의 외부 서비스에 접근 가능하도록 하고, 외부 서비스에서 해당 EC2로의 접근을 막기 위해 사용
 - VPC 내의 Public Subnet 내에 생성해야 함
 
 # NAT 게이트웨이 설정 순서
-1. NAT 게이트웨이가 속할 퍼블릭 서브넷 지정
-2. NAT 게이트웨이와 연결할 탄력적 IP 주소 지정
-  - NAT 게이트웨이 연결 후에는 탄력적 IP 주소를 변경할 수 없음
-3. NAT 게이트웨이 만든 뒤 한 개 이상의 프라이빗 서브넷과 연결된 라우팅 테이블을 업데이트하여 인터넷 바운드 트래픽이 NAT 게이트웨이를 가리키도록 함
+1. NAT Gateway가 속할 Public Subnet 지정
+2. NAT Gateway와 연결할 탄력적 IP 주소 지정
+  - NAT Gateway 연결 후에는 탄력적 IP 주소를 변경할 수 없음
+3. NAT Gateway 만든 뒤 한 개 이상의 Private Subnet과 연결된 라우팅 테이블을 업데이트하여 인터넷 바운드 트래픽이 NAT Gateway를 가리키도록 함
 - [링크1](https://hyeyeon13.tistory.com/20)
 
 
@@ -149,10 +150,17 @@ https://www.notion.so/AWS-SAA-SAP-4b098215302c4bb680c68941be9c32dc
 
 
 # EBS(Elastic Block Store)
-- AWS가 제공하는 블록 수준 스토리지 볼륨
+- EC2 인스턴스가 CPU나 메모리와 같이 연산에 관한 처리를 한다면, EBS는 SSD와 HDD처럼 데이터 저장하는 역할을 담당
+- AWS Cloud의 Amazon EC2 인스턴스에 사용할 영구 Block Storage Volume 제공
 - 하나의 가용영역 서버들의 자원을 모아 생성하므로, 99.9999%의 가용성 제공
 - 생성된 EBS는 물리적 하드디스크처럼 동일한 가용영역에서 생성된 EC2 장치에 탈부착 가능
 - EBS는 독립적이므로 탈부착하더라도 데이터는 유효
+- 단 몇 분 내에 사용량을 확장할 수 있으며, 프로비저닝한 부분에 대해서만 저렴한 비용 지불 가능
+
+## EBS 특징
+- 네트워크를 통해 별도 연결되므로 EC2 인스턴스가 종료되어도 별개로 작동
+ 
+- [인파 EBS 링크](https://inpa.tistory.com/entry/AWS-%F0%9F%93%9A-EBS-%EA%B0%9C%EB%85%90-%EC%82%AC%EC%9A%A9%EB%B2%95-%F0%9F%92%AF-%EC%A0%95%EB%A6%AC-EBS-Volume-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0)
 
 ## EBS 스냅샷
 - 스냅샷을 만들어 증분식 백업 가능
