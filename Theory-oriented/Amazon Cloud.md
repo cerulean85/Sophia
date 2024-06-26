@@ -162,6 +162,8 @@ https://www.notion.so/AWS-SAA-SAP-4b098215302c4bb680c68941be9c32dc
  
 - [인파 EBS 링크](https://inpa.tistory.com/entry/AWS-%F0%9F%93%9A-EBS-%EA%B0%9C%EB%85%90-%EC%82%AC%EC%9A%A9%EB%B2%95-%F0%9F%92%AF-%EC%A0%95%EB%A6%AC-EBS-Volume-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0)
 
+- [EC2 인스턴스 최대 절전 모드](https://www.megazone.com/techblog_181214_ec2-instances/)
+
 ## EBS 스냅샷
 - 스냅샷을 만들어 증분식 백업 가능
 - 요금은 저장된 데이터 양에 따라 결정
