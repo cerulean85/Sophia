@@ -1,20 +1,10 @@
+---
+title: C# 문법 정리
+date: 2024-06-28
+tags: CSharp, C# 
+category: Program Language
+---
 
-# 목차
-- [목차](#목차)
-  - [List 조회](#list-조회)
-    - [조건에 부합하는 요소의 목록 조회](#조건에-부합하는-요소의-목록-조회)
-    - [조건에 부합하는 요소의 존재여부 조회](#조건에-부합하는-요소의-존재여부-조회)
-    - [입력된 수치에 대해 최대값이나 최소값을 갖는 요소 조회](#입력된-수치에-대해-최대값이나-최소값을-갖는-요소-조회)
-    - [입력된 조건에 부합하는 하나의 요소 반환](#입력된-조건에-부합하는-하나의-요소-반환)
-    - [OrderBy 후 중첩 정렬](#orderby-후-중첩-정렬)
-    - [List 합치기](#list-합치기)
-    - [원하는 개수 만큼 요소 반환](#원하는-개수-만큼-요소-반환)
-    - [두 시퀀스를 합쳐 지정한 메서드의 반환값이 요소인 새로운 시퀀스를 생성](#두-시퀀스를-합쳐-지정한-메서드의-반환값이-요소인-새로운-시퀀스를-생성)
-    - [평균 계산](#평균-계산)
-    - [중복없이 시퀀스의 요소 반환(Distinct)](#중복없이-시퀀스의-요소-반환distinct)
-    - [특정값이 존재하는지 확인](#특정값이-존재하는지-확인)
-    - [두 시퀀스를 중복없이 병합하기](#두-시퀀스를-중복없이-병합하기)
-    - [시퀀스의 숫자형 요소 합계(Sum)](#시퀀스의-숫자형-요소-합계sum)
 - [LINQ(Language Integrated Query)](#linqlanguage-integrated-query)
   - [문법](#문법)
     - [from ](#from)
@@ -233,7 +223,9 @@ List<Exam1> examList2 = new List<Exam1>()
 examList1.Union(examList2).ToList().ForEach(f => Debug.WriteLine(f.Fruit));
 // Result: 사과, 바나나, 토마토, 귤, 오렌지, 옥수수, 망고, 자몽
 ```
+
 - UnionBy 예시1
+
 ```cs
 List<Exam1> examList1 = new List<Exam1>()
 {
@@ -273,6 +265,7 @@ examList1.Select(s => (s.Fruit, s.Num))
 
 - UnionBy 예시2
   - 서로 다른 클래스 Union
+
 ```cs
 // examList1의 Fruit와 examList2의 FruitName는 동일한 프로퍼티로 이름만 다름
 List<Exam1> examList1 = new List<Exam1>()
@@ -305,6 +298,7 @@ examList1.Select(s => (s.Fruit, s.Num))
 ```
 - 
 ### 시퀀스의 숫자형 요소 합계(Sum)
+
 ```cs
 # 클래스 예시
 List<A> exam = new List<A>()
@@ -353,6 +347,7 @@ foreach (var o in v)
 ```
 
 ### LINQ 쿼리식 예시
+
 ``` cs
 # Anonymous Type으로 반환하므로 반환 결과 사용 시 캐스팅 필요
 var profileList = from profile in Profiles
@@ -367,6 +362,7 @@ var profileList = from profile in Profiles
 ```
 
 ### 메소드 호출 방식 예시
+
 ``` cs
 # Anonymous Type으로 반환하므로 반환 결과 사용 시 캐스팅 필요
 var profileList = Profiles.
@@ -380,7 +376,9 @@ var profileList = Profiles.
                   })
 
 ```
+
 ### Join 예시
+
 ``` cs
 var joinList = from profile in Profiles
                join product in Products on profile.Name equals product.Star
@@ -409,16 +407,17 @@ var joinList = from profile in Profiles
 - 전역 고유 식별자(Globally Unique Identifier, CUGID)
 - 응용 S/W에서 사용되는 유사 난수
 - 중복된 값을 생성할 가능성이 매우 낮음
-  - 사용할 수 있는 모든 값의 수가 2^128 = 3.4028 x 10^38개로 매우 크
+  - 사용할 수 있는 모든 값의 수가 2^128 = 3.4028 x 10^38개로 매우 큼
+  - 
 ```cs
 Guid guid = Guid.NewGuid();
 string guidStr = guid.ToString();
 ```
 
-
 ## Enum
 
 ### Enum To String
+
 ```cs
 
 enum FruitType { 사과, 배, 복숭아, 수박, 멜론 }
@@ -426,6 +425,7 @@ string EnumToString(FruitType fruit) { return fruit.ToString(); }
 ```
 
 ### String To Enum
+
 ```cs
 enum FruitType { 사과, 배, 복숭아, 수박, 멜론 }
 FruitType StringToEnum(string fruitName)
@@ -434,6 +434,7 @@ FruitType StringToEnum(string fruitName)
 }
 
 ```
+
 ```cs
 enum FruitType { 사과, 배, 복숭아, 수박, 멜론 }
 
@@ -457,6 +458,7 @@ foreach (var value in valueList)
 
 # Null 처리
 ## 코드정리 및 설명 필요
+
 ```cs
         Test test = null;
         int? a = null;
@@ -498,7 +500,7 @@ foreach (var value in valueList)
 - string이 대소문자를 구분하지 않는 true/false 일 때 bool로 변환을 해줌
 - 좀 헷갈리는 문법이라 잘 확인하고 사용해야 함
 
-```CS
+```cs
 string fruit = "True";
 bool result = false;
 bool.TryParse(fruit, out result);
@@ -508,6 +510,7 @@ Console.WriteLine($"{fruit} / 변환 결과: {result}");
 
 # ExpandObject
 - dynamic Object에 Property 있는지 검사
+
 ```cs
 private bool CheckExpandObjectProperty(dynamic target, string name)
 {
@@ -519,6 +522,7 @@ private bool CheckExpandObjectProperty(dynamic target, string name)
 
 # switch구문 람다식으로 표현
 - 예시
+
 ```cs
 
 public static AbsSearchEmtpyCellStrategy GetFactory(            
@@ -542,6 +546,7 @@ public static AbsSearchEmtpyCellStrategy GetFactory(
 ```
 
 ## 객체 초기화자(Initializer)
+
 ```cs
 public class X
 { 
@@ -564,6 +569,7 @@ X x = new X { A=1, B=2 };
 ```
 
 ## Keyward Arguments
+
 ```cs
 public class X
 { 
@@ -579,11 +585,13 @@ X x = new X { B:1, A:2 };
 ```
 
 # 변수 일렬로 선언
+
 ```cs
 bool targetA = false, targetB = true, targetC = true;
 ```
 
 # switch/when
+
 ```cs
 
 public static string NewSwitch(Schema_Test dataModel)
@@ -594,9 +602,6 @@ public static string NewSwitch(Schema_Test dataModel)
   (3, "c") => "3번 c 유저",
   (_, _) => "None~"           // 기존 Switch 문의 default 해당
 };
-
-
-
 
 public static string NewSwitch(TClass dm)
   => (dm.pk, dm.id) switch

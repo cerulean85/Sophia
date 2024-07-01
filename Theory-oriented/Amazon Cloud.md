@@ -3,26 +3,6 @@
 
 ![alt text](../images/cloud/loadbalancing.png)
 
-# NAT
-- 대부분의 네트워크는 모든 호스트 중 일부만 인터넷 통신을 수행
-- 대부분의 호스트는 PrivateIP를 이용하고 인터넷 통신에만 PublicIP 사용하여 외부에 노출하는 PublicIP 수를 줄임
-- PrivateIP에서 인터넷으로 요청을 보낼 때 해당 요청이 NAT를 제공하는 라우터를 통과하면, NAT 라우터는 주소 변환 테이블에 가지고 있떤 PrivateIP를 PublicIP로 IP를 변환하여 요청을 보내고 변환 내용을 NAT 변환 테이블에 기록함
-- 이후 인터넷으로 보낸 응답이 도착하면 기록해두었던 NAT 변환 테이블을 참조하여 요청을 보낸 PrivateIP를 가진 호스트에게 응답을 반환함
-
-# AWS의 NAT gateway란?
-- NAT Gateway는 AWS에서 제공하는 NAT 서비스
-- Private Subnet의 인스턴스가 VPC 외부 서비스(인터넷)에 연결할 수 있도록 함
-- 외부 서비스에서는 Private Subnet 내의 인스턴스와 연결할 수 없도록 하기 위해 NAT 게이트웨이를 사용
-- 즉, Private Subnet 내의 EC2가 인터넷, AWS 서비스 등의 외부 서비스에 접근 가능하도록 하고, 외부 서비스에서 해당 EC2로의 접근을 막기 위해 사용
-- VPC 내의 Public Subnet 내에 생성해야 함
-
-# NAT 게이트웨이 설정 순서
-1. NAT Gateway가 속할 Public Subnet 지정
-2. NAT Gateway와 연결할 탄력적 IP 주소 지정
-  - NAT Gateway 연결 후에는 탄력적 IP 주소를 변경할 수 없음
-3. NAT Gateway 만든 뒤 한 개 이상의 Private Subnet과 연결된 라우팅 테이블을 업데이트하여 인터넷 바운드 트래픽이 NAT Gateway를 가리키도록 함
-- [링크1](https://hyeyeon13.tistory.com/20)
-
 
 # ELB(Elastic Laod Balancer)
 - AWS의 사용자 정의 네트워크인 VPC(Virtual Private Network)에 탑재
@@ -86,7 +66,7 @@
 - [참고사이트](https://hudi.blog/region-and-availability-zone/)
 
 # 가용 영역(Availability Zone)과 로드밸런서 노드(Load Balancer Node)
-- ELB는 VPC 내에서 하나이ㅡ 형태로 존재하고 다수의 네트워크 인터페이스를 가지며, 
+- ELB는 VPC 내에서 하나의 형태로 존재하고 다수의 네트워크 인터페이스를 가지며, 
 
 # 참고사이트
 - [SMILESHARK](https://www.smileshark.kr/post/what-is-a-load-balancer-a-comprehensive-guide-to-aws-load-balancer)
@@ -159,6 +139,17 @@ https://www.notion.so/AWS-SAA-SAP-4b098215302c4bb680c68941be9c32dc
 
 ## EBS 특징
 - 네트워크를 통해 별도 연결되므로 EC2 인스턴스가 종료되어도 별개로 작동
+
+### EBS
+- EC2가 EBS와 네트워크로 연결
+- 속도가 느리며, 인스턴스가 삭제 되어도 EBS는 남음 (영구 스토리지)
+- 하나의 
+
+|Elastic Block Storage|Instance Storage|
+|---|---|
+| | - EC2 안에 Storage가 들어 있음|
+
+
  
 - [인파 EBS 링크](https://inpa.tistory.com/entry/AWS-%F0%9F%93%9A-EBS-%EA%B0%9C%EB%85%90-%EC%82%AC%EC%9A%A9%EB%B2%95-%F0%9F%92%AF-%EC%A0%95%EB%A6%AC-EBS-Volume-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0)
 
@@ -182,3 +173,6 @@ https://www.notion.so/AWS-SAA-SAP-4b098215302c4bb680c68941be9c32dc
       - [링크](https://hiseon.me/server/iops-calculator/#google_vignette)
     - NVMe(비휘발성 메모리 익스프레스): 플래시 스토리지와 솔리드 스테이트 드라이브(SSD)에 사용되는 입출력(I/O)당 시스템 오버헤드를 줄이면서 고도로 병렬화된 데이터 전송을 위한 프로토콜로, NVMe SSD는 병렬 처리와 폴링을 허용하는 장치 드라이버의 변경으로 인해 기존 하드 디스크 드라이브보다 빠른 응답 속도 제공
       - [링크](https://www.ibm.com/kr-ko/topics/nvme)
+
+
+- [Associate Dump](https://www.examtopics.com/exams/amazon/aws-certified-solutions-architect-professional-sap-c02/view/)
