@@ -86,3 +86,23 @@
 - 사용자가 ELB를 거쳐 EC2에 접근하여 서비스에 접속하면 Connection이 생성
 - 이 Connection을 통해 사용자의 EC2가 통신하는 것인데, 통신이 더이상 발생하지 않는다면 Connection Time Out이 발생
 - Connection Time Out이 지나면 Connection이 사라지므로, Connection 삭제에 대한 허용 시간 설정이 필요함 
+
+
+## ALB (Application Load Balancer)
+- AWS에서 제공하는 4가지 LB 중 하나로 OSI 계층 중 7계층인 Apllication Layer에서 작동
+- 요청을 받으면 우선 순위에 따라 Listener 규칙을 평가하여 적용할 규칙을 결정한 다음, Target Group에서 Resource를 선택
+- L7 기반 LB를 지원하며 SSL 적용 가능하고, HTTP/HTTPS 트래픽에 적합
+- HTTP HEader나 SSL Session ID 같은 요청 콘텐츠를 확인하여 트래픽을 Redirection
+- 클라이언트 연결 유지가 필요 없는 콘텐츠(이미지, 비디오 등), 연결 유지가 필요한 콘텐츠(장바구니, 결제 등) 각각에 대해 서버를 분리하여 전송 요청
+
+
+## NLB (Network Load Balancer)
+- IP 및 기타 네트워크 정보 검사하여 트래픽을 최적으로 Redirection
+- 애플리케이션 트래픽의 Source를 추적하고 여러 서버에 고정 IP 할당 가능
+- LB 알고리즘을 사용하여 부하 분산
+- 고성능 요구하는 환경에서 적합한 솔루션
+- 낮은 Latency로 초당 수 백만 건의 요청 처리 가능하며, 갑작스러운 트래픽 증대 및 변화에 최적화
+- 실시간 스트리밍 서비스나 화상 회의, 채팅 애플리케이션에 NLB가 적합
+- Session 지속성을 효과적으로 유지 가능
+- Network 수준에서 LB를 제공하며, TCP/UPD 트래픽에 적합
+- L4 기반 LB 지원
