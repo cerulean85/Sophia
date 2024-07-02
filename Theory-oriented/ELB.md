@@ -18,6 +18,26 @@
   > 즉, Target Group의 개수에 비례하여 LB의 개수와 비용이 늘어남
 - AWS 환경에서는 4가지 유형의 LB를 지원하며, 사용자의 요구 사항과 환경에 맞춰 선택할 수 있음
 
+
+## 가용 영역(Availability Zone, AZ)
+
+
+## Load Balancing Method
+
+- 정적 로드 밸런싱
+  - 라운드 로빈, 가중치 기반 라운드 로빈 등
+  - IP 해시: 클라이언트 IP를 숫자로 변환하여 개별 서버에 매핑
+- 동적 로드 밸런싱
+  - 최소 연결 방법: 활성 연결이 가장 적은 서버로 트래픽 전송
+  - 최소 응답시간 방법: 응답시간이 가장 짧은 서버로 트래픽 전송
+
+|Method|Description|
+|---|---|
+|Round Robin|Load Balancer가 다수 서버에 순서대로 요청 할당|
+|Least Connection|요청 전달 후 생성된 Connection이 가장 적은 서버로 요청 전달|
+|Ratio|Connection 비율에 따라 요청 전달|
+|Fastest|응답 속도가 가장 빠른 서버에게 우선적으로 할당|
+
 ## Load Balancer Node
 - VPC 내 하나의 형태로 존재하는 다수의 NI(Network Interface)
 - 공인/사설 IP 모두 보유 가능
@@ -25,3 +45,44 @@
 - AWS 콘솔상에서 NI 형태로만 보이므로 EC2의 NI에서 확인 가능
 - Load Balancer Node는 AZ마다 하나씩 존재하고, 소속된 AZ 내의 Resource에게 요청을 전달함
 - VPC에서 바라보는 ELB는 Load Balancer Node와 EC2의 집합으로 보이며, 각각 Listener(Load Balancer Node), Target Group(EC2 집합)에 해당
+- AZ에 부하가 불균등하게 분산되는 현상을 해결하기 위해 교차 영역(Cross Zone) LB 수행
+![alt text](../images/cloud/lb_error.png)
+![alt text](../images/cloud/lb_cross.png)
+
+
+## ELB 요청 처리 과정
+- 사용자는 LB의 DNS 이름을 통해 ELB에 접속
+  - DNS 이름을 통해 접속하면 ELB는 요청을 Target Group에 전달되면 EC2가 요청 처리
+
+1. 사용자가 LB에 접근하기 위해 Amazon의 DNS 서버에 LB의 도메인 해석 요청
+2. Amazon의 DNS 서버가 LB Node IP 리스트를 사용자에게 전달
+3. 사용자는 IP 중 하나를 선택하요 LB에 접근 ( +Port 입력 )
+4. 사용자는 LB의 (Port가 일치하는) Listner에 접근하게 되며, Listner는 요청을 받아들여 적절한 Target Group으로 전달
+5. Listener에게 전달받은 요청을 EC2가 처리 후 다시 사용자에게 반환
+
+
+## ELB 구성 요소
+
+### Listener
+- 사용자의 요청을 받아 적잘한 Target Groupd으로 라우팅
+- LB로의 접근은 해당 Listener의 Port로 접근하는 것이므로, Listner ID에 포트 명시해야 함
+- 하나의 LB는 다수의 Listener을 보유할 수 있으며, SSL 인증서를 게시하여 SSL Offload를 실시할 수도 있음
+
+### Target Group
+- Listener가 전달한 요청을 처리하기 위한 부하분산 대상들의 모임
+- Group에 등록된 EC2의 각종 정보(인스턴스 ID, Port, AZ 등)가 적혀 있고, EC2가 요청을 처리할 수 있는지를 나타내는 Health Check, 요청 처리에 관한 Monitoring이 있음. 여기서 Monitoring이라 함은 Target Group에 요청 처리가 가능한 EC2가 몇 개인지, 불가능한 EC2는 몇 개인지를 의미함
+
+### Security Group
+- LB Node 역시 NI 형태를 띄므로 Security Group를 가질 수 있음
+- 따라서 사용자가 전달하는 요청을 처리하려면 해당 요청의 포트를 Security Group에서 열어둬야 함
+- 또한 Target Group의 EC2 역시 LB 노드가 있는 Subnet의 요청을 처리할 수 있도록 EC2의 Security Group 또한 작업해야 함
+
+### Health Check
+- Target Group의 Ec2의 상태를 체크
+- Health Check를 통과하지 못하면 더이상 요청을 전달받지 못함
+- ELB의 Health Check에는 TCP, HTTP, HTTPS가 있으며, 제한 시간이나 간격, 성공 판단 횟수를 정의할 수 있음
+
+### Connection Time Out
+- 사용자가 ELB를 거쳐 EC2에 접근하여 서비스에 접속하면 Connection이 생성
+- 이 Connection을 통해 사용자의 EC2가 통신하는 것인데, 통신이 더이상 발생하지 않는다면 Connection Time Out이 발생
+- Connection Time Out이 지나면 Connection이 사라지므로, Connection 삭제에 대한 허용 시간 설정이 필요함 
