@@ -20,6 +20,12 @@
 
 
 ## 가용 영역(Availability Zone, AZ)
+![alt text](../images/cloud/available_zone.png)
+- Region은 최소 2개 이상의 AZ로 구성
+- AZ는 최소 1개 이상의 데이터 센터로 구성
+- 개별 데이터 센터는 일반적으로 50,000 ~ 80,000대의 물리적 서버가 있음
+- 각 AZ는 같은 Region이지만, 천재지변이나 테러 등의 재해에에 대비하기 위해 지리적으로 멀리 떨어짐
+- 가용영역 확인: [AWS 글로벌 인프라](https://aws.amazon.com/ko/about-aws/global-infrastructure/)
 
 
 ## Load Balancing Method
@@ -89,20 +95,62 @@
 
 
 ## ALB (Application Load Balancer)
-- AWS에서 제공하는 4가지 LB 중 하나로 OSI 계층 중 7계층인 Apllication Layer에서 작동
-- 요청을 받으면 우선 순위에 따라 Listener 규칙을 평가하여 적용할 규칙을 결정한 다음, Target Group에서 Resource를 선택
-- L7 기반 LB를 지원하며 SSL 적용 가능하고, HTTP/HTTPS 트래픽에 적합
-- HTTP HEader나 SSL Session ID 같은 요청 콘텐츠를 확인하여 트래픽을 Redirection
-- 클라이언트 연결 유지가 필요 없는 콘텐츠(이미지, 비디오 등), 연결 유지가 필요한 콘텐츠(장바구니, 결제 등) 각각에 대해 서버를 분리하여 전송 요청
+- **OSI 계층 중 7계층인 Apllication Layer에서 작동**
+  - SSL 적용 가능하고, HTTP/HTTPS 트래픽에 적합
 
+- **HTTP/HTTPS Header 정보를 이용한 지능적 라우팅**
+   - HTTP Header나 SSL Session ID 같은 요청 콘텐츠를 확인하여 트래픽을 Redirection
+   - 요청을 받으면 우선 순위에 따라 Listener 규칙을 평가하여 적용할 규칙을 결정한 다음, Target Group에서 Resource를 선택
+   - 클라이언트 연결 유지가 필요 없는 콘텐츠(이미지, 비디오 등), 연결 유지가 필요한 콘텐츠(장바구니, 결제 등) 각각에 대해 서버를 분리하여 전송 요청
+
+- **Path-based Routing을 지원**
+  - ALB에 연결된 인스턴스들은 여러 개의 URL과 Path를 가질 수 있음
+  - LB 하나만 설정하면 트래픽을 모니터링 하여 각 Target Group에 라우팅 할 수 있음  
+
+- **Port에 따른 Target Group을 매핑**
+  - Docker Container 환경에서 유용하게 작동 가능
+  - 더 많은 Container를 넣어 비용을 최적화할 수 있음
+  - 동일한 Port라도 Path등에 따라 다르게 분기할 수도 있음
+
+- **Resource를 EC2 뿐만 아니라 Lambda, IP로도 할 수 있음**
+  - 특정 요청에 대해 서버 없이 직접 응답 메시지를 작성할 수 있으므로 MA 구성이 용이
 
 ## NLB (Network Load Balancer)
-- IP 및 기타 네트워크 정보 검사하여 트래픽을 최적으로 Redirection
-- 애플리케이션 트래픽의 Source를 추적하고 여러 서버에 고정 IP 할당 가능
-- LB 알고리즘을 사용하여 부하 분산
-- 고성능 요구하는 환경에서 적합한 솔루션
-- 낮은 Latency로 초당 수 백만 건의 요청 처리 가능하며, 갑작스러운 트래픽 증대 및 변화에 최적화
-- 실시간 스트리밍 서비스나 화상 회의, 채팅 애플리케이션에 NLB가 적합
-- Session 지속성을 효과적으로 유지 가능
-- Network 수준에서 LB를 제공하며, TCP/UPD 트래픽에 적합
-- L4 기반 LB 지원
+- **OSI 7계층 중 네 번째 Transport Layer를 다루는 LB**
+  - TCP, UPD 요청을 부하 분산
+  - HTTP Header를 해석하지 못함
+  - IP 및 기타 네트워크 정보 검사하여 트래픽을 최적으로 Redirection
+  - Network 수준에서 LB를 제공
+  - 애플리케이션 트래픽의 Source를 추적  
+
+- **여러 서버에 고정 IP 할당 가능**
+  - ALB와 달리 EIP(Elastic IP) 고정 가능
+  - LB 접근 시 IP, DNS 모두 사용 가능
+
+- **고성능 요구하는 환경에서 적합한 솔루션**
+  - Low Latency로 초당 수 백만 건의 요청 처리 가능
+  - 갑작스러운 트래픽 증대 및 변화에 최적화
+  - 실시간 스트리밍 서비스나 화상 회의, 채팅 애플리케이션에 NLB가 적합
+  - 단순 라우팅이 필요하고, 트래픽이 극도로 많은 경우 ALB보다 적합
+
+## CLB (Classic Load Balancer)
+- ALB와 NLB가 출시되기 전 사용하던 LB으로, 가장 오래된 ELB의 기본적인 형태
+- L4에서 L7계층까지 LB가 가능하며, TCP, SSL, HTTP, HTTPS 등 다양한 프로토콜 수용
+- 기본주소 바뀐 LB 새로 생성해야 하고, 하나의 주소에 하나의 대상 그룹 밖에 보내지 못함
+- 데이터를 수정/변경할 수 없어 Port, Header 등을 변경하지 못하는 단점이 있음
+- CLB 구조의 한계로 인해 서버 구성이나 아키텍처의 크기 및 복잡도에 따라 LB의 개수와 비용이 증가
+- 현재는 레거시로 분류되었으며, NLB 또는 ALB를 많이 사용
+
+## GWLB (Gateway Load Balancer)
+- OSI 7계층 중 3계층인 Network Layer에서 작동
+- 방화벽, 침입 탐지 및 방지 시스템, 심층 패킷 검사 시스템 등의 가상 어플라이언스 배포, 확장 및 관리 가능
+- 트래픽이 EC2에 도달하기 전에 트래픽 검사, 분석, 인증, 로깅을 수행할 수 있음
+- LB라기 보다는 트래픽을 체크하는 솔루션으로, 최근 LB 배포 및 확장과 AWS의 타사 네트워크 가상 어플라이언스의 플릿 관리에 사용
+
+
+# 참고사이트
+- [참고사이트](https://hudi.blog/region-and-availability-zone/)
+- [AWS Elastic Load Balancer(ELB) 쉽게 이해하기 #1](https://aws-hyoh.tistory.com/128)
+- [AWS Elastic Load Balancer(ELB) 쉽게 이해하기 #2](https://aws-hyoh.tistory.com/133)
+
+- [SMILESHARK](https://www.smileshark.kr/post/what-is-a-load-balancer-a-comprehensive-guide-to-aws-load-balancer)
