@@ -10,7 +10,7 @@
 
 # EBS 볼륨 유형
 
-|타입|범용|프로비저닝된 IOPS|쓰루풋 최적화 HDD| Cold HDD| 마그네틱|
+|타입|범용|Provisioned IOPS|쓰루풋 최적화 HDD| Cold HDD| 마그네틱|
 |:---:|:---:|:---:|:---:|:---:|:---:|
 |이름|GP3|IO2|ST1|SC1|Standard|
 |용량|1GB~16TB|4GB~16TB|500GB~16TB|500GB~16TB|1GB~1TB|
@@ -20,7 +20,8 @@
 - 하드 성능은 용량과 MAX OPOS 수치를 보면 됨
 - IOPS 수치가 높을수록 데이터 통신이 빠르며, 따라서 프로비전된 IOPS(64,000)이 가장 빠르고 좋음
 - 일반적으로 범용타입은 GP3를 선택하지만, 요금을 극도로 아끼고 싶다면 마그네틱 사용
-
+- Provisioned: 서버의 CPU, Memory 등의 자원을 할당 또는 적절히 배치하여 운영이 가능하도록 준비
+- 
 
 # 참고사이트
 - [인파 EBS 링크](https://inpa.tistory.com/entry/AWS-%F0%9F%93%9A-EBS-%EA%B0%9C%EB%85%90-%EC%82%AC%EC%9A%A9%EB%B2%95-%F0%9F%92%AF-%EC%A0%95%EB%A6%AC-EBS-Volume-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0)
