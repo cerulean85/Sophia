@@ -31,7 +31,6 @@
 - NAT Gateway가 생성되면 Subnet의 IP 범위에 속하는 Private IP가 자동으로 할당된 네트워크 인터페이스(Network Interface, NI)를 받음
 - Amazon EC2 콘솔에서 NAT Gateway의 NI를 볼 수 있으며, NI의 속성을 수정할 수는 없음
 
-
 # 참조/링크
 - [NAT GATEWAY](https://hyeyeon13.tistory.com/20)
 
