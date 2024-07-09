@@ -29,6 +29,8 @@ category: Program Language
   - [Keyward Arguments](#keyward-arguments)
 - [변수 일렬로 선언](#변수-일렬로-선언)
 - [switch/when](#switchwhen)
+- [Random 번호 생성](#random-번호-생성)
+- [Trace 로그 출력](#trace-로그-출력)
 
 
 
@@ -611,4 +613,56 @@ public static string NewSwitch(TClass dm)
   var (x, y) when x > 1 && x < 30 => "오호..",
   var (_, _) => "ㅠㅠㅠ"
 }
+```
+
+# Random 번호 생성
+```cs
+Random random = new Random();
+
+// 0부터 9사이 랜덤 정수 생성 (0 포함, 10 미포함)
+int randomNumber = random.Next(10);
+Console.WriteLine("랜덤 정수 (0-9): " + randomNumber);
+
+// 1부터 100 사이 랜덤 정수 생성 (1 포함, 101 미포함)
+int randomNumberInRange = random.Next(1, 101);
+Console.WriteLine("랜덤 정수 (1-100): " + randomNumberInRange);
+
+// 랜덤 실수 생성 (0.0 이상, 1.0 미만)
+double randomDouble = random.NextDouble();
+Console.WriteLine("랜덤 실수 (0.0-1.0): " + randomDouble);
+
+```
+
+# Trace 로그 출력
+- Trace와 Debug 차이
+  - Debug 클래스는 디버그 빌드에서만 동작하고, Trace 클래스는 디버그 및 릴리스 빌드 모두에서 동작
+  - 로그를 항상 기록하고 싶다면 Trace를 사용하는 것이 좋음
+- 구성 파일 사용
+  - 복잡한 애플리케이션에서는 로그 설정을 코드 내에 직접 작성하기 보다는 app.config 또는 web.config 파일을 사용하여 구성하는 것이 좋음
+
+```cs
+  // 로그 파일 경로 설정
+  string logFilePath = "log.txt";
+
+  // 로그 파일이 존재하지 않으면 생성
+  if (!File.Exists(logFilePath))
+  {
+      File.Create(logFilePath).Dispose();
+      // Dispose 메서드의 역할: 파일 스트림을 적절히 닫고, 파일 리소스를 해제하기 위함
+  }
+
+  // TextWriterTraceListener 설정
+  TextWriterTraceListener textListener = new TextWriterTraceListener(logFilePath);
+
+  // Trace에 리스너 추가
+  Trace.Listeners.Add(textListener);
+
+  // 로그 메시지 출력
+  Trace.WriteLine("This is a log message at " + DateTime.Now);
+  Trace.WriteLine("Another log entry at " + DateTime.Now);
+
+  // 리스너 플러시 및 종료
+  Trace.Flush();
+  Trace.Close();
+
 ```

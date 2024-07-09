@@ -4,19 +4,13 @@
 - 인스턴스가 stopping 상태로 이동시 EC2는 OS에 최대절전 모드(디스크 일시 중단) 신호 보냄
   - 최대 절전 모드 실행하면 모든 프로세스 동결되고, RAM의 콘텐츠를 EBS 루트 볼륨에 저장하고 종료
 - 모든 EBS Volume이 인스턴스에 연결된 상태로 유지되고 저장된 RAM 콘텐츠를 포함해 볼륨 데이터도 유지
-- 인스턴스에 연결된 Amazon EC2 인스턴스 스토어 볼륨이 있다면 이 볼륨상의 데이터는 솔실됨
+- 인스턴스에 연결된 Amazon EC2 인스턴스 스토어 볼륨이 있다면 이 볼륨상의 데이터는 손실됨
 - 인스턴스가 Stopped 상태라면 인스턴스 유형이나 크기를 비롯해 인스턴스의 특정 속성을 수정할 수 있음
 - 대부분의 경우 인스턴스가 시작되면 새로운 기본 호스트 컴퓨터로 마이그레이션되며, 중지했다 시작해도 동일
 - 인스턴스가 시작되면 인스턴스가 부팅되고, 프로세스가 동결 해제되어 상태가 재개되기 전에 OS에서 EBS 루트 볼륨의 RAM 내용을 읽음
 - 인스턴스는 프라이빗 IPv4 주소와 모든 IPv6 주소 유지
 - Amazon EC2는 퍼블릭 IPv4 주소를 해제함. 인스턴스 시작되면 새로운 퍼블릭 IPv4 주소 할당
 - 인스턴스는 연결된 탄력적 IP 주소를 유지함. 최대 절전 모드 인스턴스와 연결된 모든 EIP 주소에 대한 요금 부과
-
-
-## 제한사항
-- 인스턴스를 최대 절전 모드로 전환하면 인스턴스 스토어 볼륨의 데이터가 삭제됨
-- [Amazon EC2 인스턴스의 최대 절전 모드 작동 방식](https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/instance-hibernate-overview.html)
-- 보다가 또 다른데로 링크...
 
 
 ## 루트 볼륨(Root Volume)
@@ -67,7 +61,7 @@
   - 1~3년 사이의 임의 기간이 아닌 1년 똔느 3년 단위로 구매 가능
 - 온디맨드에 비해 최대 요금을 72% 절감할 수 있으며, Standard와 Convertible 두 가지 종류가 있음
 
-### 표준 예약 인스턴스(Standard RI)
+## 표준 예약 인스턴스(Standard RI)
 - t2.micro의 t2 인스턴스와 같이 동일한 인스턴스 유형 간 수정이 가능
   - 예를 들어, t2.microdptj t2는 인스턴스 유형이고, micro는 인스턴스 크기를 의미
   - nano, micro, small 등의 접미사는 각각 고유한 정규화 인자(Normalization factor)를 가짐
@@ -75,14 +69,14 @@
   - 인스턴스 크기를 수정할 때 현재 보유한 표준 RI 인스턴스의 정규화 인자 합이 수정하고자 하는 인스턴스 유형의 정규화 인자 합과 동일해야 함. 즉, 기존 t2.large 인스턴스를 하나 갖고 있다면 이를 t2.small 인스턴스 넷이나 t2.medium 인스턴스 둘로 나눌 수 있음. 또는 반대로 t2.small 인스턴스 넷과 t2.medium 인스턴스 둘의 계약을 합쳐 t2.large RI로 병합할 수 있음
 - 약정 기간 중 해당 인스턴스가 필요 없어지면 EC2 인스턴스 마켓플레이스에 판매 가능
 
-### 전환 가능 예약 인스턴스(Convertible RI)
+## 전환 가능 예약 인스턴스(Convertible RI)
 - 계약기간 중 인스턴스 스펙 뿐 아니라 OS나 인스턴스 유형 등 더 다양한 옵션을 변경해야 할 수 있음
 - Convertible RI는 표준 RI에 비해 할인율이 다소 낮으나, 중간에 인스턴스의 유형과 OS 교체도 가능
 - 기존 인스턴스 옵션을 수정하는 것이 아닌 기존 RI를 AWS에서 제공하는 새로운 인스턴스와 교환(c3.nano → c4.nano) 
 - 기존의 스펙과 같거나 그 이상의 인스턴스로 교체해야 하며, 해당 차익을 지불해야 한다는 제약 존재
 - 도중에 쓸모 없어진 인스턴스는 마켓플레이스에서 판매 불가능
 
-# 스팟 인스턴스(Spot Instance)
+## 스팟 인스턴스(Spot Instance)
 - 온디맨드에 비해 70~90% 정도의 가격으로 EC2 인스턴스를 이용할 수 있으며, 가격은 수요와 공급에 따라 변화. 남는 용량을 효율적으로 활용하기 위해 제공
 - 사용할 인스턴스에 입찰하는 형식으로, 제안한 가격이 AWS에서 명시한 인스턴스 시세보다 높다면 인스턴스를 수십% 저렴하게 사용할 수 있으나, 시세가 변해 제안한 가격보다 인스턴스가 비싸진다면 해당 인스턴스는 자동으로 중단됨
   - 인스턴스 시세가 입찰가 이상으로 올라가면 2분의 유예기간을 주고 인스턴스 제공을 중단
@@ -93,12 +87,17 @@
   - 백업 생성이나 중단 시 알람 푸시 등의 Failure Management가 잘 갖춰져야 함
 
 
-## EC2 Auto Scaling의 단계별 조정 및 단순 조정 정책
-- [EC2 Auto Scaling의 단계별 조정 및 단순 조정 정책](https://docs.aws.amazon.com/ko_kr/autoscaling/ec2/userguide/as-scaling-simple-step.html)
-
+## AutoScaling
+- Amazon EC2 용량을 사용자가 정의한 조건에 따라 자동으로 확장 또는 축소하여 실행중인 Amazon EC2 인스턴스의 수를 원하는 수준으로 유지
+- ASG; Auto Scaling Group라는 인스턴스 모음을 생성
+- 각 ASG의 최소 인스턴스 수를 지정할 수 있으며, Auto Scaling에서는 그룹의 크기가 이 값 아래로 내려가지 않음
+- 각 ASG의 최대 인스턴스 수 크기를 지정 가능하며, Auto Scaling에서는 그룹의 크기가 이 값을 넘지 않음
+- 원하는 용량(Desired capacity)을 지정한 경우 그룹을 생성한 다음에는 언제든지 오토스케일링에서 해당 그룹에서 이 만큼의 인스턴스를 보유 가능
 
 
 ## 참고사이트
 - [[⚡AWS] EC2 스팟 인스턴스 간단한 개념](https://data-engineer-tech.tistory.com/21)
 - [예약 인스턴스와 스팟 인스턴스로 EC2 비용 절감하기](https://velog.io/@c17an/%EC%98%88%EC%95%BD-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4%EC%99%80-%EC%8A%A4%ED%8C%9F-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4%EB%A1%9C-EC2-%EB%B9%84%EC%9A%A9-%EC%A0%88%EA%B0%90%ED%95%98%EA%B8%B0)
 - [Spot Instances](https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/using-spot-instances.html)
+- [EC2 Auto Scaling의 단계별 조정 및 단순 조정 정책](https://docs.aws.amazon.com/ko_kr/autoscaling/ec2/userguide/as-scaling-simple-step.html)
+- [AutoScaling](https://velog.io/@hkjs96/AWS-AutoScaling)
