@@ -2,6 +2,34 @@
 Bank of Canada Gov is positively considering currency policy.
 These days interest rates are remaining high.
 
+## 36. surplus
+- (an amount that is) more than is needed.
+
+## 35. buoy
+- a floating object on the top of the sea, used for directing ships and warning them of possible danger
+
+## 34. blow out
+- If a flame blows out or you blow it out, it stops burning when a person or the wind blows on it.
+
+## 33. rein
+- a long, thin piece of material, sespecially leather, that helps you to control and direct a horse.
+
+## 32. mandate
+- the authority given to an elected group of people, such as a government, to perform an action or govern a country.
+
+## 31. vigilance
+- more careful attention, especially in order to notice possible danger.
+
+## 30. tinker
+- to make small changes to something, especially in an attempt to repair or improve it.
+
+## 29. downturn
+- a reduction in the amount or success of something, such as a country's economic activity.
+
+
+## 28. scourge
+- something or someone that causes greate suffering or a lot of trouble.
+
 ## 27. key interest rate
 - 기준금리
 - [기사보기](https://www.wsj.com/economy/global/boe-chief-economist-pill-says-key-rate-cut-is-some-way-off-279c82fb?mod=economy_lead_story)
