@@ -2,7 +2,7 @@
 
 - Endpoint는 요청을 보낼 때 필요한 목적지라 할 수 있음
   - 어떤 서비스나 리소스로 접근할 수 있는 특정 URL이나 네트워크 주소가 될 수 있음
-- VPC Endpoint는 Endpoint 유형 중 하나로, VPC Endpoint를 사용하면 VPC 내부 또는 외부에 있는 AWS 서비스들과 통신할 때 인터넷 통신이 되지 않아도 Prvate한 통신 환경을 통해 서비스에 접근할 수 있도록 함
+- VPC Endpoint는 Endpoint 유형 중 하나로, VPC Endpoint를 사용하면 VPC 내부 또는 외부에 있는 AWS 서비스들과 통신할 때 인터넷 통신이 되지 않아도 Private한 통신 환경을 통해 서비스에 접근할 수 있도록 함
 
 ## VPC Endpoint 종류
 
@@ -26,3 +26,5 @@
 
 ## 참고사이트
 - [[소개] VPC Endpoint란?](https://tech.cloud.nongshim.co.kr/2023/03/16/%EC%86%8C%EA%B0%9C-vpc-endpoint%EB%9E%80/)
+
+- [AWS PrivateLink를 통한 새로운 SaaS 전략](https://www.megazone.com/techblog_191113_aws-privatelink/)
