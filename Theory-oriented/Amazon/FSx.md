@@ -1,0 +1,1 @@
+https://ssunw.tistory.com/entry/AWS-%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80-%EC%B6%94%EA%B0%80-%EA%B8%B0%EB%8A%A5-Amazon-FSx-1
