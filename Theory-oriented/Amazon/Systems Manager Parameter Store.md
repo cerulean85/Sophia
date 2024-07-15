@@ -1,3 +1,11 @@
+# AWS System Manager
+- AWS 애플리케이션 및 리소스를 위한 운영 허브이자, 안전한 운영이 대규모로 활성화되는 하이브리드 및 멀티클라우드 환경을 위한 안전한 엔드 투 엔드 관리 솔루션
+
+## 작동 방식
+
+
+
+
 # AWS Systems Manager Parameter Store
 
 - 애플리케이션의 구성 데이터 및 비밀을 안전하게 저장하고 관리하는 데 도움이 됨
@@ -18,5 +26,10 @@
 
 - 전반적으로 애플리케이션의 구성 데이터 및 암호 관리를 간소화하여 매개변수를 중앙 집중화하고 보호하는 동시에 다른 AWS 서비스와의 간편한 통합을 제공함
 
+
+
+
 ## 참고사이트
 - [파라미터 스토어 (AWS Systems Manager Parameter Store)](https://velog.io/@el0902/%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0-%EC%8A%A4%ED%86%A0%EC%96%B4-AWS-Systems-Manager-Parameter-Store)
+
+- [AWS Systems Manager (SSM)란?](https://seongduck.tistory.com/236)
