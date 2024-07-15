@@ -20,11 +20,11 @@
 
 
 ## 가용 영역(Availability Zone, AZ)
-![alt text](../images/cloud/available_zone.png)
+![alt text](../../images/cloud/available_zone.png)
 - Region은 최소 2개 이상의 AZ로 구성
 - AZ는 최소 1개 이상의 데이터 센터로 구성
 - 개별 데이터 센터는 일반적으로 50,000 ~ 80,000대의 물리적 서버가 있음
-- 각 AZ는 같은 Region이지만, 천재지변이나 테러 등의 재해에에 대비하기 위해 지리적으로 멀리 떨어짐
+- 각 AZ는 같은 Region이지만, 천재지변이나 테러 등의 재해에 대비하기 위해 지리적으로 멀리 떨어짐
 - 가용영역 확인: [AWS 글로벌 인프라](https://aws.amazon.com/ko/about-aws/global-infrastructure/)
 
 
@@ -52,8 +52,8 @@
 - Load Balancer Node는 AZ마다 하나씩 존재하고, 소속된 AZ 내의 Resource에게 요청을 전달함
 - VPC에서 바라보는 ELB는 Load Balancer Node와 EC2의 집합으로 보이며, 각각 Listener(Load Balancer Node), Target Group(EC2 집합)에 해당
 - AZ에 부하가 불균등하게 분산되는 현상을 해결하기 위해 교차 영역(Cross Zone) LB 수행
-![alt text](../images/cloud/lb_error.png)
-![alt text](../images/cloud/lb_cross.png)
+![alt text](../../images/cloud/lb_error.png)
+![alt text](../../images/cloud/lb_cross.png)
 
 
 ## ELB 요청 처리 과정

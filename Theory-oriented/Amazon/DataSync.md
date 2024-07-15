@@ -49,11 +49,11 @@
 
 - 온프레미스의 데이터를 AWS 스토리지 서비스로 복사
 
-![alt text](../images/cloud/datasync_1.png)
+![alt text](../../images/cloud/datasync_1.png)
 
 - AWS EFS에서 또다른 AWS EFS로 데이터 복사
 
-![alt text](../images/cloud/datasync_2.png)
+![alt text](../../images/cloud/datasync_2.png)
 
 - DataSync만을 위한 별도의 에이전트를 온프레미스 환경이나 AWS 환경에 배포해야 함
 
