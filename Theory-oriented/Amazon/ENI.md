@@ -12,7 +12,7 @@
 - 아래와 같이 기본 ENI인 Eth0에 연결되어 EC2 인스턴스 연결을 제공
 - 독립적으로 생성된 ENI로 즉시 연결하지 않고 Sub ENI를 사용하여 장애 조치 용도로 사용 가능
 
-![alt text](../images/cloud/eni_1.png)
+![alt text](../../images/cloud/eni_1.png)
 
 - ENI 하나에 1개 이상의 Private IP와 오직 하나의 Public IP를 가질 수 있음. Public IP는 없어도 됨
 - 모든 인스턴스는 기본적으로 인스턴스 생성 시 자동으로 생성되는 Primary ENI가 하나 있어야 하며, 이것은 인스턴스에서 제거할 수 없음
