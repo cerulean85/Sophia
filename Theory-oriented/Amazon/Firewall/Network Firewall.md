@@ -17,3 +17,7 @@
 - AWS WAF, AWS Shield, AWS Network Firewall, 보안 그룹 등 다양한 보안 서비스를 통합 관리
 
 - 즉, Network Firewall은 네트워크 레벨의 보안에 집중하고, AWS Firewall Manager는 조직 전체의 보안 정책 관리에 중점을 둠
+
+
+## 참고사이트
+- ChatGPT Firewall Manager과 Network Firewall의 차이
