@@ -62,8 +62,8 @@
 
 1. 사용자가 LB에 접근하기 위해 Amazon의 DNS 서버에 LB의 도메인 해석 요청
 2. Amazon의 DNS 서버가 LB Node IP 리스트를 사용자에게 전달
-3. 사용자는 IP 중 하나를 선택하요 LB에 접근 ( +Port 입력 )
-4. 사용자는 LB의 (Port가 일치하는) Listner에 접근하게 되며, Listner는 요청을 받아들여 적절한 Target Group으로 전달
+3. 사용자는 IP 중 하나를 선택하여 LB에 접근 ( +Port 입력 )
+4. 사용자는 LB의 (Port가 일치하는) Listener에 접근하게 되며, Listener는 요청을 받아들여 적절한 Target Group으로 전달
 5. Listener에게 전달받은 요청을 EC2가 처리 후 다시 사용자에게 반환
 
 

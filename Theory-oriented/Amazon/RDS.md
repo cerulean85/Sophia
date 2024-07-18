@@ -31,7 +31,7 @@
 - AWS Ke Management Service(KMS)를 통해 저장 중 암호화된 Amazon RDS DB 인스턴스에 대해서도 읽기 전용 복제본을 생성할 수 있음
 
 
-![alt text](../images/cloud/replica.png.png)
+![alt text](../../images/cloud/replica.png)
 
 
 # 참고사이트
