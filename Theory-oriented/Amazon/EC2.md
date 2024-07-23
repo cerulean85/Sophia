@@ -101,3 +101,8 @@
 - [Spot Instances](https://docs.aws.amazon.com/ko_kr/AWSEC2/latest/UserGuide/using-spot-instances.html)
 - [EC2 Auto Scaling의 단계별 조정 및 단순 조정 정책](https://docs.aws.amazon.com/ko_kr/autoscaling/ec2/userguide/as-scaling-simple-step.html)
 - [AutoScaling](https://velog.io/@hkjs96/AWS-AutoScaling)
+
+
+
+- [Specifications for Amazon EC2 memory optimized instances](https://docs.aws.amazon.com/ec2/latest/instancetypes/mo.html) 
+- [Burstable performance instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/burstable-performance-instances.html)
