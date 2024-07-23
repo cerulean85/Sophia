@@ -43,7 +43,7 @@
 ## SCP Examples
 - SCP에는 Blocklist(차단 목록)과 Allowlist(허용 목록) 두 가지 전략이 있음
 
-![alt text](image-2.png)
+![alt text](../../images/cloud/organizations.png)
 
 
 ## 참고사이트
