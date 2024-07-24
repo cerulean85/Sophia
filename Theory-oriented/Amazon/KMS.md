@@ -1,6 +1,10 @@
 
 # AWS Key Management Service
 
+- AWS KMS는 데이터 보호를 위한 암호화 키를 쉽게 만들고 통제할 수 있는 관리형 서비스
+- 대부분의 AWS 서비스와 통합되는데, 감사, 규제, 규정 준수 요구 사항에 따른 AWS 키 사용을 AWS CloudTrail로 기록
+- AWS KMS API를 사용하여 KMS 키와 특수 기능을 생성 및 관리할 수 있음
+
 ## References
 - [AWS Key Management Service](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html)
 - [Multi-Region keys in AWS KMS](https://docs.aws.amazon.com/kms/latest/developerguide/multi-region-keys-overview.html)
