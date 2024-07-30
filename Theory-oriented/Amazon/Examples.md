@@ -18,6 +18,8 @@
 
 [Associate SAA-C03 Examples (6)](https://www.examtopics.com/exams/amazon/aws-certified-solutions-architect-associate-saa-c03/view/6/)
 
+[Associate SAA-C03 Examples (7)](https://www.examtopics.com/exams/amazon/aws-certified-solutions-architect-associate-saa-c03/view/7/)
+
 [AWS SAA-C03 Examtopics 문제 정리 (1-544)](https://velog.io/@gagaeun/AWS-SAA-C03-Examtopics-%ED%97%B7%EA%B0%88%EB%A6%AC%EB%8A%94-%EB%AC%B8%EC%A0%9C-%EC%A0%95%EB%A6%AC)
 
 
