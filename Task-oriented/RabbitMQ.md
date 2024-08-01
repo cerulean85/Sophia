@@ -45,6 +45,28 @@ rabbitmqctl set_permissions -p / "rabbitmq" ".*" ".*" ".*"
 rabbitmqctl list_permissions
 ```
 
+- cmd로 queue 삭제하기
+  - RabbitMQ Management를 실행하였다면 브라우저를 통해 다음 경로로 접속하여 rabbitmqadmin 다운로드
+  - 경로: http://localhost:15672/cli/rabbitmqadmin
+  - 다운로드 받은 파일을 원하는 위치로 옮긴 후 다음 명령어로 실습
+
+```shell
+
+# CMD 실행 후 rabbitmqadmin을 옮긴 경로로 이동
+cd C:\Program Files\RabbitMQ Server\rabbitmq_server-3.13.4\escript
+
+# guest 계정으로, / 호스트의 celery 큐 삭제
+python rabbitmqadmin -u guest -p guest -V / delete queue name=celery
+
+# tos_admin 계정으로, / 호스트의 celery 큐 삭제
+python rabbitmqadmin -u tos_admin -p <Any Pass> -V /TOS_SYSTEM delete queue name=celery
+
+# tos_admin 계정으로, / 호스트의 TOS 큐 삭제
+python rabbitmqadmin -u tos_admin -p <Any Pass> -V /TOS_SYSTEM delete queue name=TOS
+
+```
+- rabbitmqadmin은 파이썬으로 실행해야 함
+
 ## References
 - [출처1](https://experiences.tistory.com/2)
 - [출처2](https://sarc.io/index.php/miscellaneous/1632-ubuntu-rabbitmq-apt)
