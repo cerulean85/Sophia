@@ -72,3 +72,4 @@ python rabbitmqadmin -u tos_admin -p <Any Pass> -V /TOS_SYSTEM delete queue name
 - [출처2](https://sarc.io/index.php/miscellaneous/1632-ubuntu-rabbitmq-apt)
 - [사용자 비번 변경](https://bangcfactory.tistory.com/entry/rabbitmq-%EC%82%AC%EC%9A%A9%EC%9E%90-%EA%B4%80%EB%A6%AC)
 - [사용자 권한 변경](https://heodolf.tistory.com/50)
+- [RabbitMQ Mamangement-cli](https://www.rabbitmq.com/docs/management-cli)
