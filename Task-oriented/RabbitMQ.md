@@ -67,9 +67,33 @@ python rabbitmqadmin -u tos_admin -p <Any Pass> -V /TOS_SYSTEM delete queue name
 ```
 - rabbitmqadmin은 파이썬으로 실행해야 함
 
+## RabbitMQ 메시지 처리 과정
+- RabbitMQ로 전달된 메시지는 Exchange를 통해 Queue로 전달됨
+![alt text](../images/rabbitmq.png)
+
+## Exhange 유형
+### Direct Exchange
+- 메시지의 라우팅 키를 기반으로 메시지 전달
+- Exchange와 Queue가 특정키로 바인딩
+
+### Fanout Exchange
+- 연결된 모든 Queue에 메시지 전송
+- Exchange에 N개의 Queue가 연결되어 있다면 N개 복사되어 각 Queue로 라우팅
+
+### Topic Exchange
+- Direct 방식과 마찬가지로 라우팅 키 사용
+- Direct 방식과는 달리 특정 키가 아닌 패턴으로 바인딩
+- 라우팅 키가 바인딩 규칙 중 일치하는 모든 패턴의 Queue에 메시지 라우팅
+
+### Headers Exchange
+- 헤더에 여러 속성 값을 사용하여 라우팅
+- 헤더이 값과 바인딩 규칙 값이 일치하면 Queue로 메시지 라우팅
+
+
 ## References
 - [출처1](https://experiences.tistory.com/2)
 - [출처2](https://sarc.io/index.php/miscellaneous/1632-ubuntu-rabbitmq-apt)
 - [사용자 비번 변경](https://bangcfactory.tistory.com/entry/rabbitmq-%EC%82%AC%EC%9A%A9%EC%9E%90-%EA%B4%80%EB%A6%AC)
 - [사용자 권한 변경](https://heodolf.tistory.com/50)
 - [RabbitMQ Mamangement-cli](https://www.rabbitmq.com/docs/management-cli)
+- [[RabbitMQ] RabbitMQ의 동작과 Exchange Type](https://velog.io/@jaewan/RabbitMQ-RabbitMQ%EC%9D%98-%EB%8F%99%EC%9E%91%EA%B3%BC-Exchange-Type)
