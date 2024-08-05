@@ -95,6 +95,12 @@
 - 원하는 용량(Desired capacity)을 지정한 경우 그룹을 생성한 다음에는 언제든지 오토스케일링에서 해당 그룹에서 이 만큼의 인스턴스를 보유 가능
 
 
+## launchPermission
+- 특정 AWS계정과 AMI공유 (--attribute launchPermission 추가)
+- [특정 AWS계정과 AMI공유](https://sepiros.tistory.com/49)
+
+
+
 ## 참고사이트
 - [[⚡AWS] EC2 스팟 인스턴스 간단한 개념](https://data-engineer-tech.tistory.com/21)
 - [예약 인스턴스와 스팟 인스턴스로 EC2 비용 절감하기](https://velog.io/@c17an/%EC%98%88%EC%95%BD-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4%EC%99%80-%EC%8A%A4%ED%8C%9F-%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4%EB%A1%9C-EC2-%EB%B9%84%EC%9A%A9-%EC%A0%88%EA%B0%90%ED%95%98%EA%B8%B0)
