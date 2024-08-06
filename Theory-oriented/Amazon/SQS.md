@@ -9,6 +9,10 @@ PDF
 RSS
 소비자가 대기열에서 메시지를 수신하고 처리하면 메시지는 계속 대기열에 있습니다. Amazon SQS는 메시지를 자동으로 삭제하지 않습니다. Amazon SQS는 분산 시스템이므로 소비자가 메시지를 실제로 받는지 보장할 수 없습니다(예를 들어, 연결 문제 또는 소비자 애플리케이션 문제로 인해). 또한, 소비자는 메시지를 수신하고 처리한 후 대기열에서 이 메시지를 삭제해야 합니다.
 
+## Amazon SQS visibility timeout
+- 컨슈머가 큐에서 메시지 받아 처리하면 메시지는 여전히 큐에 남음
+- Amazon SQS는 컨슈머가 실제로 메시지 받았는지 보장하지 않으므로, 컨슈머가 큐에서 메시지를 없애야 함
+- 모든 컨슈머가 메시지를 받거나 처리하지 못하게 하려면 visibility timeout 설정 (기본30분, 최대12시간)
 
 
 https://docs.aws.amazon.com/ko_kr/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html

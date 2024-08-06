@@ -50,6 +50,13 @@
 - 경험 수준과 관계없이 모든 사용자가 코드를 작성하지 않고 AWS Glue의 서버리스 Apache Spark 기반 ETL 플랫폼에서 빅데이터를 처리 가능
 - Glue Studio를 통해 여러 데이터 소스에서 카탈로그로 메타데이터만 가져오고, ETL 작업 후 데이터를 저장하거나 엔드포인트를 생성하여 Sagemaker, EMR, QuickSight 등의 서비스로 연결할 수 있음
 
+## Tracking Processed data using job bookmarks
+- AWS Glue는 이전 ETL 잡에서 처리했던 데이터를 상태 정보로 저장하여 추적
+- 이 영속화된 상태 정보를 job bookmark라고 부름
+- Job bookmark는 AWS Glue가 상태 정보를 유지하고 예전 데이터를 다시 처리하지 않게 지원
+- Job bookmark로 스케쥴 잔격에 따른 재실행 시 새로운 데이터를 처리할 수 있음
+- Job bookmark는 sources, transformations, and targets와 같이 job의 다양한 요소에 대한 상태들로 구성
+
 ## 참고사이트
 - [AWS Glue 개념 정리](https://jaynamm.tistory.com/entry/AWS-Glue-%EA%B0%9C%EB%85%90-%EC%A0%95%EB%A6%AC)
 
