@@ -1,1 +1,0 @@
-https://btcd.tistory.com/469
