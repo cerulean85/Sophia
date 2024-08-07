@@ -8,6 +8,10 @@
 - 계정 간 예약 인스턴스와 Saving Plans 할인 공유
 - AWS 계정 생성을 자동화하기 위한 API 제공
 
+- 계정 관리 서비스로 다양한 AWS 계정을 사용자가 만들고 집중적으로 관리하는 조직으로 통합할 수 있게 함
+- 계정 관리와 통합된 Billing Capabilities를 포함시켜 사용자가 예산(budgetary), 보안(security), 비즈니스의 규정준수 요구사항(compliance needs)를 충족시키도록 함
+- 조직 관리자라면 조직에서 계정을 만들고, 존재하는 계정을 조직으로 초대할 수 있음
+
 
 ![alt text](../../images/cloud/orginizations.png)
 
