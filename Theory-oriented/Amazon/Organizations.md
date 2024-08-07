@@ -46,5 +46,17 @@
 ![alt text](../../images/cloud/organizations.png)
 
 
+## Managing access permissions for your organization
+- 루트, OU, 계정, 조직 내 정책 등 모든 AWS 리소스는 AWS 계정에 의해 소유되고, 리소스를 만들거나 접근하는 권한은 권한 정책에 의해 통치됨
+- 조직을 위해 관리 계정은 모든 리소스를 소유하며, 계정 관리자는 IAM 정체성(users, groups, and roles) 권한 정책을 더하여 AWS 리소스로의 접근을 통제할 수 있음
+- 권한을 부여할 때, 사용자는 누가 권한을 얻을지, 권한을 얻을 리소스와 그런 리소스에 허락하고 싶은 구체적인 활동들을 결정
+- 기본적으로 IAM 사용자와 그룹, 역할은 아무런 권한이 없음
+- 조직의 관리 계정 내 관리자에 이해 행적적인 태스크를 수행하거나 관리 계정 내의 다른 IAM 사용자나 역할에 대한 관리자 권한을 위임할 수 있음
+- 이를 위해 IAM 사용자, 그룹, 역할에 있어 IAM 권한 정책을 더함
+- 기본적으로 사용자는 어떤 권한도 없으며 이는 implicit deny라고 불림
+- 정책은 implicit deny를 explicit allow로 오버라이드 하는데, explicit allow는 사용자가 수행할 수 있는 어떤 활동과 그 활동을 위해 필요한 리소스들을 구체화함
+- 만약 권한이 역할에 부여된다면, 조직의 다른 계정의 사용자들은 역할을 맡을 수 있음
+
 ## 참고사이트
 - [[AWS] Advanced Identity in AWS](https://velog.io/@gagaeun/AWS-Advanced-Identity-in-AWS)
+- [Managing access permissions for your organization](https://docs.aws.amazon.com/organizations/latest/userguide/orgs_permissions_overview.html)
