@@ -1,3 +1,24 @@
+# AWS Global Accelerator
+- 다양한 AWS 리전에 있는 엔드포인트를 지원하는 글로벌 서비스
+- 표준 Accelerator는 최적의 지역 엔드포인트로 트래픽을 라우팅
+  - health, Client location, policy 고려
+- 기본적으로 사용자의 Accelerator와 연결된 고정 IP 주소를 제공하며, 고정 IP 주소는 AWS 엣지 네트워크의 애니캐스트임
+  > 애니캐스트?
+  > 요청을 가장 효율적으로 철할 수 있는 포인트(데이터 센터, 엔드포인트 등)로 트래픽을 라우팅
+  > 즉, 1:1로 결합 가능한 케이스가 여러 개
+- 표준 Accelerator의 엔드포인트는 NLB, ALB, EC2 인스턴스, EIP 주소 등이 될 수 있음
+- 이 서비스는 즉각적으로 health 변화, 클라이언트의 인터넷 트래픽이 항상 healthy 엔드포인트에 연결됨을 보장하는 설정 변화에 대응
+
+- Global Accelerator는 지원된 엔드포인트에 대해 Route 53 ARC 트래픽 리다이렉션을 존중(respect)하여, 잠재적으로 손상된 zonal shift, zonal autoshift를 가진 AZ로부터 트래픽을 라우팅
+
+- Custom 라우팅 Accelerator는 Amazon VPC 서브넷 유형만 지원하고, 이 서브넷 내에서 프라이빗 IP주소의 트래픽을 라우팅
+
+  > zonal shift?
+  > Amazon Route 53 애플리케이션 리커버리 컨트롤러(Route 53 ARC)의 기능
+  > 손상된 AZ로부터 로드밸런싱을 이동시켜 AWS리전에서 다른 건강한 AZ에서 운영을 계속 할 수 있음
+  
+
+
 AWS Global Accelerator standard accelerator에 대해 설명해줘.
 ChatGPT
 AWS Global Accelerator는 애플리케이션의 성능과 가용성을 향상시키기 위해 설계된 네트워크 서비스입니다. 표준 가속기(Standard Accelerator)는 AWS Global Accelerator의 기본적인 유형으로, 애플리케이션 트래픽을 전 세계적으로 분산시키고 최적의 경로로 전달함으로써 지연 시간을 줄이고 애플리케이션의 성능을 최적화합니다.

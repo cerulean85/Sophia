@@ -1,0 +1,1 @@
+- (How Lambda processes records from stream and queue-based event sources)[https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html]
