@@ -11,6 +11,10 @@
 
 - 회사 내부 네트워크 혹은 기존 데이터 센터 환경의 온프레미스 IT 자원과 AWS 클라우드 자원을 전용 회선으로 연결하여, 하이브리드 환경을 구축할 수 있는 서비스
 
+## AWS Direct Connect vs. Snowball
+- AWS Direct Connect: 인터넷 서비스 제공업체 우회가 목적. 전용회선 연결. 온프레미스와 AWS의 하이브리드 환경 구축
+- AWS Direct Connect: Amazon S3와 사용자의 온사이트 데이터 스토리지 간 대용량 데이터를 인터넷 보다 빠른 속도로 전송
+
 
 
 

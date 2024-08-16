@@ -31,6 +31,12 @@
 - NAT Gateway가 생성되면 Subnet의 IP 범위에 속하는 Private IP가 자동으로 할당된 네트워크 인터페이스(Network Interface, NI)를 받음
 - Amazon EC2 콘솔에서 NAT Gateway의 NI를 볼 수 있으며, NI의 속성을 수정할 수는 없음
 
+# NAT Gateway vs. NAT Instance
+- NAT Gateway는 AWS가 관리 하므로 관리 부담이 적고, 고가용성이며, 비싸며, 사용량 기반 비용 지불. 그리고 Bastion 서버 불가능하며, 보안그룹도 적용할 수 없음
+
+- NAT Instance는 사용자가 관리하므로 관리부담이 크고, 가용성 부족. 스케일링을 수동으로 해야 하며, Bastion 서버 사용 가능. 보안그룹 적용 가능하며 NAT Gateway 보다는 저렴하며, EC2 인스턴스 유형과 시간에 따라 비용 결정
+
+
 # 참조/링크
 - [NAT GATEWAY](https://hyeyeon13.tistory.com/20)
-
+- [[AWS] NAT Gateway와 NAT Instance의 차이점 정리](https://jibinary.tistory.com/356#google_vignette)

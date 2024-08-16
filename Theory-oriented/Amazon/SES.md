@@ -7,6 +7,7 @@
 - 이메일 서버 관리, 네트워크 구성, IP주소 확보 등 인프라 구축 어려움
 - 써드 파티 이메일 솔루션은 계약 및 금액 협상 뿐만 아니라 상당한 초기 비용까지 필요
 
+- 이메일을 HTML 포맷으로 전송 가능
 
 ## References
 - [What is Amazon SES?](https://docs.aws.amazon.com/ses/latest/dg/Welcome.html)

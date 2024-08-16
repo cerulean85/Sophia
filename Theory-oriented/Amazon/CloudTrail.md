@@ -1,7 +1,5 @@
 # AWS CloudTrail
 
-- 사용자가 설계한 Amazon S3 버킷으로 로그파일을 딜리버리 하는 서비스
-
 - AWS 계정의 운영 및 위험 감사, 거버넌스 및 규정 준수를 활성화 하는 데 도움이 되는 서비스
 
 - 사용자, 역할 또는 AWS 서비스가 수행하는 작업은 CloudTrail에 이벤트로 기록
@@ -17,6 +15,8 @@
 - AWS 계정의 활동 및 이벤트 기록을 보유하려면 추적을 생성해야 함. CloudTrail 요금 있음
 
 - CloudTrail 생성시 추적에 대한 로그를 저장해야 하므로 S3 버킷을 지정해야 함
+
+- 사용자가 설계한 Amazon S3 버킷으로 로그파일을 딜리버리
 
 ## 참고사이트
 - [[중요][AWS] CloudTrail란 무엇인가?](https://metaverse-cloud.tistory.com/204)
