@@ -9,3 +9,5 @@
 
 ## References
 - [What Is AWS Certificate Manager?](https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html)
+
+- [Amazon Certificate Manager](https://abiabi0707.medium.com/amazon-certificate-manager-8c8ed24c0691)
