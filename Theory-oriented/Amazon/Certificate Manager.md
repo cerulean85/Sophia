@@ -7,6 +7,9 @@
 - ACM wildcard certificates protect an unlimited number of subdomains.
 - export ACM certificates singed by AWS PRivate CA for use anywhere in your internal PKI.
 
+- ACM is not responsible for monitoring and renewal. Amazon Cloudwatch Events sends notices before the certification expires. To renew the imported certificate, you renew with the certificate issuer or create a new certificate with ACM.
+
+
 ## References
 - [What Is AWS Certificate Manager?](https://docs.aws.amazon.com/acm/latest/userguide/acm-overview.html)
 

@@ -4,7 +4,7 @@
 - Private IP에서 인터넷으로 요청을 보내면 NAT 라우터에서 주소 변환 테이블에 따라 Public IP로 변환
 - 이때 변환된 내용은 NAT 변환 테이블에 기록되는데, 인터넷으로부터 응답이 라우터에 도착하면 이 테이블을 참조하여 Private IP를 가진 호스트에게 전달
 
-# NAT Gateway
+# AWS NAT Gateway
 - NAT Gateway는 AWS에서 제공하는 NAT 서비스
 - Private Subnet의 인스턴스가 인터넷과 같은 VPC 외부 서비스에 연결할 수 있도록 함
 - NAT Gateway는 외부 서비스에서 Private Subnet 내의 인스턴스와 연결할 수 없도록 함
