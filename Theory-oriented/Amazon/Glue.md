@@ -1,5 +1,47 @@
 # AWS Glue
 
+
+AWS Glue와 Amazon Kinesis Data Firehose 비교
+AWS Glue와 Amazon Kinesis Data Firehose는 모두 데이터 처리와 이동을 위한 AWS 서비스이지만, 그 목적과 사용 사례가 다릅니다. 아래는 두 서비스의 주요 차이점과 비교입니다.
+
+AWS Glue
+목적: 데이터의 추출(Extract), 변환(Transform), 저장(Load) 작업을 자동화하는 ETL 서비스
+주요 기능:
+ETL 작업: 데이터를 다양한 소스로부터 추출하고, 변환한 후, 데이터 웨어하우스나 데이터 레이크에 저장
+서버리스: 인프라 설정이나 관리가 필요 없음
+Dynamic Frame: Apache Spark의 DataFrame과 호환되며, 스키마가 필요 없는 고급 변환 세트를 제공
+스케줄링: 주기적인 작업 실행을 자동화
+북마크 기능: 작업 상태를 저장하여 중단된 시점부터 작업 재개 가능
+AWS Glue Data Catalog: 중앙 메타데이터 리포지토리로, 모든 데이터를 한 곳에 모아 ETL 작업을 수행
+자동 코드 생성: Python 및 Scala 코드를 자동으로 생성하는 ETL 엔진
+작업 모니터링 및 재시도: 종속성 확인, 작업 모니터링 및 재시도를 관리하는 유연한 스케줄러
+Amazon Kinesis Data Firehose
+목적: 스트리밍 데이터를 실시간으로 수집, 변환, 로드하는 서비스
+주요 기능:
+실시간 데이터 수집: 스트리밍 데이터를 실시간으로 수집하여 다양한 데이터 저장소로 전송
+데이터 변환: Lambda 함수를 사용하여 데이터를 실시간으로 변환
+자동 스케일링: 데이터 수집 및 전송을 자동으로 스케일링
+다양한 데이터 싱크: Amazon S3, Amazon Redshift, Amazon Elasticsearch Service, Splunk 등으로 데이터를 전송
+내구성: 데이터를 안전하게 저장하고 전송
+모니터링 및 경고: Amazon CloudWatch와 통합하여 데이터 전송 상태를 모니터링하고 경고 설정 가능
+비교 요약
+목적:
+
+AWS Glue: 데이터의 추출, 변환, 저장 작업을 자동화하는 ETL 서비스
+Amazon Kinesis Data Firehose: 스트리밍 데이터를 실시간으로 수집, 변환, 로드하는 서비스
+주요 사용 사례:
+
+AWS Glue: 데이터 웨어하우스나 데이터 레이크로의 데이터 이동, 데이터 변환 및 정제, 주기적인 ETL 작업
+Amazon Kinesis Data Firehose: 실시간 로그 수집 및 분석, 실시간 데이터 스트리밍, 실시간 데이터 변환 및 로드
+데이터 처리 방식:
+
+AWS Glue: 배치 처리, 주기적인 ETL 작업
+Amazon Kinesis Data Firehose: 실시간 스트리밍 데이터 처리
+변환 기능:
+
+AWS Glue: 복잡한 데이터 변환 및 정제 작업을 수행할 수 있는 고급 ETL 기능
+Amazon Kinesis Data Firehose: Lambda 함수를 사용한 실시간 데이터 변환
+
 - ETL 서비스
 - 완전 관리형 추출(Extract), 변환(Transform), 저장(Load) ETL 서비스
 - 효율적인 비용으로 간단하게 여러 데이터 스토어 및 데이터 스트림 간에 원하는 데이터를 분류, 정리, 보강, 이동할 수 있음
