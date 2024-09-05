@@ -3,6 +3,24 @@
 - 다양한 워크로드에 맞게 최적화된 파일 시스템을 제공하며, 사용자는 파일 시스템을 쉽게 생성, 관리, 확장할 수 있음
 - Amazon FSx for Windows File Server와 Amazon FSx for Lustre 등 두 가지 주요 파일 시스템을 지원
 
+주요 기능 및 특징:
+
+다양한 파일 시스템 지원:
+
+Amazon FSx for Windows File Server: Windows 기반 애플리케이션을 위한 완전 관리형 네이티브 Windows 파일 시스템.
+Amazon FSx for Lustre: 고성능 컴퓨팅(HPC) 워크로드를 위한 고성능 병렬 파일 시스템.
+Amazon FSx for NetApp ONTAP: NetApp의 데이터 관리 기능을 제공하는 파일 시스템.
+Amazon FSx for OpenZFS: ZFS 파일 시스템의 기능을 제공하는 파일 시스템.
+고성능: 높은 처리량과 낮은 지연 시간을 제공하여 데이터 집약적인 애플리케이션에 적합합니다.
+
+완전 관리형: 하드웨어 프로비저닝, 패치 적용, 백업, 복구 등 파일 시스템 관리 작업을 자동화합니다.
+
+보안: 데이터 암호화, VPC 통합, IAM을 통한 접근 제어를 지원합니다.
+
+확장성: 필요에 따라 파일 시스템의 크기와 성능을 확장할 수 있습니다.
+
+비용 효율성: 사용한 만큼만 비용을 지불하는 유연한 가격 모델을 제공합니다.
+
 # 주요 기능
 - Amazon FSx for Windows File Server
     - Windows 네티이브: Windws Server에서 제공하는 네이티브 파일 시스템 기능을 지원
