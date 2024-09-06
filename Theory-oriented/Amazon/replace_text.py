@@ -24,11 +24,14 @@ if __name__ == '__main__':
     parser.add_argument('file_path', type=str, help='Path to the Markdown file')
 
     replacements = {
+        '시킵니다.': '시킴\n-',
+        '줍니다.': '줌\n-',
         '합니다.': '\n- ',
         '됩니다.': '\n- ',
         '습니다.': '음\n- ',
         '입니다.': '\n- ',
-        ':': '\n- '
+        # ':': '\n- ',
+        '- \n': ''
     }  # 찾고자 하는 단어와 변경할 단어의 딕셔너리
 
     args = parser.parse_args()
