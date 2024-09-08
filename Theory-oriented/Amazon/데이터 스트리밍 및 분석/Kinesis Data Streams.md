@@ -77,8 +77,10 @@ response = kinesis.put_record(
 print(response)
 ```
 
-요약
-Amazon Kinesis Data Streams는 대규모 데이터를 실시간으로 수집하고 처리할 수 있는 AWS의 실시간 데이터 스트리밍 서비스 실시간 로그 및 이벤트 데이터 수집, 실시간 분석, 데이터 파이프라인 구축 등의 다양한 사용 사례에 활용할 수 있음 확장성, 내구성, 보안 등의 기능을 제공하여 안정적이고 효율적인 데이터 스트리밍을 지원
+# 요약
+- Amazon Kinesis Data Streams는 대규모 데이터를 실시간으로 수집하고 처리할 수 있는 AWS의 실시간 데이터 스트리밍 서비스
+- 실시간 로그 및 이벤트 데이터 수집, 실시간 분석, 데이터 파이프라인 구축 등의 다양한 사용 사례에 활용할 수 있음
+- 확장성, 내구성, 보안 등의 기능을 제공하여 안정적이고 효율적인 데이터 스트리밍을 지원
 
 
 ---
@@ -98,3 +100,4 @@ Amazon Kinesis Data Streams는 대규모 데이터를 실시간으로 수집하�
 
 ## References
 - [Amazon Kinesis Data Streams 용어 및 개념](https//docs.aws.amazon.com/ko_kr/streams/latest/dev/key-concepts.html)
+- https://docs.aws.amazon.com/ko_kr/streams/latest/dev/introduction.html
