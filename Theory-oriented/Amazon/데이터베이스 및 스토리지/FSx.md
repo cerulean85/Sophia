@@ -1,4 +1,75 @@
 # Amazon FSx
+
+# Amazon FSx
+
+## 요약
+- Amazon FSx는 AWS에서 제공하는 완전 관리형 파일 시스템 서비스
+
+## 개요
+- 다양한 파일 시스템 지원: Windows 파일 서버, Lustre, NetApp ONTAP, OpenZFS
+- 고성능 파일 시스템을 손쉽게 배포 및 관리 가능
+
+## 주요 기능 및 특징
+- **다양한 파일 시스템 지원**
+- **고성능**: 높은 처리량과 낮은 지연 시간
+- **완전 관리형**: 백업, 복원, 패치, 모니터링 자동화
+- **보안**: 데이터 암호화, VPC 통합, IAM 역할 기반 접근 제어
+- **확장성**: 용량과 성능 확장 가능
+
+## 구성
+- **파일 시스템**: 선택한 파일 시스템 유형에 따라 구성
+- **스토리지 용량**: 파일 시스템의 용량 설정
+- **네트워크 설정**: VPC 및 서브넷 설정
+- **보안 설정**: IAM 역할, 보안 그룹, 데이터 암호화 설정
+
+## 작동 방식
+1. 파일 시스템 유형 선택
+2. 스토리지 용량, 네트워크, 보안 설정 구성
+3. 파일 시스템 생성
+4. 파일 시스템을 애플리케이션에 마운트하여 사용
+5. 백업, 복원, 모니터링 등 관리 작업 수행
+
+### 예제 코드
+```python
+import boto3
+
+# FSx 클라이언트 생성
+fsx = boto3.client('fsx')
+
+# 파일 시스템 생성
+response = fsx.create_file_system(
+    FileSystemType='WINDOWS',
+    StorageCapacity=300,
+    SubnetIds=['subnet-12345678'],
+    SecurityGroupIds=['sg-12345678'],
+    WindowsConfiguration={
+        'ThroughputCapacity': 32,
+        'WeeklyMaintenanceStartTime': '1:05:00'
+    }
+)
+
+print(response)
+```
+
+# 다른 서비스와의 연관성
+- Amazon EC2: FSx 파일 시스템을 EC2 인스턴스에 마운트하여 사용
+- AWS Backup: FSx 파일 시스템의 백업 및 복원 관리
+- Amazon VPC: FSx 파일 시스템을 VPC 내에서 안전하게 사용
+
+# 사용 사례
+- 엔터프라이즈 파일 공유: Windows 파일 서버를 사용한 파일 공유
+- 고성능 컴퓨팅(HPC): Lustre 파일 시스템을 사용한 HPC 워크로드
+- 데이터베이스 백업: NetApp ONTAP을 사용한 데이터베이스 백업 및 복원
+- 개발 및 테스트 환경: OpenZFS를 사용한 개발 및 테스트 환경 구성
+
+# 결론
+- Amazon FSx는 다양한 파일 시스템을 지원하는 완전 관리형 파일 시스템 서비스
+- 고성능과 확장성을 제공
+- AWS의 다른 서비스와 통합하여 다양한 사용 사례에 적용 가능
+
+
+---
+
 - 고성능 파일 시스템을 제공하는 AWS의 관리형 서비스
 - 다양한 워크로드에 맞게 최적화된 파일 시스템을 제공하며, 사용자는 파일 시스템을 쉽게 생성, 관리, 확장할 수 있음
 - Amazon FSx for Windows File Server와 Amazon FSx for Lustre 등 두 가지 주요 파일 시스템을 지원
