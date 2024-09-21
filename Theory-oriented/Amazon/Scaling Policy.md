@@ -1,0 +1,143 @@
+# Simple Scaling Policy
+
+- Simple Scaling Policy는 특정 조건이 충족될 때 단일 스케일링 작업을 수행하는 AWS Auto Scaling 정책
+- 조건이 충족되면 인스턴스를 추가하거나 제거하여 애플리케이션의 성능을 유지함
+
+## 주요 기능 및 특징
+- 단일 스케일링 작업
+  - 특정 조건이 충족될 때 단일 스케일링 작업을 수행
+  - 예: CPU 사용률이 70%를 초과하면 인스턴스를 추가
+
+- CloudWatch 경보 기반
+  - CloudWatch 경보를 기반으로 스케일링 작업을 트리거
+  - 다양한 지표(CPU 사용률, 네트워크 트래픽 등)를 모니터링하여 경보 설정
+
+- 간단한 설정
+  - 설정이 간단하여 빠르게 스케일링 정책을 적용할 수 있음
+  - 복잡한 조건 없이 단순한 스케일링 작업을 수행
+
+## 구성
+- Auto Scaling 그룹 생성
+- CloudWatch 경보 설정
+- Simple Scaling Policy 설정
+
+## 작동 방식
+1. Auto Scaling 그룹을 생성하고 초기 인스턴스 수를 설정함
+2. CloudWatch에서 모니터링할 지표와 경보를 설정함
+3. Simple Scaling Policy를 설정하여 경보가 트리거될 때 인스턴스를 추가하거나 제거함
+4. 조건이 충족되면 Auto Scaling 그룹이 설정된 정책에 따라 인스턴스를 자동으로 조정함
+
+## 다른 서비스와의 연관성
+- Amazon EC2: Auto Scaling 그룹에서 관리하는 인스턴스
+- Amazon CloudWatch: 모니터링 지표와 경보 설정
+- Elastic Load Balancing (ELB): Auto Scaling 그룹과 함께 사용하여 트래픽 분산
+
+## 사용 사례
+- 웹 애플리케이션의 트래픽 증가에 대응
+  - 예: 트래픽이 증가하면 인스턴스를 추가하여 성능 유지
+- 배치 작업의 수요 변화에 대응
+  - 예: 배치 작업이 많아지면 인스턴스를 추가하여 작업 시간 단축
+- 비용 최적화
+  - 예: 수요가 감소하면 인스턴스를 제거하여 비용 절감
+
+## 결론
+- Simple Scaling Policy는 특정 조건이 충족될 때 단일 스케일링 작업을 수행하는 간단한 정책
+- CloudWatch 경보와 함께 사용하여 애플리케이션의 성능을 유지하고 비용을 최적화할 수 있음
+
+## 예제 코드
+### Simple Scaling Policy 설정 예제
+```json
+{
+  "AutoScalingGroupName": "my-auto-scaling-group",
+  "PolicyName": "scale-out-policy",
+  "PolicyType": "SimpleScaling",
+  "AdjustmentType": "ChangeInCapacity",
+  "ScalingAdjustment": 1,
+  "Cooldown": 300
+}
+```
+
+# Target Tracking Policy
+
+- Target Tracking Policy는 AWS Auto Scaling에서 제공하는 정책으로, 특정 지표의 목표 값을 설정하고 해당 목표를 유지하기 위해 인스턴스 수를 자동으로 조정하는 기능
+- 목표 지표를 설정하면 Auto Scaling이 자동으로 인스턴스 수를 조정하여 목표를 유지함
+
+## 주요 기능 및 특징
+- 목표 지표 설정
+  - 특정 지표의 목표 값을 설정하여 Auto Scaling이 이를 유지하도록 함
+  - 예: 평균 CPU 사용률을 50%로 유지
+
+- 자동 조정
+  - 설정된 목표 지표를 유지하기 위해 인스턴스 수를 자동으로 조정
+  - 지표가 목표 값을 초과하거나 미달할 때 인스턴스를 추가하거나 제거
+
+- 간단한 설정
+  - 설정이 간단하여 빠르게 적용 가능
+  - 복잡한 조건 없이 목표 지표만 설정하면 됨
+
+- 다양한 지표 지원
+  - CPU 사용률, 네트워크 트래픽, 요청 수 등 다양한 CloudWatch 지표를 지원
+  - 사용자 정의 지표도 사용 가능
+
+## 구성
+- Auto Scaling 그룹 생성
+- CloudWatch 지표 설정
+- Target Tracking Policy 설정
+
+## 작동 방식
+1. Auto Scaling 그룹을 생성하고 초기 인스턴스 수를 설정함
+2. CloudWatch에서 모니터링할 지표를 설정함
+3. Target Tracking Policy를 설정하여 목표 지표 값을 정의함
+4. Auto Scaling 그룹이 설정된 목표 지표를 유지하기 위해 인스턴스 수를 자동으로 조정함
+
+## 다른 서비스와의 연관성
+- Amazon EC2: Auto Scaling 그룹에서 관리하는 인스턴스
+- Amazon CloudWatch: 모니터링 지표 설정 및 경보
+- Elastic Load Balancing (ELB): Auto Scaling 그룹과 함께 사용하여 트래픽 분산
+
+## 사용 사례
+- 웹 애플리케이션의 성능 유지
+  - 예: 평균 CPU 사용률을 50%로 유지하여 성능 최적화
+- 배치 작업의 수요 변화에 대응
+  - 예: 작업 큐의 길이를 일정 수준으로 유지하여 작업 시간 단축
+- 비용 최적화
+  - 예: 수요가 감소하면 인스턴스를 제거하여 비용 절감
+
+## 결론
+- Target Tracking Policy는 특정 지표의 목표 값을 설정하고 이를 유지하기 위해 인스턴스 수를 자동으로 조정하는 강력한 정책
+- 간단한 설정과 다양한 지표 지원을 통해 애플리케이션의 성능을 최적화하고 비용을 절감할 수 있음
+
+## 예제 코드
+### Target Tracking Policy 설정 예제
+```json
+{
+  "AutoScalingGroupName": "my-auto-scaling-group",
+  "PolicyName": "scale-out-policy",
+  "PolicyType": "TargetTrackingScaling",
+  "TargetTrackingConfiguration": {
+    "PredefinedMetricSpecification": {
+      "PredefinedMetricType": "ASGAverageCPUUtilization"
+    },
+    "TargetValue": 50.0
+  }
+}
+```
+
+
+# Simple Scaling Policy vs. Target Tracking Policy
+
+## Simple Scaling Policy
+- **작동 방식**: 특정 조건이 충족될 때 단일 스케일링 작업을 수행
+- **기반**: CloudWatch 경보
+- **설정**: 조건이 충족되면 인스턴스를 추가하거나 제거
+- **사용 예**: CPU 사용률이 70%를 초과하면 인스턴스를 1개 추가
+- **장점**: 설정이 간단하고 특정 조건에 대한 명확한 대응 가능
+- **단점**: 복잡한 수요 변화에 대한 대응이 어려움
+
+## Target Tracking Policy
+- **작동 방식**: 특정 지표의 목표 값을 설정하고, 해당 목표를 유지하기 위해 인스턴스 수를 자동으로 조정
+- **기반**: CloudWatch 지표
+- **설정**: 목표 지표 값을 설정하면 Auto Scaling이 이를 유지하기 위해 인스턴스를 추가하거나 제거
+- **사용 예**: 평균 CPU 사용률을 50%로 유지
+- **장점**: 복잡한 수요 변화에 유연하게 대응 가능, 설정이 간단
+- **단점**: 목표 지표 설정이 부정확할 경우 과도한 스케일링 발생 가능
