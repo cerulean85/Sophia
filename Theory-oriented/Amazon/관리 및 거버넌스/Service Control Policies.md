@@ -63,3 +63,16 @@
     }
   ]
 }
+```
+
+
+## SCP를 통한 간접적인 인터넷 연결 차단 방법
+- 퍼블릭 IP 할당 차단
+  - SCP를 사용해 ```ec2:AssignPublicIpAddress``` API를 차단하면, EC2 인스턴스가 퍼블릭 IP 할당받는 것을 막을 수 있음
+  - 퍼블릭 IP가 없다면 해당 인스턴스는 인터넷과 연결할 수 없음
+
+- 인터넷 게이트웨이 생성 차단:
+  - ```ec2:CreateInternetGateway``` 및 ```ec2:AttacthInternetGateway``` API 호출을 차단하여 VPC가 인터넷과 연결되지 않도록 만들 수 있음
+
+- 네트워크 보안 설정 제한
+  - ```ec2:AuthorizeSecurityGroupIngress``` 또는 ```ec2:AuthorizeSecurityGroupEgress```와 같은 보안 그룹의 인바운드/아웃바운드 규칙을 제한하여 인터넷을 통한 트래픽이 허용되지 않도록 만들 수 있음
