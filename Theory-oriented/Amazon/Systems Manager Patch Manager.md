@@ -1,5 +1,84 @@
 # AWS Systems Manager Patch Manager
-- AWS Systems Manager의 관리자 기능인 Patch Manager는 보안이나 기타 업데이트가 필요한 관리형 노드를 패치하는 과정을 자동화
 
-## References
-- [AWS Systems Manager Patch Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/patch-manager.html)
+## 요약
+- AWS Systems Manager Patch Manager는 AWS 인프라의 패치 관리를 자동화하는 서비스
+
+## 개요
+- AWS Systems Manager의 구성 요소 중 하나
+- 인스턴스와 관련된 패치 작업을 자동화하여 보안 및 규정 준수를 유지하는 데 도움을 줌
+
+## 주요 기능 및 특징
+- 패치 기준 설정: 운영 체제별로 패치 기준을 설정할 수 있음
+- 자동화된 패치 배포: 지정된 시간에 자동으로 패치를 배포할 수 있음
+- 패치 컴플라이언스 보고서: 패치 상태를 모니터링하고 보고서를 생성할 수 있음
+- 다양한 운영 체제 지원: Windows, Amazon Linux, Ubuntu 등 다양한 운영 체제를 지원함
+- 유지 관리 윈도우: 패치 작업을 특정 시간대에 실행하도록 예약할 수 있음
+
+## 구성
+- 패치 그룹: 패치가 적용될 인스턴스 그룹을 정의함
+- 패치 기준: 적용할 패치의 기준을 설정함
+- 유지 관리 윈도우: 패치 작업이 실행될 시간대를 설정함
+- 패치 컴플라이언스 보고서: 패치 적용 상태를 모니터링하고 보고서를 생성함
+
+## 작동 방식
+1. 패치 그룹을 정의함
+2. 패치 기준을 설정함
+3. 유지 관리 윈도우를 설정함
+4. 패치 작업을 예약함
+5. 패치 컴플라이언스 보고서를 확인함
+
+## 다른 서비스와의 연관성
+- AWS Systems Manager의 다른 구성 요소와 통합되어 전체 인프라 관리 기능을 제공함
+- AWS Identity and Access Management(IAM)와 연동하여 접근 제어를 강화할 수 있음
+
+## 사용 사례
+- 대규모 AWS 인프라에서 패치 관리를 자동화하여 보안 및 규정 준수를 유지하고자 할 때
+- 다양한 운영 체제를 사용하는 환경에서 패치 작업을 중앙에서 관리하고자 할 때
+
+## 결론
+- AWS Systems Manager Patch Manager는 AWS 인프라의 패치 관리를 자동화하여 보안 및 규정 준수를 유지하는 데 도움을 줌
+- 다양한 운영 체제를 지원하며, 패치 기준 설정, 자동화된 패치 배포, 패치 컴플라이언스 보고서 등의 기능을 제공함
+
+## 예제 코드
+```yaml
+# 패치 기준 설정 예제 (AWS Systems Manager 문서에서 발췌)
+PatchBaseline:
+  Type: "AWS::SSM::PatchBaseline"
+  Properties:
+    Name: "MyPatchBaseline"
+    OperatingSystem: "WINDOWS"
+    PatchGroups:
+      - "MyPatchGroup"
+    ApprovalRules:
+      PatchRules:
+        - ApproveAfterDays: 7
+          ComplianceLevel: "CRITICAL"
+          EnableNonSecurity: false
+```
+
+
+## AWS Systems Manager Run Command vs. AWS Systems Manager Patch Manage
+
+### 1. **AWS Systems Manager Run Command**
+- **목적:** 서버나 인스턴스에 원격 명령을 실행하는 도구
+- **기능:** EC2 인스턴스나 온프레미스 서버에 대해 명령을 실행할 수 있으며, 에이전트가 설치된 경우 AWS Systems Manager가 이를 지원
+- **사용 예시:** 패치 배포, 애플리케이션 설치, 구성 파일 업데이트, 로그 수집 등 여러 스크립트나 명령어 실행이 필요할 때 활용
+- **운영 방식:** 사용자 지정 명령어 또는 AWS가 제공하는 명령 템플릿을 사용하여 관리되는 인스턴스 그룹에서 동시 실행할 수 있dma
+- **주요 특징:**
+  - 대규모 인스턴스에서 병렬로 명령을 실행할 수 있음
+  - 세부 결과를 추적하고 모니터링할 수 있음
+  - 에이전트 기반 명령어 실행을 지원
+
+### 2. **AWS Systems Manager Patch Manager**
+- **목적:** EC2 인스턴스 및 온프레미스 서버의 패치를 자동화하는 도구
+- **기능:** OS 및 소프트웨어 패치를 자동으로 관리, 설치 및 적용하는 기능을 제공. 패치 관리 정책을 설정하면 관리되는 인스턴스에 자동으로 패치를 적용할 수 있dma
+- **사용 예시:** 보안 패치나 버그 수정이 포함된 업데이트를 자동으로 인스턴스에 배포
+- **운영 방식:** 패치 그룹을 정의하고 운영 체제별로 패치 기준을 설정한 후, 사전에 정의된 스케줄에 따라 패치를 자동으로 적용
+- **주요 특징:**
+  - 인스턴스 그룹에 대해 패치 정책을 설정하고 이를 자동으로 적용 가능
+  - 운영 체제별로 패치 기준을 설정할 수 있음
+  - 패치 관리 결과를 보고서 형태로 제공하여 적용 여부를 확인 가능
+
+### 차이점 요약:
+- **Run Command**는 **사용자가 직접 명령을 실행**하는 데 초점을 맞추며, 패치 관리 외에도 다양한 명령어를 실행할 수 있는 유연한 도구임
+- **Patch Manager**는 **패치 업데이트를 자동화**하는 데 특화되어 있으며, 보안 업데이트 및 패치 작업을 일관되고 안전하게 관리하는 데 중점을 둠
