@@ -141,3 +141,84 @@
 - **사용 예**: 평균 CPU 사용률을 50%로 유지
 - **장점**: 복잡한 수요 변화에 유연하게 대응 가능, 설정이 간단
 - **단점**: 목표 지표 설정이 부정확할 경우 과도한 스케일링 발생 가능
+
+
+
+
+# Step Scaling Policy
+
+## 요약
+- Step Scaling Policy는 Amazon EC2 Auto Scaling에서 제공하는 자동 확장 정책 중 하나로, 지표 값이 특정 임계값을 초과하거나 미달할 때 인스턴스 수를 단계적으로 조정하는 기능
+
+## 개요
+- Amazon EC2 Auto Scaling의 자동 확장 정책 중 하나
+- 지표 값이 특정 임계값을 초과하거나 미달할 때 인스턴스 수를 단계적으로 조정
+- 각 단계는 지표 값의 범위와 조정할 인스턴스 수를 정의
+
+## 주요 기능 및 특징
+- 단계적 조정: 지표 값의 범위에 따라 인스턴스 수를 단계적으로 조정
+- 유연한 설정: 각 단계의 임계값과 조정할 인스턴스 수를 유연하게 설정 가능
+- 다양한 지표 지원: CPU 사용률, 네트워크 트래픽, 사용자 정의 지표 등 다양한 지표를 기반으로 확장 가능
+- 비용 효율성: 필요에 따라 인스턴스를 자동으로 조정하여 비용 절감
+- 고가용성: 애플리케이션의 성능을 유지하면서 고가용성 보장
+
+## 구성
+- Auto Scaling 그룹: 인스턴스의 자동 확장을 관리하는 그룹
+- 지표: 확장 정책이 모니터링할 지표 (예: CPU 사용률)
+- 임계값: 지표 값이 초과하거나 미달할 때의 임계값
+- 단계: 각 단계는 지표 값의 범위와 조정할 인스턴스 수를 정의
+
+## 작동 방식
+1. Auto Scaling 그룹을 생성하고 인스턴스를 추가함
+2. 지표와 임계값을 설정함 (예: CPU 사용률 70% 초과 시)
+3. 각 단계의 지표 값 범위와 조정할 인스턴스 수를 설정함
+4. 지표 값이 특정 임계값을 초과하거나 미달할 때 인스턴스 수를 단계적으로 조정함
+
+## 다른 서비스와의 연관성
+- Amazon CloudWatch와 통합되어 지표 데이터를 모니터링하고 확장 정책을 트리거
+- AWS Lambda와 연동하여 사용자 정의 확장 로직을 구현 가능
+- Amazon SNS와 통합하여 확장 이벤트에 대한 알림을 받을 수 있음
+
+## 사용 사례
+- 웹 애플리케이션의 CPU 사용률을 일정 수준으로 유지하여 성능 최적화
+- 네트워크 트래픽에 따라 인스턴스 수를 조정하여 비용 절감
+- 사용자 정의 지표를 기반으로 애플리케이션의 확장 정책을 설정
+
+## 결론
+- Step Scaling Policy는 지표 값이 특정 임계값을 초과하거나 미달할 때 인스턴스 수를 단계적으로 조정하는 Amazon EC2 Auto Scaling의 자동 확장 정책
+- 단계적 조정, 유연한 설정, 다양한 지표 지원, 비용 효율성, 고가용성 등의 기능을 제공
+- Amazon CloudWatch, AWS Lambda, Amazon SNS 등과 통합되어 유연한 데이터 처리 및 보안 관리 가능
+
+## 예제 코드
+```python
+import boto3
+
+# Auto Scaling 클라이언트 생성
+autoscaling = boto3.client('autoscaling')
+
+# Step Scaling Policy 생성
+response = autoscaling.put_scaling_policy(
+    AutoScalingGroupName='my-auto-scaling-group',
+    PolicyName='cpu-step-scaling-policy',
+    PolicyType='StepScaling',
+    AdjustmentType='ChangeInCapacity',
+    StepAdjustments=[
+        {
+            'MetricIntervalLowerBound': 0,
+            'MetricIntervalUpperBound': 10,
+            'ScalingAdjustment': 1
+        },
+        {
+            'MetricIntervalLowerBound': 10,
+            'MetricIntervalUpperBound': 20,
+            'ScalingAdjustment': 2
+        },
+        {
+            'MetricIntervalLowerBound': 20,
+            'ScalingAdjustment': 3
+        }
+    ],
+    MetricAggregationType='Average'
+)
+
+print(response)
