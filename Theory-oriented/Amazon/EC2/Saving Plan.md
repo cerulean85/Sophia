@@ -65,3 +65,10 @@ aws savingsplans purchase-savings-plan \
     --term 1-year \
     --payment-option AllUpfront
 ```
+
+
+# Zonal Reserved Instances
+- 특정 가용 영역에 고정되며, 인스턴스 패밀리나 크기를 변경할 수 있는 유연성이 없음
+
+# Standard Reserved Instances
+- 정 인스턴스 패밀리와 크기에 고정되며, 유연성이 부족
