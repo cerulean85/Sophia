@@ -1,4 +1,4 @@
-# VPC Peering에 대해 알려줌
+# VPC Peering
 
 ## 요약
 - VPC Peering은 두 개의 VPC 간에 네트워크 트래픽을 직접 전송할 수 있게 하는 서비스임
