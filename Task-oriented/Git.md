@@ -275,7 +275,11 @@ fileDirectory/**/fileName.txt
 
 # 예외
 !fileName.txt
+
+# 적용 안 되ㅏㄹ 때
+git rm -r --cached .
 ```
+
 
 ## 브랜치
 ### 생성

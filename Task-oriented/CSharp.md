@@ -666,3 +666,33 @@ Console.WriteLine("랜덤 실수 (0.0-1.0): " + randomDouble);
   Trace.Close();
 
 ```
+
+
+# ConcurrentDictionary
+- .NET의 System.Collections.Concurrent 네임스페이스에 포함된 스레드 안전한 컬렉션 클래스
+- 여러 스레드가 동시에 읽고 쓸 수 있도록 설게 되었으며, Dictionary와 유사하나 동시성 제어를 위해 추가적인 기능을 제공함
+- 주요 특징
+  - 스레드 안전성: 여러 스레드가 동시에 데이터를 추가, 제거, 수정할 수 있음
+  - 고성능: 내부적으로 락을 최소화하여 높은 성능을 유지
+  - 원자적 연산: TryAdd, TryRemove, TryUpdate 등의 메서드를 통해 원자적 연산을 지원
+- 예제 코드
+```cs
+  // ConcurrentDictionary 생성
+  var dictionary = new ConcurrentDictionary<int, string>();
+
+  // 항목 추가
+  dictionary.TryAdd(1, "Value1");
+  dictionary.TryAdd(2, "Value2");
+
+  // 항목 업데이트
+  dictionary.TryUpdate(1, "UpdatedValue1", "Value1");
+
+  // 항목 제거
+  dictionary.TryRemove(2, out var removedValue);
+
+  // 항목 조회
+  if (dictionary.TryGetValue(1, out var value))
+  {
+      Console.WriteLine($"Key: 1, Value: {value}");
+  }
+```
