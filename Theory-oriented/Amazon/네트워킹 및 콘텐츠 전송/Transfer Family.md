@@ -1,5 +1,7 @@
 # AWS Transfer Family
 
+![alt text](../../../images/cloud/transfer_fam.png)
+
 ## 요약
 - 안전하고 확장 가능한 파일 전송 서비스 제공함
 

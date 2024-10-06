@@ -1,5 +1,7 @@
 # Amazon S3 File Gateway
 
+![alt text](../../../images/cloud/file_gw_conf.png)
+
 
 Amazon S3 File Gateway는 **AWS Storage Gateway**의 한 유형으로, 온프레미스 애플리케이션이 AWS S3에 안전하게 데이터를 저장하고, S3에서 파일을 손쉽게 읽고 쓸 수 있게 해주는 **파일 기반 스토리지 서비스**입니다. 이를 통해 로컬 파일 시스템에서 S3 객체 스토리지로 데이터를 통합하고, AWS의 클라우드 기능을 온프레미스 환경에 쉽게 연결할 수 있습니다.
 
