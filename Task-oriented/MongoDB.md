@@ -38,3 +38,13 @@ results = collection.find.sort("age", -1) # 내림차순)
 # 영어 대소문자를 구분하지 않고 정렬
 results = collection.find().sort("name", 1).collation({"locale": "en", "strength": 2})
 ```
+
+
+## 예시
+```js
+var analDataCol = db.getCollection('AnalysisData')
+var analData = analDataCol.find().pretty().sort({dateTime: -1}).limit(1).next()
+var zeroArr = analData['simulateList'].map((arr) => {
+    return arr[45]
+})
+```
