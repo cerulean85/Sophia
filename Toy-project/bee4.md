@@ -1,3 +1,36 @@
+# bee4 241018
+- 트래픽 자동 생성: Go 언어
+- Metrics 모니터링
+- 로드밸런싱 자동화/시각화
+- 비용 추적
+- 리액트 UI 만들기
+- Spring Boot
+- Netty
+- 테라폼
+- AWS Trusted Advisor
+- AWS Organizations, SCP 등 계정 통합
+
+# bee4 로그인&인증
+1) AWS Organizations, SCP 등 계정 통합
+2) Cognito를 이용한 인증
+3) Role, Policy 부여
+
+# [탭1] bee4 트래픽 시뮬레이터
+1) 엔드포인트 생성 기능
+  - ALB, NLB, API Gateway
+
+2) 트래픽 발생 기능
+  - 트래픽 한 개씩 발생, 트래픽 무작위 발생, 트래픽 동시 생성
+
+3) 트래픽 이동 애니메이션
+4) 트래픽에 따른 비용 정산 기능
+5) 엔드포인트에서 수행할 함수 설계
+
+![alt text](image-1.png)
+
+# [탭2] bee4 인스턴스별 Metrics
+- 인스턴스별 Metrics 그래프가 나타남
+
 # bee4 (beeFour) 정의 및 목표
 
 ## bee4 정의
