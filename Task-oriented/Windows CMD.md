@@ -10,3 +10,9 @@ tasklist | findstr "celery"
 ```sh
 taskkill /PID [프로세스ID] /F
 ```
+
+## Port 검색
+```sh
+netstat -ano | find "[포트번호]"
+# 예시: netstat -ano | find "8080"
+```

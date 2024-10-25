@@ -1,11 +1,80 @@
 # AWS Fargate
 
-- 컨테이너를 적절한 규모의 온디맨드  
+- AWS Fargate는 AWS의 서버리스 컨테이너 실행 엔진으로, 사용자가 서버를 직접 관리하지 않고도 컨테이너를 실행할 수 있게 해줌
+- Fargate는 Amazon ECS(Elastic Container Service)와 Amazon EKS(Elastic Kubernetes Service)와 통합되어 사용됨
 
-- Technology that provides on-demand, right-sized compute capacity for containers
-- Don't have to provision, configure, or scale groups of virtual machine on your own to run containers.
-- Don't need to choose server types, decide when to scale your node groups, or optimize cluster packing.
+### 주요 특징
+
+1. **서버리스 아키텍처**:
+   - 서버를 프로비저닝하거나 관리할 필요가 없음
+   - Fargate는 필요한 만큼의 컴퓨팅 리소스가 자동으로 할당됨
+
+2. **자동 확장**:
+   - 애플리케이션의 요구에 따라 자동으로 리소스를 확장하고 축소
+   - 사용자는 CPU와 메모리 요구 사항만 정의하면 됨
+
+3. **유연한 배포**:
+   - Docker 컨테이너를 쉽게 배포할 수 있으며, ECS나 EKS에서 관리할 수 있음
+
+4. **비용 효율성**:
+   - 사용한 만큼만 비용. 실제 실행한 컨테이너에 대해서만 요금이 부과되므로, 비즈니스에 필요한 최적의 리소스를 선택할 수 있음
+
+5. **보안**:
+   - VPC와 통합되어 네트워크를 안전하게 관리할 수 있으며, IAM을 통해 세부적인 액세스 제어가 가능
+
+6. **간단한 관리**:
+   - 복잡한 인프라 관리를 피할 수 있어 개발자들이 애플리케이션 코드에 집중할 수 있음
+
+### 사용 사례
+
+- **마이크로서비스**: 애플리케이션을 작은 서비스로 분리하여 독립적으로 배포하고 관리할 수 있음
+- **배치 작업**: 일회성 작업이나 주기적인 작업을 효율적으로 처리할 수 있음
+- **CI/CD 파이프라인**: 지속적 통합 및 배포 과정에서 컨테이너를 손쉽게 사용할 수 있음
+- **애플리케이션 개발 및 테스트**: 개발 및 테스트 환경을 신속하게 설정할 수 있음
+
+### 결론
+
+- AWS Fargate는 서버리스 컨테이너 실행 엔진으로, 컨테이너화된 애플리케이션의 배포와 관리를 간소화함 복잡한 - 인프라 관리 없이도 컨테이너를 쉽게 실행할 수 있어, 개발자들이 애플리케이션 코드에 집중할 수 있게 도움
 
 
-# References
-- [AWS Fargate](https://docs.aws.amazon.com/eks/latest/userguide/fargate.html)
+## CloudFormation과 비교
+
+### AWS Fargate
+
+1. **목적**: 
+   - Fargate는 서버리스 컨테이너 실행 엔진으로, Docker 컨테이너를 AWS에서 직접 실행할 수 있게 해줌
+   - 사용자는 서버를 프로비저닝하거나 관리할 필요 없이, 필요한 만큼의 컴퓨팅 리소스를 자동으로 할당받음
+
+2. **특징**:
+   - **서버리스**: 인프라 관리가 필요 없으며, 컨테이너의 실행과 관리를 자동으로 처리
+   - **비용 효율성**: 실제로 사용한 리소스에 대해서만 비용이 청구
+   - **유연한 배포**: ECS나 EKS와 통합되어 쉽게 컨테이너를 배포할 수 있음
+   - **자동 확장**: 필요에 따라 리소스를 자동으로 조정할 수 있음
+
+3. **사용 사례**:
+   - 마이크로서비스, 배치 작업, CI/CD 파이프라인 등 다양한 컨테이너화된 애플리케이션에 적합.
+
+### AWS CloudFormation
+
+1. **목적**:
+   - CloudFormation은 **AWS 리소스를 코드로 관리하고 배포**할 수 있는 서비스
+   - 사용자는 인프라를 템플릿으로 정의하여, 반복 가능한 방식으로 AWS 리소스를 생성하고 업데이트할 수 있음
+
+2. **특징**:
+   - **Infrastructure as Code (IaC)**: 인프라를 코드로 관리하여 버전 관리 및 재사용이 가능
+   - **자동화**: 여러 리소스를 한 번에 정의하고, 의존성을 고려하여 자동으로 생성
+   - **템플릿 기반**: JSON 또는 YAML 형식의 템플릿을 사용하여 리소스를 정의
+
+3. **사용 사례**:
+   - 인프라의 표준화, 배포 자동화, 복잡한 리소스 구성 관리 등 다양한 인프라 관리에 사용
+
+### 주요 차이점
+
+- **목적**:
+  - Fargate는 컨테이너 실행에 초점을 맞추고 있으며, CloudFormation은 AWS 리소스의 프로비저닝 및 관리에 중점을 둠
+
+- **운영 방식**:
+  - Fargate는 서버리스 환경에서 컨테이너를 실행하는 데 사용되고, CloudFormation은 리소스를 코드로 정의하고 관리하는 데 사용
+
+- **통합성**:
+  - Fargate는 ECS나 EKS와 통합되어 사용되며, CloudFormation은 모든 AWS 리소스와 통합되어 인프라를 관리
