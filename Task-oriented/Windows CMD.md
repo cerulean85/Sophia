@@ -50,3 +50,6 @@ scp C:\Users\John\Documents\example.txt username@remote_host:/home/username/
 # scp "C:/Users/ZHKim/Desktop/어떤 파일.pptx" zhkim@123.23.23.14:/C:/Users/RemoteZHKim/Desktop
 # scp C:/Users/Hanwha/Desktop/20241029_1.md swdev.common1@172.22.104.226:/C:/Users/swdev.common1/Desktop/20241029_1.md
 ```
+
+
+![alt text](image.png)
