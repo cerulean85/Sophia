@@ -1,6 +1,3 @@
-## TEST 글11111111111
-
-
 **알고리즘**
 - 카탈란(Catalan) 수 (http://cerulean85.tistory.com/233)
 - 배낭 문제(Knapsack Problem) (http://cerulean85.tistory.com/231)
