@@ -1,3 +1,9 @@
+---
+title: Git 명령어 정리
+date: 2024-06-30
+tags: Git
+---
+
 - [Git 저장소](#git-저장소)
   - [origin master](#origin-master)
 - [Git 명령어](#git-명령어)
@@ -14,7 +20,7 @@
     - [아스키 그래프 조회](#아스키-그래프-조회)
   - [diff](#diff)
     - [Unstaged된 파일 비교](#unstaged된-파일-비교)
-    - [Stagin Area에 있는 파일 비교](#stagin-area에-있는-파일-비교)
+    - [Staging Area에 있는 파일 비교](#staging-area에-있는-파일-비교)
     - [브랜치간 비교](#브랜치간-비교)
     - [커밋 간 비교](#커밋-간-비교)
     - [커밋 사이를 비교](#커밋-사이를-비교)

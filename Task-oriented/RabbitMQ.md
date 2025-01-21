@@ -1,3 +1,9 @@
+---
+title: RabbitMQ 정리
+date: 2024-04-30
+tags: RabbitMQ
+---
+
 # RabbitMQ 사용하기
 
 - 리소스 리스트  RabbitMQ 리파지토리를 추가 
